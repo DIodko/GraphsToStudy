@@ -48,11 +48,17 @@ namespace GraphsToStudy {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"MalgrangeForm";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->SuspendLayout();
+			// 
+			// MalgrangeForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(554, 521);
+			this->Name = L"MalgrangeForm";
+			this->Text = L"MalgrangeForm";
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 	};

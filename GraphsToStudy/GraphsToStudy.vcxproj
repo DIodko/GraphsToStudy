@@ -143,6 +143,12 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MalgrangeForm.resx">
+      <DependentUpon>MalgrangeForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShortestPathForm.resx">
+      <DependentUpon>ShortestPathForm.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
