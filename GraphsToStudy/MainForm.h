@@ -48,17 +48,11 @@ namespace GraphsToStudy {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->SuspendLayout();
-			// 
-			// MainForm
-			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(624, 708);
-			this->Name = L"MainForm";
+			this->components = gcnew System::ComponentModel::Container();
+			this->Size = System::Drawing::Size(300,300);
 			this->Text = L"MainForm";
-			this->ResumeLayout(false);
-
+			this->Padding = System::Windows::Forms::Padding(0);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 		}
 #pragma endregion
 	};
