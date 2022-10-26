@@ -35,6 +35,9 @@ namespace GraphsToStudy {
 			}
 		}
 
+
+	protected:
+
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
