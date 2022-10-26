@@ -120,10 +120,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DemoucronForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="MalgrangeForm.cpp" />
+    <ClCompile Include="ShortestPathForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DemoucronForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MainForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="MalgrangeForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ShortestPathForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
