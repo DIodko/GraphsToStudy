@@ -10,6 +10,12 @@ namespace GraphsToStudy {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	ref struct Position
+	{
+		int X;
+		int Y;
+	};
+
 	/// <summary>
 	/// Сводка для ShortestPathForm
 	/// </summary>
@@ -67,9 +73,10 @@ namespace GraphsToStudy {
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(12, 33);
+			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->pictureBox1->Location = System::Drawing::Point(12, 12);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(463, 343);
+			this->pictureBox1->Size = System::Drawing::Size(1000, 500);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -77,7 +84,7 @@ namespace GraphsToStudy {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(656, 514);
+			this->ClientSize = System::Drawing::Size(1193, 815);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"ShortestPathForm";
 			this->Text = L"ShortestPathForm";
@@ -89,10 +96,15 @@ namespace GraphsToStudy {
 #pragma endregion
 		private:
 			Void onShown(System::Object^ sender, System::EventArgs^ e);
-			Void DrawGraph(System::Object^ sender);
+			Void VisualizeGraph(System::Object^ sender);
 
-			String^ type;
-			array<array<int>^>^ matrix;
-			int size;
+			String^ type; // содержит тип задания
+			array<array<int>^>^ matrix; // содержит матрицу смежности
+			array<Position^>^ positions; // содержит координаты уже отрисованных вершин 
+			Graphics^ graph; // сюда рисуется граф
+			Drawing::Font^ font;
+			Pen^ pen;
+			Brush^ brush;
+			int size; // содержит количество вершин
 	};
 }
