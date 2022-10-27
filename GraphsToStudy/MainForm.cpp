@@ -15,7 +15,16 @@ void main(array<String^>^ args)
 
 Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	GraphsToStudy::ShortestPathForm^ newShortestPathForm = gcnew GraphsToStudy::ShortestPathForm();
+	size = 5;
+	array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
+	for (int i = 0; i < size; i++)
+	{
+		matrix[i] = gcnew array<int>(size);
+		for (int j = 0; j < size; j++)
+		{
+			matrix[i][j] = (i + j) % 2;
+		}
+	}
+	GraphsToStudy::ShortestPathForm^ newShortestPathForm = gcnew GraphsToStudy::ShortestPathForm("Тип задания", matrix, size);
 	newShortestPathForm->Show();
-	//newShortestPathForm->onShown(sender, e);
 }

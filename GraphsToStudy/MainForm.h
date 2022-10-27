@@ -78,7 +78,9 @@ namespace GraphsToStudy {
 
 		}
 #pragma endregion
-	//private: array<int^> ^arr;
-	private: Void button1_Click(System::Object^ sender, System::EventArgs^ e);
+	private: 
+		Void button1_Click(System::Object^ sender, System::EventArgs^ e);
+
+		int size;
 	};
 }
