@@ -13,10 +13,10 @@ Void GraphsToStudy::ShortestPathForm::onShown(System::Object^ sender, System::Ev
 Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
 {
     pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
-    pen = gcnew Pen(Color::Black, 1.0f);
-    brush = Brushes::Black;
-    font = gcnew Drawing::Font("Arial", 20);
-    graph = Graphics::FromImage(pictureBox1->Image);
+    Pen^ pen = gcnew Pen(Color::Black, 1.0f);
+    Brush^ brush = Brushes::Black;
+    Drawing::Font^ font = gcnew Drawing::Font("Arial", 20);
+    Graphics^ graph = Graphics::FromImage(pictureBox1->Image);
     positions = gcnew array<Position^>(size);
 
     for (int i = 0; i < size; i++)

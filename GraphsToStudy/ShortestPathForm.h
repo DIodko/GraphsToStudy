@@ -10,12 +10,6 @@ namespace GraphsToStudy {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	ref struct Position
-	{
-		int X;
-		int Y;
-	};
-
 	/// <summary>
 	/// Сводка для ShortestPathForm
 	/// </summary>
@@ -98,13 +92,18 @@ namespace GraphsToStudy {
 			Void onShown(System::Object^ sender, System::EventArgs^ e);
 			Void VisualizeGraph(System::Object^ sender);
 
+			ref struct Position
+			{
+				int X;
+				int Y;
+			};
 			String^ type; // содержит тип задания
 			array<array<int>^>^ matrix; // содержит матрицу смежности
 			array<Position^>^ positions; // содержит координаты уже отрисованных вершин 
+			int size; // содержит количество вершин
 			Graphics^ graph; // сюда рисуется граф
 			Drawing::Font^ font;
 			Pen^ pen;
 			Brush^ brush;
-			int size; // содержит количество вершин
 	};
 }
