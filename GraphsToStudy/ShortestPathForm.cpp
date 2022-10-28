@@ -12,7 +12,8 @@ Void GraphsToStudy::ShortestPathForm::onShown(System::Object^ sender, System::Ev
 
 Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
 {
-    CalculateLevels(); // вычисляет какие вершины находятся на каких уровнях
+    int amountOfLevels = CalculateLevels(); // вычисляет какие вершины находятся на каких уровнях
+    CalculatePositions(amountOfLevels);
     pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
     pen = gcnew Pen(Color::Black, 1.0f);
     brush = Brushes::Black;
@@ -59,12 +60,14 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // 
     }
 }
 
-void GraphsToStudy::ShortestPathForm::CalculateLevels()
+// определяет по матрице смежности на каких уровнях какие вершины находятся, возвращает количество построенных уровней
+int GraphsToStudy::ShortestPathForm::CalculateLevels()
 {
     positions = gcnew array<Position^>(size);
     levels = gcnew array<array<int>^>(size);
+    int addedRootsAmount = 1;
 
-    for (int levelIndex = 0; levelIndex < size - 1; levelIndex++)
+    for (int levelIndex = 0; levelIndex < size; levelIndex++)
     {
         levels[levelIndex] = gcnew array<int>(size);
         if (levelIndex == 0) // если первая вершина, помещаю ее в уровень
@@ -75,20 +78,24 @@ void GraphsToStudy::ShortestPathForm::CalculateLevels()
         else
         {
             int prevLevelIndex = levelIndex - 1;
-            for (int i = 0; levels[prevLevelIndex][i] != 0 && i < size; i++) // для вершин с индексами 0, 1, 2 в массиве levels[level_index] будет 1, 2, 3
+            for (int i = 0; levels[prevLevelIndex][i] != 0 && i < size; i++) // цикл обхода всех вершин предыдущего уровня
             {
                 int rootIndex = levels[prevLevelIndex][i] - 1;
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < size; j++) // цикл обхода строки в матрице смежности для вершины предудыщего уровня
                 {
-                    if (matrix[rootIndex][j] > 0 && rootIndex != j && !IsInLevels(j))
+                    if (matrix[rootIndex][j] > 0 && rootIndex != j && !IsInLevels(j, levelIndex + 1)) // учитываем уровень, который строится сейчас, поскольку в него может быть уже добавлена текущая вершина
                     {
                         AddToLevel(levelIndex, j);
+                        addedRootsAmount++;
                         Trace::WriteLine("Вершина " + (j).ToString() + " добавлена в уровень " + levelIndex.ToString());
                     }
                 }
             }
         }
+        if (addedRootsAmount == size)
+            return levelIndex + 1; // возвращаем точное количество добавленных уровней
     }
+    return -1;
 }
 
 // добавляет вершину на уровень
@@ -104,10 +111,10 @@ void GraphsToStudy::ShortestPathForm::AddToLevel(int levelIndex, int rootIndex)
     }
 }
 
-// проверяет есть ли вершина в уже построенных уровнях, много бесполезных итераций
-bool GraphsToStudy::ShortestPathForm::IsInLevels(int rootIndex)
+// проверяет есть ли вершина в уже построенных уровнях
+bool GraphsToStudy::ShortestPathForm::IsInLevels(int rootIndex, int curAmountOfLevels)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < curAmountOfLevels; i++)
     {
         for (int j = 0; j < size && levels[i] != nullptr; j++)
         {
@@ -118,3 +125,11 @@ bool GraphsToStudy::ShortestPathForm::IsInLevels(int rootIndex)
     return false;
 }
 
+// последовательно рассчитывает позиции вершин на каждом уровне
+void GraphsToStudy::ShortestPathForm::CalculatePositions(int amountOfLevels)
+{
+    for (int i = 0; i < amountOfLevels; i++) // цикл обхода массива массивов уровней
+    {
+
+    }
+}

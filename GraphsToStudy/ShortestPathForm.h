@@ -92,9 +92,10 @@ namespace GraphsToStudy {
 			Void onShown(System::Object^ sender, System::EventArgs^ e);
 			Void VisualizeGraph(System::Object^ sender);
 
+			int CalculateLevels();
 			void AddToLevel(int levelIndex, int rootIndex);
-			void CalculateLevels();
-			bool IsInLevels(int rootIndex);
+			bool IsInLevels(int rootIndex, int curAmountOfLevels);
+			void CalculatePositions(int amountOfLevels);
 
 			ref struct Position
 			{
