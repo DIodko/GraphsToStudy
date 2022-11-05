@@ -1,4 +1,3 @@
-#include <list>
 #pragma once
 
 namespace GraphsToStudy {
@@ -97,7 +96,7 @@ namespace GraphsToStudy {
 			bool IsInLevels(int rootIndex, int curAmountOfLevels);
 			void CalculatePositions(int amountOfLevels);
 
-			ref struct Position
+			ref struct Vertex
 			{
 				int X;
 				int Y;
@@ -107,7 +106,7 @@ namespace GraphsToStudy {
 			String^ type; // содержит тип задания
 			array<array<int>^>^ matrix; // содержит матрицу смежности
 			int size; // содержит количество вершин
-			array<Position^>^ positions; // содержит координаты уже отрисованных вершин 
+			array<Vertex^>^ vertices; // содержит координаты уже отрисованных вершин 
 			Graphics^ graph; // сюда рисуется граф
 			Drawing::Font^ font;
 			Pen^ pen;
