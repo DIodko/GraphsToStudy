@@ -98,6 +98,7 @@ namespace GraphsToStudy {
 
 			ref struct Vertex
 			{
+				int name;
 				int X;
 				int Y;
 			};
