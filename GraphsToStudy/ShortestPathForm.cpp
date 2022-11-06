@@ -77,7 +77,7 @@ int GraphsToStudy::ShortestPathForm::CalculateLevels()
         {
             Array::Resize(levels[levelIndex], 1);
             levels[0][0] = 1; //в массиве для первого уровня номер первой вершины
-            Trace::WriteLine("Вершина 0 добавлена в уровень 0");
+            Trace::WriteLine("Вершина 1 добавлена в уровень 0");
         }
         else
         {
@@ -97,7 +97,7 @@ int GraphsToStudy::ShortestPathForm::CalculateLevels()
                             levels[levelIndex + 1] = gcnew array<int>(0);
                             AddToLevel(levelIndex + 1, size - 1);
                         }
-                        Trace::WriteLine("Вершина " + (j).ToString() + " добавлена в уровень " + levelIndex.ToString());
+                        Trace::WriteLine("Вершина " + (j + 1).ToString() + " добавлена в уровень " + levelIndex.ToString());
                     }
                 }
             }
@@ -135,35 +135,35 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions(int amountOfLevels)
 {
     vertices = gcnew array<Vertex^>(size);
     int X = 20;
-    int Y = 225;
+    int Y = this->pictureBox1->Height / 2;
 
     vertices[0] = gcnew Vertex;
     vertices[0]->Name = (1).ToString();
     vertices[0]->X = X;
     vertices[0]->Y = Y;
-    Trace::WriteLine("Созданы координаты первой вершины");
+    Trace::WriteLine("Созданы координаты 1 вершины, Х: " + X + ", Y: " + Y);
     for (int i = 1; i < amountOfLevels; i++) // цикл обхода массива массивов уровней
     {
-        X += 100;
+        int levelSize = levels[i]->Length;
+        X += 100 * (levelSize + 1) / 2;
         int modifier = 0;
         int multiplier = 1;
-        int levelSize = levels[i]->Length;
         if (levelSize % 2 == 0)
         {
             modifier += 50;
         }
-        for (int j = 0; j < levelSize; j++) // цикл обхода массива уровней +100 -200 +300 -400
+        for (int j = 0; j < levelSize; j++) // цикл обхода массива уровней
         {
             multiplier = -multiplier;
             int vertex = levels[i][j];
 
             vertices[vertex - 1] = gcnew Vertex;
             vertices[vertex - 1]->Name = vertex.ToString();
-            vertices[vertex - 1]->X = X;
+            vertices[vertex - 1]->X = X - modifier;
             vertices[vertex - 1]->Y = Y + modifier * multiplier;
-            Trace::WriteLine("Созданы координаты " + vertex + " вершины");            
+            Trace::WriteLine("Созданы координаты " + vertex + " вершины, " "Х: " + vertices[vertex - 1]->X + ", Y : " + vertices[vertex - 1]->Y);
             
-            if (j % 2 == 1)
+            if ((j % 2 == 1 && levelSize % 2 == 0) || (j % 2 == 0 && levelSize % 2 == 1))// при нечетном колве вершин построили первую, увеличили, построили две, увеличили...
             {
                 modifier += 100;
             }
