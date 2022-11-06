@@ -25,12 +25,12 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // 
         //int drawnRoots = 0;
         if (i == 0) // если первая вершина, строю ее
         {
-            positions[i] = gcnew Position;
+            vertices[i] = gcnew Vertex;
             String^ name = (i + 1).ToString();
-            positions[i]->X = 20;
-            positions[i]->Y = 225;
-            graph->DrawEllipse(pen, positions[i]->X, positions[i]->Y, diameter, diameter);
-            graph->DrawString(name, font, brush, positions[i]->X + 15, positions[i]->Y + 10);
+            vertices[i]->X = 20;
+            vertices[i]->Y = 225;
+            graph->DrawEllipse(pen, vertices[i]->X, vertices[i]->Y, diameter, diameter);
+            graph->DrawString(name, font, brush, vertices[i]->X + 15, vertices[i]->Y + 10);
             Trace::WriteLine("Построена первая вершина");
         }
         //Trace::WriteLine("Рисуется все для " + (i + 1).ToString() + " вершины");
@@ -63,7 +63,7 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // 
 // определяет по матрице смежности на каких уровнях какие вершины находятся, возвращает количество построенных уровней
 int GraphsToStudy::ShortestPathForm::CalculateLevels()
 {
-    positions = gcnew array<Position^>(size);
+    vertices = gcnew array<Vertex^>(size);
     levels = gcnew array<array<int>^>(size);
     int addedRootsAmount = 1;
 
