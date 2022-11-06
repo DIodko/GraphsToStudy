@@ -77,7 +77,7 @@ namespace GraphsToStudy {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1193, 815);
+			this->ClientSize = System::Drawing::Size(1920, 1080);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"ShortestPathForm";
 			this->Text = L"ShortestPathForm";
