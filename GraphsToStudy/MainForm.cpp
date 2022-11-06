@@ -31,7 +31,7 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 		for (int j = k; j < size; j++)
 		{
 			int true_random = rand->Next(0, 101);
-			if (true_random > 60) {
+			if (true_random > 25) {
 				matrix[i][j] = 0;
 			}
 			else
@@ -57,9 +57,8 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 		}
 		Trace::WriteLine( " ");
 	}
-
-
-
+	
+	
 	//Массивы для временных меток и постоянных меток
 	array<int>^ ways = gcnew array<int>(size);
 	ways[0] = 0;
@@ -69,8 +68,9 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 	array<int>^ markers = gcnew array<int>(size);
 	markers[0] = 1;
 	for (int i = 1; i < size; i++) {
-		ways[i] = 0;
+		markers[i] = 0;
 	}
+	// Ищем минимальный путь алгоритмом Дейкстры
 
 	int Xt = 0; //текущая вершина
 	while (markers[size-1] == 0) {
@@ -80,9 +80,9 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 				ways[j] = temp_marker;
 			}		
 		}
-		int Xt = 10000;
+		int min_marker = 10000;
 		for (int i = 0; i < size; i++) {
-			if (markers[i] != 1 && ways[i] < Xt) {
+			if (markers[i] != 1 && ways[i] < min_marker) {
 				Xt = i;
 			}
 		}
