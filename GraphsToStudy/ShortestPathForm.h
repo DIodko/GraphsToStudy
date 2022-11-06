@@ -92,25 +92,22 @@ namespace GraphsToStudy {
 			Void VisualizeGraph(System::Object^ sender);
 
 			int CalculateLevels();
-			void AddToLevel(int levelIndex, int rootIndex);
-			bool IsInLevels(int rootIndex, int curAmountOfLevels);
+			void AddToLevel(int levelIndex, int vertexIndex);
+			bool IsInLevels(int vertexIndex, int curAmountOfLevels);
 			void CalculatePositions(int amountOfLevels);
 
 			ref struct Vertex
 			{
-				int name;
+				String^ Name;
 				int X;
 				int Y;
 			};
+
 			const int diameter = 50;
 			array<array<int>^>^ levels; // содержит вершины каждого уровня
 			String^ type; // содержит тип задания
 			array<array<int>^>^ matrix; // содержит матрицу смежности
 			int size; // содержит количество вершин
 			array<Vertex^>^ vertices; // содержит координаты уже отрисованных вершин 
-			Graphics^ graph; // сюда рисуется граф
-			Drawing::Font^ font;
-			Pen^ pen;
-			Brush^ brush;
 	};
 }

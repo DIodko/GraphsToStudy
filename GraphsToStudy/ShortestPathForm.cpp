@@ -7,32 +7,36 @@ using namespace System::Drawing;
 
 Void GraphsToStudy::ShortestPathForm::onShown(System::Object^ sender, System::EventArgs^ e)
 {
+    int amountOfLevels = CalculateLevels(); // вычисляет какие вершины находятся на каких уровнях
+    CalculatePositions(amountOfLevels);
     VisualizeGraph(sender);
 }
 
 Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
 {
-    int amountOfLevels = CalculateLevels(); // вычисляет какие вершины находятся на каких уровнях
-    CalculatePositions(amountOfLevels);
+    int radius = diameter / 2;
     pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
-    pen = gcnew Pen(Color::Black, 1.0f);
-    brush = Brushes::Black;
-    font = gcnew Drawing::Font("Arial", 20);
-    graph = Graphics::FromImage(pictureBox1->Image);
+    Pen^ pen = gcnew Pen(Color::Black, 1.0f);
+    Brush^ brush = Brushes::Black;
+    Brush^ whiteBrush = Brushes::White;
+    Drawing::Font^ font = gcnew Drawing::Font("Arial", 20);
+    Graphics^ graph = Graphics::FromImage(pictureBox1->Image);
 
     for (int i = 0; i < size; i++)
     {
-        //int drawnRoots = 0;
-        if (i == 0) // если первая вершина, строю ее
+        for (int j = i + 1; j < size; j++)
         {
-            vertices[i] = gcnew Vertex;
-            String^ name = (i + 1).ToString();
-            vertices[i]->X = 20;
-            vertices[i]->Y = 225;
-            graph->DrawEllipse(pen, vertices[i]->X, vertices[i]->Y, diameter, diameter);
-            graph->DrawString(name, font, brush, vertices[i]->X + 15, vertices[i]->Y + 10);
-            Trace::WriteLine("Построена первая вершина");
+            if (matrix[i][j] > 0)
+            {
+                graph->DrawLine(pen, vertices[i]->X + radius, vertices[i]->Y + radius,
+                                     vertices[j]->X + radius, vertices[j]->Y + radius);
+            }
         }
+        graph->DrawEllipse(pen, vertices[i]->X, vertices[i]->Y, diameter, diameter);
+        graph->FillEllipse(whiteBrush, vertices[i]->X, vertices[i]->Y, diameter, diameter);
+        graph->DrawString(vertices[i]->Name, font, brush, vertices[i]->X + 15, vertices[i]->Y + 10);
+        Trace::WriteLine("Построена " + (i + 1) + " вершина");
+
         //Trace::WriteLine("Рисуется все для " + (i + 1).ToString() + " вершины");
         //for (int j = i + 1; j < size; j++) // для вершины строятся смежные ей
         //{
@@ -63,22 +67,22 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // 
 // определяет по матрице смежности на каких уровнях какие вершины находятся, возвращает количество построенных уровней
 int GraphsToStudy::ShortestPathForm::CalculateLevels()
 {
-    vertices = gcnew array<Vertex^>(size);
     levels = gcnew array<array<int>^>(size);
-    int addedRootsAmount = 1;
+    int addedVerticesAmount = 1;
 
     for (int levelIndex = 0; levelIndex < size; levelIndex++)
     {
-        levels[levelIndex] = gcnew array<int>(size);
+        levels[levelIndex] = gcnew array<int>(0);
         if (levelIndex == 0) // если первая вершина, помещаю ее в уровень
         {
+            Array::Resize(levels[levelIndex], 1);
             levels[0][0] = 1; //в массиве для первого уровня номер первой вершины
             Trace::WriteLine("Вершина 0 добавлена в уровень 0");
         }
         else
         {
             int prevLevelIndex = levelIndex - 1;
-            for (int i = 0; levels[prevLevelIndex][i] != 0 && i < size; i++) // цикл обхода всех вершин предыдущего уровня
+            for (int i = 0; i < levels[prevLevelIndex]->Length; i++) // цикл обхода всех вершин предыдущего уровня
             {
                 int rootIndex = levels[prevLevelIndex][i] - 1;
                 for (int j = 0; j < size; j++) // цикл обхода строки в матрице смежности для вершины предудыщего уровня
@@ -86,39 +90,34 @@ int GraphsToStudy::ShortestPathForm::CalculateLevels()
                     if (matrix[rootIndex][j] > 0 && rootIndex != j && !IsInLevels(j, levelIndex + 1)) // учитываем уровень, который строится сейчас, поскольку в него может быть уже добавлена текущая вершина
                     {
                         AddToLevel(levelIndex, j);
-                        addedRootsAmount++;
+                        addedVerticesAmount++;
                         Trace::WriteLine("Вершина " + (j).ToString() + " добавлена в уровень " + levelIndex.ToString());
                     }
                 }
             }
         }
-        if (addedRootsAmount == size)
+        if (addedVerticesAmount == size)
             return levelIndex + 1; // возвращаем точное количество добавленных уровней
     }
     return -1;
 }
 
 // добавляет вершину на уровень
-void GraphsToStudy::ShortestPathForm::AddToLevel(int levelIndex, int rootIndex)
+void GraphsToStudy::ShortestPathForm::AddToLevel(int levelIndex, int vertexIndex)
 {
-    for (int i = 0; i < size; i++)
-    {
-        if (levels[levelIndex][i] == 0)
-        {
-            levels[levelIndex][i] = rootIndex + 1;
-            break;
-        }
-    }
+    int length = levels[levelIndex]->Length;
+    Array::Resize(levels[levelIndex], length + 1);
+    levels[levelIndex][length] = vertexIndex + 1;
 }
 
 // проверяет есть ли вершина в уже построенных уровнях
-bool GraphsToStudy::ShortestPathForm::IsInLevels(int rootIndex, int curAmountOfLevels)
+bool GraphsToStudy::ShortestPathForm::IsInLevels(int vertexIndex, int curAmountOfLevels)
 {
     for (int i = 0; i < curAmountOfLevels; i++)
     {
-        for (int j = 0; j < size && levels[i] != nullptr; j++)
+        for (int j = 0; j < levels[i]->Length; j++)
         {
-            if (levels[i][j] == rootIndex + 1)
+            if (levels[i][j] == vertexIndex + 1)
                 return true;
         }
     }
@@ -128,8 +127,40 @@ bool GraphsToStudy::ShortestPathForm::IsInLevels(int rootIndex, int curAmountOfL
 // последовательно рассчитывает позиции вершин на каждом уровне
 void GraphsToStudy::ShortestPathForm::CalculatePositions(int amountOfLevels)
 {
-    for (int i = 0; i < amountOfLevels; i++) // цикл обхода массива массивов уровней
-    {
+    vertices = gcnew array<Vertex^>(size);
+    int X = 20;
+    int Y = 225;
 
+    vertices[0] = gcnew Vertex;
+    vertices[0]->Name = (1).ToString();
+    vertices[0]->X = X;
+    vertices[0]->Y = Y;
+    Trace::WriteLine("Созданы координаты первой вершины");
+    for (int i = 1; i < amountOfLevels; i++) // цикл обхода массива массивов уровней
+    {
+        X += 100;
+        int modifier = 0;
+        int multiplier = 1;
+        int levelSize = levels[i]->Length;
+        if (levelSize % 2 == 0)
+        {
+            modifier += 50;
+        }
+        for (int j = 0; j < levelSize; j++) // цикл обхода массива уровней +100 -200 +300 -400
+        {
+            multiplier = -multiplier;
+            int vertex = levels[i][j];
+
+            vertices[vertex - 1] = gcnew Vertex;
+            vertices[vertex - 1]->Name = vertex.ToString();
+            vertices[vertex - 1]->X = X;
+            vertices[vertex - 1]->Y = Y + modifier * multiplier;
+            Trace::WriteLine("Созданы координаты " + vertex + " вершины");            
+            
+            if (j % 2 == 1)
+            {
+                modifier += 100;
+            }
+        }
     }
 }

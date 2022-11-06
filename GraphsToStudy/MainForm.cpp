@@ -35,7 +35,7 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 	//   1  2  3  4  5
 		{1, 0, 0, 0, 1}, // 1 вершина, "1" на графе  1 0 1 0 0
 		{0, 1, 1, 1, 1}, // 2 вершина, "2" на графе  0
-		{0, 1, 1, 1, 1}, // 3 вершина, "3" на графе  1 1
+		{0, 1, 1, 1, 0}, // 3 вершина, "3" на графе  1 1
 		{0, 1, 1, 0, 1}, // 4 вершина, "4" на графе  0 0 0
 		{1, 1, 0, 1, 1}};// 5 вершина, "5" на графе  0 0 0 0
 	GraphsToStudy::ShortestPathForm^ newShortestPathForm = gcnew GraphsToStudy::ShortestPathForm("Тип задания", matrix, size);
