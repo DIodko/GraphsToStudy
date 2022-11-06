@@ -73,7 +73,7 @@ int GraphsToStudy::ShortestPathForm::CalculateLevels()
     for (int levelIndex = 0; levelIndex < size; levelIndex++)
     {
         levels[levelIndex] = gcnew array<int>(0);
-        if (levelIndex == 0) // если первая вершина, помещаю ее в уровень
+        if (levelIndex == 0) // если первый уровень, помещаю в него первую вершину
         {
             Array::Resize(levels[levelIndex], 1);
             levels[0][0] = 1; //в массиве для первого уровня номер первой вершины
@@ -84,20 +84,26 @@ int GraphsToStudy::ShortestPathForm::CalculateLevels()
             int prevLevelIndex = levelIndex - 1;
             for (int i = 0; i < levels[prevLevelIndex]->Length; i++) // цикл обхода всех вершин предыдущего уровня
             {
-                int rootIndex = levels[prevLevelIndex][i] - 1;
-                for (int j = 0; j < size; j++) // цикл обхода строки в матрице смежности для вершины предудыщего уровня
+                int vertexIndex = levels[prevLevelIndex][i] - 1;
+                for (int j = 0; j < size - 1; j++) // цикл обхода строки в матрице смежности для вершины предудыщего уровня
                 {
-                    if (matrix[rootIndex][j] > 0 && rootIndex != j && !IsInLevels(j, levelIndex + 1)) // учитываем уровень, который строится сейчас, поскольку в него может быть уже добавлена текущая вершина
+                    if (matrix[vertexIndex][j] > 0 && vertexIndex != j && !IsInLevels(j, levelIndex + 1)) // учитываем уровень, который строится сейчас, поскольку в него может быть уже добавлена текущая вершина
                     {
                         AddToLevel(levelIndex, j);
                         addedVerticesAmount++;
+                        if (addedVerticesAmount == size - 1)
+                        {
+                            addedVerticesAmount++;
+                            levels[levelIndex + 1] = gcnew array<int>(0);
+                            AddToLevel(levelIndex + 1, size - 1);
+                        }
                         Trace::WriteLine("Вершина " + (j).ToString() + " добавлена в уровень " + levelIndex.ToString());
                     }
                 }
             }
         }
         if (addedVerticesAmount == size)
-            return levelIndex + 1; // возвращаем точное количество добавленных уровней
+            return levelIndex + 2; // возвращаем точное количество добавленных уровней
     }
     return -1;
 }
