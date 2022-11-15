@@ -45,6 +45,7 @@ namespace GraphsToStudy {
 		}
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::Label^ label1;
 
 
 
@@ -65,6 +66,7 @@ namespace GraphsToStudy {
 		{
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
@@ -80,22 +82,32 @@ namespace GraphsToStudy {
 			// 
 			// dataGridView1
 			// 
+			this->dataGridView1->AllowUserToAddRows = false;
+			this->dataGridView1->AllowUserToResizeColumns = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(1229, 12);
+			this->dataGridView1->Location = System::Drawing::Point(1218, 37);
 			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->ReadOnly = true;
 			this->dataGridView1->RowHeadersWidth = 50;
 			this->dataGridView1->Size = System::Drawing::Size(240, 150);
 			this->dataGridView1->TabIndex = 1;
-			this->dataGridView1->AllowUserToAddRows = false;
-			this->dataGridView1->ScrollBars = ScrollBars::None;
-			this->dataGridView1->AllowUserToResizeColumns = false;
-			this->dataGridView1->ReadOnly = true;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F));
+			this->label1->Location = System::Drawing::Point(1218, 12);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(187, 22);
+			this->label1->TabIndex = 2;
+			this->label1->Text = L"Матрица смежности";
 			// 
 			// ShortestPathForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1800, 800);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"ShortestPathForm";
@@ -104,6 +116,7 @@ namespace GraphsToStudy {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
