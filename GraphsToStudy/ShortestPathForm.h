@@ -69,7 +69,7 @@ namespace GraphsToStudy {
 			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->pictureBox1->Location = System::Drawing::Point(12, 12);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(1920, 900);
+			this->pictureBox1->Size = System::Drawing::Size(1198, 694);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -77,7 +77,7 @@ namespace GraphsToStudy {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1920, 1080);
+			this->ClientSize = System::Drawing::Size(1564, 903);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"ShortestPathForm";
 			this->Text = L"ShortestPathForm";
@@ -103,7 +103,7 @@ namespace GraphsToStudy {
 				int Y;
 			};
 
-			const int diameter = 50;
+			const int diameter = 30;
 			array<array<int>^>^ levels; // содержит вершины каждого уровня
 			String^ type; // содержит тип задания
 			array<array<int>^>^ matrix; // содержит матрицу смежности

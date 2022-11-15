@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #pragma once
 
 namespace GraphsToStudy {
@@ -80,7 +81,6 @@ namespace GraphsToStudy {
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(58, 21);
 			this->comboBox1->TabIndex = 2;
-			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::comboBox1_SelectedIndexChanged);
 			// 
 			// MainForm
 			// 
@@ -98,9 +98,10 @@ namespace GraphsToStudy {
 	private: 
 		Void button1_Click(System::Object^ sender, System::EventArgs^ e);
 
+		array<array<int>^>^ GenerateMatrix(int size);
+		void FillRandom(int index, array<array<int>^>^ matrix, int size, array<int>^ amounts);
+		bool BetweenFirstLast(int index, array<array<int>^>^ matrix, int size, int j);
+
 		int size;
-	
-	private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
 	};
 }
