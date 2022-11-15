@@ -88,6 +88,8 @@ namespace GraphsToStudy {
 			this->dataGridView1->TabIndex = 1;
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->ScrollBars = ScrollBars::None;
+			this->dataGridView1->AllowUserToResizeColumns = false;
+			this->dataGridView1->ReadOnly = true;
 			// 
 			// ShortestPathForm
 			// 

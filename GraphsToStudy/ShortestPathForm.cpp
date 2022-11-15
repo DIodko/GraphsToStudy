@@ -179,8 +179,8 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions(int amountOfLevels)
 
 Void GraphsToStudy::ShortestPathForm::VisualizeTables()
 {
-    dataGridView1->Height = 20 * size + 35;
-    dataGridView1->Width = 30 * size + 60;
+    dataGridView1->Height = 22 * size + 20;
+    dataGridView1->Width = 30 * size + 52;
     for (int i = 0; i < size; i++)
     {
         dataGridView1->Columns->Add((i + 1).ToString(), (i + 1).ToString());
@@ -189,7 +189,12 @@ Void GraphsToStudy::ShortestPathForm::VisualizeTables()
 
     for (int i = 0; i < size; i++)
     {
+        array<int>^ values = gcnew array<int>(size);
         dataGridView1->Rows->Add();
         dataGridView1->Rows[i]->HeaderCell->Value = (i + 1).ToString();
+        for (int j = 0; j < size; j++)
+        {
+            dataGridView1->Rows[i]->Cells[j]->Value = matrix[i][j];
+        }
     }
 }
