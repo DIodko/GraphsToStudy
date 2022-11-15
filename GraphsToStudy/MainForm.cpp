@@ -116,8 +116,8 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 
 	for (int i = 0; i < size; i++)
 	{
-		int amountOfLines = 2;
-		//int amountOfLines = rand->Next(2, 4);
+		//int amountOfLines = 2;
+		int amountOfLines = rand->Next(2, 4);
 		for (int j = 0; j < i; j++)
 		{
 			if (matrix[i][j] != 0)

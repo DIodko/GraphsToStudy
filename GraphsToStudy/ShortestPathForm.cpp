@@ -9,10 +9,12 @@ Void GraphsToStudy::ShortestPathForm::onShown(System::Object^ sender, System::Ev
 {
     int amountOfLevels = CalculateLevels(); // вычисляет какие вершины находятся на каких уровнях
     CalculatePositions(amountOfLevels);
-    VisualizeGraph(sender);
+    VisualizeGraph();
+    VisualizeTables();
+
 }
 
-Void GraphsToStudy::ShortestPathForm::VisualizeGraph(System::Object^ sender) // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
+Void GraphsToStudy::ShortestPathForm::VisualizeGraph() // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
 {
     int radius = diameter / 2;
     int offset = radius / 2 - 5;
@@ -173,4 +175,21 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions(int amountOfLevels)
     vertices[vertex]->Name = (size).ToString();
     vertices[vertex]->X = X + 60;
     vertices[vertex]->Y = Y;
+}
+
+Void GraphsToStudy::ShortestPathForm::VisualizeTables()
+{
+    dataGridView1->Height = 20 * size + 35;
+    dataGridView1->Width = 30 * size + 60;
+    for (int i = 0; i < size; i++)
+    {
+        dataGridView1->Columns->Add((i + 1).ToString(), (i + 1).ToString());
+        dataGridView1->Columns[i]->Width = 30;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        dataGridView1->Rows->Add();
+        dataGridView1->Rows[i]->HeaderCell->Value = (i + 1).ToString();
+    }
 }
