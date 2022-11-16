@@ -11,7 +11,6 @@ Void GraphsToStudy::ShortestPathForm::onShown(System::Object^ sender, System::Ev
     CalculatePositions(amountOfLevels);
     VisualizeGraph();
     VisualizeTables();
-
 }
 
 Void GraphsToStudy::ShortestPathForm::VisualizeGraph() // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
@@ -84,9 +83,9 @@ int GraphsToStudy::ShortestPathForm::CalculateLevels()
                         {
                             AddToLevel(size - 1, j);
                         }
-                        else 
+                        else
                         {*/
-                            AddToLevel(levelIndex, j);
+                        AddToLevel(levelIndex, j);
                         //}
                         addedVerticesAmount++;
                         if (addedVerticesAmount == size - 1)
@@ -181,10 +180,15 @@ Void GraphsToStudy::ShortestPathForm::VisualizeTables()
 {
     dataGridView1->Height = 22 * size + 20;
     dataGridView1->Width = 30 * size + 52;
+
+    dataGridView2->Height = 22 * size + 20;
+    dataGridView2->Width = 30 * size + 112;
+
     for (int i = 0; i < size; i++)
     {
         dataGridView1->Columns->Add((i + 1).ToString(), (i + 1).ToString());
         dataGridView1->Columns[i]->Width = 30;
+        dataGridView1->Columns[i]->SortMode = DataGridViewColumnSortMode::NotSortable;
     }
 
     for (int i = 0; i < size; i++)
@@ -196,5 +200,21 @@ Void GraphsToStudy::ShortestPathForm::VisualizeTables()
         {
             dataGridView1->Rows[i]->Cells[j]->Value = matrix[i][j];
         }
+    }
+
+    label2->Location = System::Drawing::Point(1218, dataGridView1->Location.Y + dataGridView1->Height + 10);
+    dataGridView2->Location = System::Drawing::Point(1218, label2->Location.Y + 30);
+
+    dataGridView2->Columns->Add("0", "Итерация");
+    dataGridView2->Columns[0]->Width = 30;
+    dataGridView2->Columns[0]->SortMode = DataGridViewColumnSortMode::NotSortable;
+    dataGridView2->Columns->Add("1", "x");
+    dataGridView2->Columns[1]->Width = 30;
+    dataGridView2->Columns[1]->SortMode = DataGridViewColumnSortMode::NotSortable;
+    for (int i = 0; i < size; i++)
+    {
+        dataGridView2->Columns->Add((i + 2).ToString(), (i + 1).ToString());
+        dataGridView2->Columns[i]->Width = 30;
+        dataGridView2->Columns[i]->SortMode = DataGridViewColumnSortMode::NotSortable;
     }
 }

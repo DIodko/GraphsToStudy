@@ -21,10 +21,12 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 	array<array<int>^>^ matrix = GenerateMatrix(size);
 	
 	//Массивы для временных меток и постоянных меток
+	array<array<int>^>^ correct_ways = gcnew array<array<int>^>(size);
+	array<int>^ correct_markers = gcnew array<int>(size);
 	array<int>^ ways = gcnew array<int>(size);
 	ways[0] = 0;
 	for (int i = 1; i < size; i++) {
-		ways[i] = 10000;
+		ways[i] = 1000000;
 	}
 	array<int>^ markers = gcnew array<int>(size);
 	markers[0] = 1;
@@ -33,21 +35,25 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 	}
 	// Ищем минимальный путь алгоритмом Дейкстры
 
-	int Xt = 0; //текущая вершина
-	while (markers[size-1] == 0) {
-		for (int j = 0; j < size; j++) {
-			if (matrix[Xt][j] != 0) {
-				int temp_marker = (ways[j] > (ways[Xt] + matrix[Xt][j])) ? ways[Xt] + matrix[Xt][j] : ways[j];
-				ways[j] = temp_marker;
+	int curr_vertex = 0; //текущая вершина
+	for (int k = 0; markers[size - 1] == 0; k++) { // заполняем size меток, по одной на каждой итерации
+		correct_ways[k] = gcnew array<int>(size);
+		for (int j = 0; j < size; j++) { // проходимся по строке в матрице для текущей вершины
+			if (matrix[curr_vertex][j] != 0) { // если есть путь
+				// если значение пути в вершину больше чем значение пути в эту вершину и из нее в ту то обновляем
+				ways[j] = (ways[j] > (ways[curr_vertex] + matrix[curr_vertex][j])) ? ways[curr_vertex] + matrix[curr_vertex][j] : ways[j];
 			}		
 		}
-		int min_marker = 10000;
-		for (int i = 0; i < size; i++) {
-			if (markers[i] != 1 && ways[i] < min_marker) {
-				Xt = i;
+		int min_marker = 1000000;
+		for (int i = 0; i < size; i++) { //проходимся по всем вершинам
+			if (markers[i] != 1 && ways[i] < min_marker) { // если вершина не помечена постоянной и значение пути в нее минимально помечаем постоянной
+				curr_vertex = i;
+				min_marker = ways[i];
 			}
 		}
-		markers[Xt] = 1;
+		ways->CopyTo(correct_ways[k], 0);
+		correct_markers[k] = curr_vertex;
+		markers[curr_vertex] = 1;
 	}
 	Trace::WriteLine(ways[size-1]);
 
@@ -57,56 +63,6 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 
 array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 {
-	//array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
-	//Random^ rand = gcnew Random();
-	//Random^ rand_help = gcnew Random();
-	//for (int i = 0; i < size; i++) {
-	//	matrix[i] = gcnew array<int>(size);
-	//}
-	//for (int i = 0; i < size; i++)
-	//{
-	//	int tempJ = -1;
-	//	int not_null_str = 0;
-	//	for (int j = i + 1; j < size; j++)
-	//	{
-	//		int true_random = rand->Next(0, 101);
-	//		if (true_random > 5) {
-	//			matrix[i][j] = 0;
-	//		}
-	//		else
-	//		{
-	//			tempJ = j;
-	//			matrix[i][j] = rand->Next(1, 15);
-	//			not_null_str++;
-	//		}
-	//		matrix[j][i] = matrix[i][j];
-	//	}
-	//	if (not_null_str == 0 && i + 2 < size) {
-	//		int j = rand->Next(i + 1, size - 1);
-	//		matrix[i][j] = rand->Next(1, 15);
-	//		matrix[j][i] = matrix[i][j];
-	//		tempJ = j;
-	//		not_null_str++;
-	//	}
-	//	if (not_null_str == 1 && i + 2 < size)
-	//	{
-	//		int j = rand->Next(i + 1, size);
-	//		while (j == tempJ) {
-	//			j = rand->Next(i + 1, size);
-	//		}
-	//		matrix[i][j] = rand->Next(1, 15);
-	//		matrix[j][i] = matrix[i][j];
-	//	}
-	//}
-	////	Отладочный вывод матрицы
-	//for (int i = 0; i < size; i++)
-	//{
-	//	for (int j = 0; j < size; j++)
-	//	{
-	//		Trace::Write(matrix[i][j] + " ");
-	//	}
-	//	Trace::WriteLine(" ");
-	//}
 	array<int>^ amounts = gcnew array<int>(size);
 	array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
 	Random^ rand = gcnew Random();
@@ -133,6 +89,7 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 		}
 
 	}
+
 	//	Отладочный вывод матрицы
 	for (int i = 0; i < size; i++)
 	{
