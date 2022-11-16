@@ -132,7 +132,7 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 		int verticesOnRoute = 0;
 		while (routeDone != 1) {
 			int probability = rand->Next(0, 100);
-			if (probability < 60 || verticesOnRoute < 2) {
+			if ((probability < 40 && verticesOnRoute < 5) || verticesOnRoute < 2) {
 				int num = rand->Next(1, size - 1);
 				while (vertices[num] == 0)
 				{
@@ -144,7 +144,7 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 				verticesOnRoute++;
 				counter++;
 			}
-			if (counter == size - 2 || (probability >= 60 && verticesOnRoute >= 2)) {
+			if (counter == size - 2 || (probability >= 40 && verticesOnRoute >= 2) || verticesOnRoute >= 5) {
 				routes[i][j + 1] = size - 1;
 				routeDone++;
 			}
