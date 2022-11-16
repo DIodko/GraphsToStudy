@@ -107,42 +107,82 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 	//	}
 	//	Trace::WriteLine(" ");
 	//}
-	array<int>^ amounts = gcnew array<int>(size);
+	array<int>^ vertices = gcnew array<int>(size);
 	array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
+	array<array<int>^>^ routes = gcnew array<array<int>^>(size);
 	Random^ rand = gcnew Random();
 	for (int i = 0; i < size; i++) {
 		matrix[i] = gcnew array<int>(size);
+		routes[i] = gcnew array<int>(size);
+		vertices[i] = 1;
 	}
-
-	for (int i = 0; i < size; i++)
-	{
-		//int amountOfLines = 2;
-		int amountOfLines = rand->Next(2, 4);
-		for (int j = 0; j < i; j++)
-		{
-			if (matrix[i][j] != 0)
-			{
-				amountOfLines--;
+	//создание маршрутов
+	
+	int counter = 0;
+	for (int i = 0; i < size && counter < size - 2; i++) {
+		routes[i][0] = 0;
+		int j = 0;
+		bool routeDone = 0;
+		int verticesOnRoute = 0;
+		while (routeDone != 1) {
+			int probability = rand->Next(0, 100);
+			if (probability < 60 || verticesOnRoute < 2) {
+				int num = rand->Next(1, size - 1);
+				while (vertices[num] == 0)
+				{
+					num = rand->Next(1, size - 1);
+				}
+				routes[i][j] = num;
+				Trace::WriteLine(num + " " + vertices[num]);
+				vertices[num] = 0;
+				verticesOnRoute++;
+				counter++;
 			}
+			if (counter == size - 2 || (probability >= 60 && verticesOnRoute >= 2)) {
+				routes[i][j + 1] = size - 1;
+				routeDone++;
+			}
+			j++;
 		}
-
-		while (amountOfLines > 0)
-		{
-			FillRandom(i, matrix, size, amounts);
-			amountOfLines--;
-		}
-
+		
 	}
+
+	//for (int i = 0; i < size; i++)
+	//{
+	//	Trace::Write((i + 1) + ": ");
+	//	for (int j = 0; j < size; j++)
+	//	{
+	//		Trace::Write(routes[i][j] + " ");
+	//	}
+	//	Trace::WriteLine("");
+	//}
+
+	//заполнение матрицы
+	for (int i = 0; i < size; i++) { // цикл для обхода путей
+		matrix[0][routes[i][0]] = rand->Next(1, 15);
+		matrix[routes[i][0]][0] = matrix[0][routes[i][0]];
+		for (int j = 0; j < size - 1; j++) { // цикл для обхода пути
+			if (routes[i][j + 1] != 0) {
+				int index1 = routes[i][j];
+				int index2 = routes[i][j + 1];
+				matrix[index1][index2] = rand->Next(1, 15);
+				matrix[index2][index1] = matrix[index1][index2];
+			}
+			else break;
+		}
+	}
+
 	//	Отладочный вывод матрицы
-	for (int i = 0; i < size; i++)
-	{
-		Trace::Write((i + 1) + ": ");
-		for (int j = 0; j < size; j++)
-		{
-			Trace::Write(matrix[i][j] + " ");
-		}
-		Trace::WriteLine("");
-	}
+	//for (int i = 0; i < size; i++)
+	//{
+	//	Trace::Write((i + 1) + ": ");
+	//	for (int j = 0; j < size; j++)
+	//	{
+	//		Trace::Write(matrix[i][j] + " ");
+	//	}
+	//	Trace::WriteLine("");
+	//}
+
 	return matrix;
 }
 
