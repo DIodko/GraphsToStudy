@@ -143,9 +143,10 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions(int amountOfLevels)
     {
         int levelSize = levels[i]->Length;
         X += 110 * (levelSize + 1) / 2;
-        int Ymodifier = (i - 1) * 20;
+        //int Ymodifier = (i - 1) * 20;
+        int Ymodifier = 0;
         int Xmodifier = (i - 1) * 40;
-        int multiplier = -1;
+        int multiplier = 1;
         if (levelSize % 2 == 0)
         {
             Ymodifier += 40 + (i - 1) * 20;
@@ -164,7 +165,7 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions(int amountOfLevels)
             
             if ((j % 2 == 1 && levelSize % 2 == 0) || (j % 2 == 0 && levelSize % 2 == 1))// при нечетном колве вершин построили первую, увеличили, построили две, увеличили...
             {
-                Ymodifier += 50 + (i - 1) * 20;
+                Ymodifier += 50 + (j - 1) * 20;
                 Xmodifier += 100 + (j - 1) * 20;
             }
         }
