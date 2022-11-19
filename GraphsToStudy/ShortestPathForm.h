@@ -152,15 +152,6 @@ namespace GraphsToStudy {
 		}
 #pragma endregion
 	private:
-		Void onShown(System::Object^ sender, System::EventArgs^ e);
-		Void VisualizeGraph();
-		Void VisualizeTables();
-
-		int CalculateLevels();
-		void AddToLevel(int levelIndex, int vertexIndex);
-		bool IsInLevels(int vertexIndex, int curAmountOfLevels);
-		void CalculatePositions(int amountOfLevels);
-
 		ref struct Vertex
 		{
 			String^ Name;
@@ -168,11 +159,20 @@ namespace GraphsToStudy {
 			int Y;
 		};
 
+		Void onShown(System::Object^ sender, System::EventArgs^ e);
+		Void VisualizeGraph(array<Vertex^>^ vertices);
+		Void VisualizeTables();
+
+		//int CalculateLevels();
+		//void AddToLevel(int levelIndex, int vertexIndex);
+		//bool IsInLevels(int vertexIndex, int curAmountOfLevels);
+		void CalculatePositions();
+		int NextNotMarked(int currentVertex, array<int>^ markedVertices, array<int>^ verticesOffsets);
+
+		array<Vertex^>^ vertices;
 		const int diameter = 30;
-		array<array<int>^>^ levels; // содержит вершины каждого уровня
 		String^ type; // содержит тип задания
 		array<array<int>^>^ matrix; // содержит матрицу смежности
 		int size; // содержит количество вершин
-		array<Vertex^>^ vertices; // содержит координаты уже отрисованных вершин 
 	};
 }

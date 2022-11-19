@@ -65,6 +65,15 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 {
 	array<int>^ vertices = gcnew array<int>(size);
 	array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
+	//{ 
+	//	{ 0, 0, 9, 0, 5, 8, 0 },
+	//	{ 0, 0, 0, 0, 0, 3, 1 },
+	//	{ 9, 0, 0, 6, 0, 0, 0 },
+	//	{ 0, 0, 6, 0, 0, 0, 9 },
+	//	{ 5, 0, 0, 0, 0, 0, 7 },
+	//	{ 8, 3, 0, 0, 0, 0, 0 },
+	//	{ 0, 1, 0, 9, 7, 0, 0 },
+	//};
 	array<array<int>^>^ routes = gcnew array<array<int>^>(size);
 	Random^ rand = gcnew Random();
 	for (int i = 0; i < size; i++) {
@@ -99,15 +108,15 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 		
 	}
 
-	for (int i = 0; i < size; i++)
-	{
-		Trace::Write((i + 1) + ": ");
-		for (int j = 0; j < size; j++)
-		{
-			Trace::Write(routes[i][j] + " ");
-		}
-		Trace::WriteLine("");
-	}
+	//for (int i = 0; i < size; i++)
+	//{
+	//	Trace::Write((i + 1) + ": ");
+	//	for (int j = 0; j < size; j++)
+	//	{
+	//		Trace::Write(routes[i][j] + " ");
+	//	}
+	//	Trace::WriteLine("");
+	//}
 
 	//заполнение матрицы
 	for (int i = 0; i < size && routes[i][0] != 0; i++) { // цикл для обхода путей
@@ -139,7 +148,6 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 	//	}
 	//	Trace::WriteLine("");
 	//}
-
 	return matrix;
 }
 
