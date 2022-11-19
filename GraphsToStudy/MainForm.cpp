@@ -82,7 +82,7 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 		vertices[i] = 1;
 	}
 	//создание маршрутов
-	
+	int numOfRoutes = 0;
 	int counter = 0;
 	for (int i = 0; i < size && counter < size - 2; i++) {
 		int j = 0;
@@ -105,7 +105,7 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 				routeDone = true;
 			}
 		}
-		
+		numOfRoutes = i;
 	}
 
 	//for (int i = 0; i < size; i++)
@@ -136,6 +136,29 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 	{
 		matrix[routes[0][0]][routes[0][2]] = rand->Next(1, 15);
 		matrix[routes[0][2]][routes[0][0]] = matrix[routes[0][0]][routes[0][2]];
+	}
+	
+	//добавление случайных связей 
+	for (int i = 0; i < numOfRoutes; i++) {
+		int probability = 0;
+		int j = 0;
+		int count = 0;
+		while (((count < 4)  || count == 0) && routes[i][j] != 0) {
+			probability = rand->Next(0, 100);
+			int iOfRoute = rand->Next(i + 1, numOfRoutes + 1);
+			if (probability > 55 && routes[iOfRoute][j] != 0) {				//тут связь в одном уровне
+				matrix[routes[i][j]][routes[iOfRoute][j]] = rand->Next(1, 15);
+				matrix[routes[iOfRoute][j]][routes[i][j]] = matrix[routes[i][j]][routes[iOfRoute][j]];
+				count++;
+			}
+			if (probability <= 55 && probability >= 10 && routes[iOfRoute][j + 1] != 0) {	//тут связь в соседних уровнях
+				int iOfRoute = rand->Next(i, numOfRoutes + 1);
+				matrix[routes[i][j]][routes[iOfRoute][j + 1]] = rand->Next(1, 15);
+				matrix[routes[iOfRoute][j + 1]][routes[i][j]] = matrix[routes[i][j]][routes[iOfRoute][j + 1]];
+				count++;
+			}
+			j++;
+		}
 	}
 
 	//	Отладочный вывод матрицы
