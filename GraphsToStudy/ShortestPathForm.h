@@ -1,4 +1,5 @@
 #pragma once
+#include <math.h>
 
 namespace GraphsToStudy {
 
@@ -164,11 +165,12 @@ namespace GraphsToStudy {
 		Void VisualizeTables();
 
 		//int CalculateLevels();
-		//void AddToLevel(int levelIndex, int vertexIndex);
+		void AddToLevel(int levelIndex, int vertexIndex);
 		//bool IsInLevels(int vertexIndex, int curAmountOfLevels);
 		void CalculatePositions();
 		int NextNotMarked(int currentVertex, array<int>^ markedVertices, array<int>^ verticesOffsets);
 
+		array<array<int>^>^ levels;
 		array<Vertex^>^ vertices;
 		const int diameter = 30;
 		String^ type; // содержит тип задания

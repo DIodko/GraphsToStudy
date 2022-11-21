@@ -32,7 +32,6 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(array<Vertex^>^ vertices) /
             {
                 graph->DrawLine(pen, vertices[i]->X + radius, vertices[i]->Y + radius,
                     vertices[j]->X + radius, vertices[j]->Y + radius);
-                Trace::WriteLine("Построена линия из " + (i + 1) + " вершины в " + (j + 1));
             }
         }
     }
@@ -49,14 +48,13 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(array<Vertex^>^ vertices) /
         {
             graph->DrawString(vertices[i]->Name, font, brush, vertices[i]->X + radius / 2 - 5, vertices[i]->Y + radius / 2.5);
         }
-        Trace::WriteLine("Построена " + (i + 1) + " вершина");
     }
 }
 
-//// определяет по матрице смежности на каких уровнях какие вершины находятся, возвращает количество построенных уровней
+//определяет по матрице смежности на каких уровнях какие вершины находятся, возвращает количество построенных уровней
 //int GraphsToStudy::ShortestPathForm::CalculateLevels()
 //{
-//    array<array<int>^>^ levels = gcnew array<array<int>^>(size);
+//    levels = gcnew array<array<int>^>(size);
 //    levels[size - 1] = gcnew array<int>(0);
 //    int addedVerticesAmount = 1;
 //
@@ -66,7 +64,7 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(array<Vertex^>^ vertices) /
 //        if (levelIndex == 0) // если первый уровень, помещаю в него первую вершину
 //        {
 //            Array::Resize(levels[levelIndex], 1);
-//            levels[0][0] = 1; //в массиве для первого уровня номер первой вершины
+//            levels[0][0] = 0; //в массиве для первого уровня номер первой вершины
 //            Trace::WriteLine("Вершина 1 добавлена в уровень 0");
 //        }
 //        else
@@ -74,19 +72,12 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(array<Vertex^>^ vertices) /
 //            int prevLevelIndex = levelIndex - 1;
 //            for (int i = 0; i < levels[prevLevelIndex]->Length; i++) // цикл обхода всех вершин предыдущего уровня
 //            {
-//                int vertexIndex = levels[prevLevelIndex][i] - 1;
+//                int vertexIndex = levels[prevLevelIndex][i];
 //                for (int j = 0; j < size - 1; j++) // цикл обхода строки в матрице смежности для вершины предудыщего уровня
 //                {
 //                    if (matrix[vertexIndex][j] > 0 && vertexIndex != j && !IsInLevels(j, levelIndex + 1)) // учитываем уровень, который строится сейчас, поскольку в него может быть уже добавлена текущая вершина
-//                    {// если из вершины есть путь в последнюю вершину  
-//                        /*if (matrix[j][size - 1] > 0)
-//                        {
-//                            AddToLevel(size - 1, j);
-//                        }
-//                        else
-//                        {*/
+//                    {
 //                        AddToLevel(levelIndex, j);
-//                        //}
 //                        addedVerticesAmount++;
 //                        if (addedVerticesAmount == size - 1)
 //                        {
@@ -106,21 +97,21 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(array<Vertex^>^ vertices) /
 //}
 //
 //// добавляет вершину на уровень
-//void GraphsToStudy::ShortestPathForm::AddToLevel(int levelIndex, int vertexIndex)
-//{
-//    int length = levels[levelIndex]->Length;
-//    Array::Resize(levels[levelIndex], length + 1);
-//    levels[levelIndex][length] = vertexIndex + 1;
-//}
+void GraphsToStudy::ShortestPathForm::AddToLevel(int levelIndex, int vertexIndex)
+{
+    int length = levels[levelIndex]->Length;
+    Array::Resize(levels[levelIndex], length + 1);
+    levels[levelIndex][length] = vertexIndex;
+}
 //
-//// проверяет есть ли вершина в уже построенных уровнях
+//// проверяет есть ли вершина в уже построенных уровнях, возвращает номер уровня
 //bool GraphsToStudy::ShortestPathForm::IsInLevels(int vertexIndex, int curAmountOfLevels)
 //{
 //    for (int i = 0; i < curAmountOfLevels; i++)
 //    {
 //        for (int j = 0; j < levels[i]->Length; j++)
 //        {
-//            if (levels[i][j] == vertexIndex + 1)
+//            if (levels[i][j] == vertexIndex)
 //                return true;
 //        }
 //    }
@@ -131,13 +122,16 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(array<Vertex^>^ vertices) /
 void GraphsToStudy::ShortestPathForm::CalculatePositions()
 {
     int maxX = 0;
+    int maxY = 0;
     vertices = gcnew array<Vertex^>(size);
+    levels = gcnew array<array<int>^>(size);
     array<int>^ markedVertices = gcnew array<int>(size);
     array<int>^ verticesOffsets = gcnew array<int>(size);
     int markedAmount = 1;
     int currentVertex = 0;
     int X = 20;
-    int Y = this->pictureBox1->Height / 2 - size * 30;
+    int Y = this->pictureBox1->Height / 2 - size * 20;
+    int amountOfLevels = 0;
 
     markedVertices[0] = 1;
     vertices[0] = gcnew Vertex;
@@ -145,47 +139,91 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions()
     vertices[0]->X = X;
     vertices[0]->Y = this->pictureBox1->Height / 2;
     Trace::WriteLine("Созданы координаты 1 вершины, Х: " + X + ", Y: " + this->pictureBox1->Height / 2);
-    while (markedAmount != size) // пока не все вершины помечены
+    while (markedAmount != size - 1) // пока не все вершины помечены
     {
         currentVertex = NextNotMarked(currentVertex, markedVertices, verticesOffsets);
         markedAmount++; 
         if (currentVertex == -1) // если для текущей вершины уже все помечены, найти любую непомеченную
         {
-            currentVertex = NextNotMarked(0, markedVertices, verticesOffsets);
+            currentVertex = NextNotMarked(0, markedVertices, verticesOffsets); // попытка найти непомеченную вершину для первой
             X = 20;
             Y += 100;
-            //for (int i = 0; i < size; i++)
-            //{
-            //    if (markedVertices[i] == 0)
-            //    {
-            //        currentVertex = i;
-            //        break;
-            //    }
-            //}
+            if (currentVertex == -1)
+            {
+                Trace::WriteLine("Не можем попасть в конец или в непомеченную");
+                Y -= 100;
+                for (int i = 0; i < size; i++)
+                {
+                    verticesOffsets[i] = 0;
+                }
+                for (int i = 0; i < size; i++)
+                {
+                    if (markedVertices[i] == 0)
+                    {
+                        currentVertex = i; // если из этой вершины можно попасть в 10, то для всех после нее, куда можно попасть, надо добавить смещение
+                        for (int k = currentVertex; k < size && matrix[currentVertex][size - 1] > 0; k++)
+                        {
+                            if (matrix[currentVertex][k] > 0)
+                            {
+                                verticesOffsets[k] += 100;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
         }
         // если нашли непомеченную, то увеличить Х и создать ее координаты
-        X += 100;
-        maxX = (maxX < X) ? X : maxX;
-        markedVertices[currentVertex] = 1;
-        vertices[currentVertex] = gcnew Vertex;
-        vertices[currentVertex]->Name = (currentVertex + 1).ToString();
-        vertices[currentVertex]->X = X;
-        vertices[currentVertex]->Y = Y + verticesOffsets[currentVertex];
-        Trace::WriteLine(currentVertex + 1);
+        //int levelIndex = (X - 20) / 140 - 1;
+        //if (levels[levelIndex] == nullptr)
+        //{
+        //    levels[levelIndex] = gcnew array<int>(0);
+        //    amountOfLevels++;
+        //}
+        //Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена на уровень " + levelIndex + " со смещением " + verticesOffsets[currentVertex]);
+        Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена со смещением " + verticesOffsets[currentVertex]);
+        //AddToLevel(levelIndex, currentVertex);
+        Trace::WriteLine("Созданы координаты " + (currentVertex + 1) + " вершины, Х: " + X + ", Y: " + Y);
         if (currentVertex == size - 1)
         {
+            markedVertices[currentVertex] = 0;
+            markedAmount--;
+            Trace::WriteLine("Пришли в конец");
             for (int i = 0; i < size; i++)
             {
                 verticesOffsets[i] = 0;
             }
             currentVertex = 0;
             X = 20;
-            Y += 100;
+            Y = maxY + 100;
+            Trace::WriteLine("Y: " + Y);
+        }
+        else
+        {
+            X += 140 - verticesOffsets[currentVertex];
+            Y += verticesOffsets[currentVertex];
+            maxX = (maxX < X) ? X : maxX;
+            maxY = (maxY < Y) ? Y : maxY;
+            markedVertices[currentVertex] = 1;
+            vertices[currentVertex] = gcnew Vertex;
+            vertices[currentVertex]->Name = (currentVertex + 1).ToString();
+            vertices[currentVertex]->X = X;
+            vertices[currentVertex]->Y = Y;
         }
     }
+    //for (int i = 0; i < amountOfLevels; i++)
+    //{
+    //    int length = levels[i]->Length;
+    //    for (int j = 0; j < length; j++)
+    //    {
+    //        vertices[levels[i][j]]->X += fabs((float)j - (float)(length - 1) / 2) * 50;
+    //        Trace::WriteLine("Для вершины " + (levels[i][j] + 1) + " задано смещение " + fabs((float)j - (float)(length - 1) / 2) * 50);
+    //    }
+    //}
+    vertices[size - 1] = gcnew Vertex;
+    vertices[size - 1]->Name = (size).ToString();
     vertices[size - 1]->Y = this->pictureBox1->Height / 2;
     vertices[size - 1]->X = maxX + 100;
-    
 }
 
 Void GraphsToStudy::ShortestPathForm::VisualizeTables()
@@ -244,7 +282,7 @@ int GraphsToStudy::ShortestPathForm::NextNotMarked(int currentVertex, array<int>
         }
         else if (matrix[currentVertex][i] != 0 && markedVertices[i] == 0 && currentVertex != 0)
         {
-            verticesOffsets[i] += 50;
+            verticesOffsets[i] = 100;
             break;
         }
     }
