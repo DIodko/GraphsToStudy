@@ -82,7 +82,7 @@ namespace GraphsToStudy {
 			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->pictureBox1->Location = System::Drawing::Point(12, 12);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(1200, 700);
+			this->pictureBox1->Size = System::Drawing::Size(1200, 915);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -127,7 +127,7 @@ namespace GraphsToStudy {
 			this->label2->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F));
 			this->label2->Location = System::Drawing::Point(1219, 344);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(52, 13);
+			this->label2->Size = System::Drawing::Size(89, 22);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"Решение";
 			// 
@@ -135,7 +135,7 @@ namespace GraphsToStudy {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1800, 800);
+			this->ClientSize = System::Drawing::Size(1800, 959);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->dataGridView2);
 			this->Controls->Add(this->label1);
@@ -164,9 +164,7 @@ namespace GraphsToStudy {
 		Void VisualizeGraph(array<Vertex^>^ vertices);
 		Void VisualizeTables();
 
-		//int CalculateLevels();
 		void AddToLevel(int levelIndex, int vertexIndex);
-		//bool IsInLevels(int vertexIndex, int curAmountOfLevels);
 		void CalculatePositions();
 		int NextNotMarked(int currentVertex, array<int>^ markedVertices, array<int>^ verticesOffsets);
 

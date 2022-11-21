@@ -65,15 +65,6 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 {
 	array<int>^ vertices = gcnew array<int>(size);
 	array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
-	//{ 
-	//	{ 0, 0, 9, 0, 5, 8, 0 },
-	//	{ 0, 0, 0, 0, 0, 3, 1 },
-	//	{ 9, 0, 0, 6, 0, 0, 0 },
-	//	{ 0, 0, 6, 0, 0, 0, 9 },
-	//	{ 5, 0, 0, 0, 0, 0, 7 },
-	//	{ 8, 3, 0, 0, 0, 0, 0 },
-	//	{ 0, 1, 0, 9, 7, 0, 0 },
-	//};
 	array<array<int>^>^ routes = gcnew array<array<int>^>(size);
 	Random^ rand = gcnew Random();
 	for (int i = 0; i < size; i++) {
@@ -190,17 +181,6 @@ array<array<int>^>^ GraphsToStudy::MainForm::GenerateMatrix(int size)
 			}
 		}
 	}
-
-	//	Отладочный вывод матрицы
-	//for (int i = 0; i < size; i++)
-	//{
-	//	Trace::Write((i + 1) + ": ");
-	//	for (int j = 0; j < size; j++)
-	//	{
-	//		Trace::Write(matrix[i][j] + " ");
-	//	}
-	//	Trace::WriteLine("");
-	//}
 	return matrix;
 }
 
@@ -210,7 +190,6 @@ void GraphsToStudy::MainForm::FillRandom(int index, array<array<int>^>^ matrix, 
 { 
 	Random^ rand = gcnew Random();
 	int j = rand->Next(0, size); 
-	//while (matrix[index][j] > 0 || index == j || amounts[j] >= 3 || abs(index - j) == size - 1
 	while (matrix[index][j] > 0 || index == j || amounts[j] >= 4 || abs(index - j) == size - 1
 		 || BetweenFirstLast(index, matrix, size, j))
 	{
@@ -221,7 +200,6 @@ void GraphsToStudy::MainForm::FillRandom(int index, array<array<int>^>^ matrix, 
 	matrix[index][j] = rand->Next(1, 15);
 	matrix[j][index] = matrix[index][j];
 } 
-
 
 bool GraphsToStudy::MainForm::BetweenFirstLast(int index, array<array<int>^>^ matrix, int size, int j)
 {

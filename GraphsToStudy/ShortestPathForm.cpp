@@ -51,51 +51,6 @@ Void GraphsToStudy::ShortestPathForm::VisualizeGraph(array<Vertex^>^ vertices) /
     }
 }
 
-//определяет по матрице смежности на каких уровнях какие вершины находятся, возвращает количество построенных уровней
-//int GraphsToStudy::ShortestPathForm::CalculateLevels()
-//{
-//    levels = gcnew array<array<int>^>(size);
-//    levels[size - 1] = gcnew array<int>(0);
-//    int addedVerticesAmount = 1;
-//
-//    for (int levelIndex = 0; levelIndex < size - 1; levelIndex++)
-//    {
-//        levels[levelIndex] = gcnew array<int>(0);
-//        if (levelIndex == 0) // если первый уровень, помещаю в него первую вершину
-//        {
-//            Array::Resize(levels[levelIndex], 1);
-//            levels[0][0] = 0; //в массиве для первого уровня номер первой вершины
-//            Trace::WriteLine("Вершина 1 добавлена в уровень 0");
-//        }
-//        else
-//        {
-//            int prevLevelIndex = levelIndex - 1;
-//            for (int i = 0; i < levels[prevLevelIndex]->Length; i++) // цикл обхода всех вершин предыдущего уровня
-//            {
-//                int vertexIndex = levels[prevLevelIndex][i];
-//                for (int j = 0; j < size - 1; j++) // цикл обхода строки в матрице смежности для вершины предудыщего уровня
-//                {
-//                    if (matrix[vertexIndex][j] > 0 && vertexIndex != j && !IsInLevels(j, levelIndex + 1)) // учитываем уровень, который строится сейчас, поскольку в него может быть уже добавлена текущая вершина
-//                    {
-//                        AddToLevel(levelIndex, j);
-//                        addedVerticesAmount++;
-//                        if (addedVerticesAmount == size - 1)
-//                        {
-//                            addedVerticesAmount++;
-//                            levels[levelIndex + 1] = gcnew array<int>(0);
-//                            AddToLevel(levelIndex + 1, size - 1);
-//                        }
-//                        Trace::WriteLine("Вершина " + (j + 1).ToString() + " добавлена в уровень " + levelIndex.ToString());
-//                    }
-//                }
-//            }
-//        }
-//        if (addedVerticesAmount == size)
-//            return levelIndex + 1; // возвращаем точное количество добавленных уровней
-//    }
-//    return -1;
-//}
-//
 //// добавляет вершину на уровень
 void GraphsToStudy::ShortestPathForm::AddToLevel(int levelIndex, int vertexIndex)
 {
@@ -103,20 +58,6 @@ void GraphsToStudy::ShortestPathForm::AddToLevel(int levelIndex, int vertexIndex
     Array::Resize(levels[levelIndex], length + 1);
     levels[levelIndex][length] = vertexIndex;
 }
-//
-//// проверяет есть ли вершина в уже построенных уровнях, возвращает номер уровня
-//bool GraphsToStudy::ShortestPathForm::IsInLevels(int vertexIndex, int curAmountOfLevels)
-//{
-//    for (int i = 0; i < curAmountOfLevels; i++)
-//    {
-//        for (int j = 0; j < levels[i]->Length; j++)
-//        {
-//            if (levels[i][j] == vertexIndex)
-//                return true;
-//        }
-//    }
-//    return false;
-//}
 
 // последовательно рассчитывает позиции вершин на каждом уровне
 void GraphsToStudy::ShortestPathForm::CalculatePositions()
@@ -129,8 +70,10 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions()
     array<int>^ verticesOffsets = gcnew array<int>(size);
     int markedAmount = 1;
     int currentVertex = 0;
+    int prevVertex = 0;
+    int beforePrevVertex = 0;
     int X = 20;
-    int Y = this->pictureBox1->Height / 2 - size * 20;
+    int Y = this->pictureBox1->Height / 2 - size * 25;
     int amountOfLevels = 0;
 
     markedVertices[0] = 1;
@@ -141,6 +84,8 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions()
     Trace::WriteLine("Созданы координаты 1 вершины, Х: " + X + ", Y: " + this->pictureBox1->Height / 2);
     while (markedAmount != size - 1) // пока не все вершины помечены
     {
+        beforePrevVertex = prevVertex;
+        prevVertex = currentVertex;
         currentVertex = NextNotMarked(currentVertex, markedVertices, verticesOffsets);
         markedAmount++; 
         if (currentVertex == -1) // если для текущей вершины уже все помечены, найти любую непомеченную
@@ -174,17 +119,21 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions()
             }
         }
         // если нашли непомеченную, то увеличить Х и создать ее координаты
-        //int levelIndex = (X - 20) / 140 - 1;
-        //if (levels[levelIndex] == nullptr)
-        //{
-        //    levels[levelIndex] = gcnew array<int>(0);
-        //    amountOfLevels++;
-        //}
-        //Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена на уровень " + levelIndex + " со смещением " + verticesOffsets[currentVertex]);
-        Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена со смещением " + verticesOffsets[currentVertex]);
-        //AddToLevel(levelIndex, currentVertex);
-        Trace::WriteLine("Созданы координаты " + (currentVertex + 1) + " вершины, Х: " + X + ", Y: " + Y);
-        if (currentVertex == size - 1)
+
+
+
+        if (beforePrevVertex != 0 && matrix[0][currentVertex] > 0) // если мы не из первой вершины попали в вершину, в которую есть путь из первой, сбросить Х
+        {
+            X = 20;
+            Y = maxY + 100;
+            Trace::WriteLine("Была предотвращена линия из 1 через весь граф");
+            for (int i = 0; i < size; i++)
+            {
+                verticesOffsets[i] = 0;
+            }
+        }
+
+        if (currentVertex == size - 1) // если мы попали в последнюю вершину то мы сбрасываем значения и ничего не строим
         {
             markedVertices[currentVertex] = 0;
             markedAmount--;
@@ -209,17 +158,47 @@ void GraphsToStudy::ShortestPathForm::CalculatePositions()
             vertices[currentVertex]->Name = (currentVertex + 1).ToString();
             vertices[currentVertex]->X = X;
             vertices[currentVertex]->Y = Y;
+            Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена со смещением " + verticesOffsets[currentVertex]);
+            Trace::WriteLine("Созданы координаты " + (currentVertex + 1) + " вершины, Х: " + X + ", Y: " + Y);
+            if ((X - 20) % 140 == 0 && X != 20)
+            {
+                int levelIndex = (X - 20) / 140 - 1;
+                if (levels[levelIndex] == nullptr)
+                {
+                    levels[levelIndex] = gcnew array<int>(0);
+                    amountOfLevels++;
+                }
+                //Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена на уровень " + levelIndex);
+                AddToLevel(levelIndex, currentVertex);
+            }
         }
     }
-    //for (int i = 0; i < amountOfLevels; i++)
-    //{
-    //    int length = levels[i]->Length;
-    //    for (int j = 0; j < length; j++)
-    //    {
-    //        vertices[levels[i][j]]->X += fabs((float)j - (float)(length - 1) / 2) * 50;
-    //        Trace::WriteLine("Для вершины " + (levels[i][j] + 1) + " задано смещение " + fabs((float)j - (float)(length - 1) / 2) * 50);
-    //    }
-    //}
+    for (int i = 0; i < amountOfLevels; i++)
+    {
+        Trace::Write((i + 1) + ": ");
+        for (int j = 0; j < levels[i]->Length; j++)
+        {
+            Trace::Write((levels[i][j] + 1) + " ");
+        }
+        Trace::WriteLine("");
+    }
+
+    int levelOffset = 0;
+    int maxOffset = 0;
+    for (int i = 0; i < amountOfLevels; i++)
+    {
+        levelOffset += maxOffset;
+        maxOffset = 0;
+        int length = levels[i]->Length;
+        for (int j = 0; j < length; j++) // 0, 1, 4, 5, 0 и 5 надо смещать сильнее чем 1 и 4
+        {
+            int offset = fabs((float)j - (float)(length - 1) / 2) * 50;
+            vertices[levels[i][j]]->X += offset + levelOffset;
+            maxOffset = (offset > maxOffset) ? offset : maxOffset;
+            maxX = (vertices[levels[i][j]]->X > maxX) ? vertices[levels[i][j]]->X : maxX;
+            Trace::WriteLine("Для вершины " + (levels[i][j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
+        }
+    }
     vertices[size - 1] = gcnew Vertex;
     vertices[size - 1]->Name = (size).ToString();
     vertices[size - 1]->Y = this->pictureBox1->Height / 2;
