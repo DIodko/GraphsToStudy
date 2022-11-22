@@ -48,6 +48,11 @@ namespace DijkstraVisualization {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::DataGridView^ dataGridView2;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Button^ checkSolutionButton;
+
+	private: System::Windows::Forms::Button^ showSolutionButton;
+
+
 
 
 
@@ -71,6 +76,8 @@ namespace DijkstraVisualization {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->checkSolutionButton = (gcnew System::Windows::Forms::Button());
+			this->showSolutionButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
@@ -87,8 +94,10 @@ namespace DijkstraVisualization {
 			// 
 			// dataGridView1
 			// 
+			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->AllowUserToResizeColumns = false;
+			this->dataGridView1->AllowUserToResizeRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(1218, 37);
 			this->dataGridView1->Name = L"dataGridView1";
@@ -101,7 +110,7 @@ namespace DijkstraVisualization {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F));
+			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 14));
 			this->label1->Location = System::Drawing::Point(1218, 12);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(187, 22);
@@ -110,11 +119,14 @@ namespace DijkstraVisualization {
 			// 
 			// dataGridView2
 			// 
+			this->dataGridView2->AllowUserToDeleteRows = false;
+			this->dataGridView2->AllowUserToAddRows = false;
 			this->dataGridView2->AllowUserToResizeColumns = false;
+			this->dataGridView2->AllowUserToResizeRows = false;
 			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView2->Location = System::Drawing::Point(1218, 360);
 			this->dataGridView2->Name = L"dataGridView2";
-			this->dataGridView2->RowHeadersWidth = 50;
+			this->dataGridView2->RowHeadersWidth = 70;
 			this->dataGridView2->ShowRowErrors = false;
 			this->dataGridView2->Size = System::Drawing::Size(240, 150);
 			this->dataGridView2->TabIndex = 3;
@@ -122,24 +134,49 @@ namespace DijkstraVisualization {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F));
+			this->label2->Font = (gcnew System::Drawing::Font(L"Arial", 14));
 			this->label2->Location = System::Drawing::Point(1219, 344);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(89, 22);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"Решение";
 			// 
-			// ShortestPathForm
+			// checkSolutionButton
+			// 
+			this->checkSolutionButton->Font = (gcnew System::Drawing::Font(L"Arial", 12));
+			this->checkSolutionButton->Location = System::Drawing::Point(1218, 740);
+			this->checkSolutionButton->Name = L"checkSolutionButton";
+			this->checkSolutionButton->Size = System::Drawing::Size(123, 57);
+			this->checkSolutionButton->TabIndex = 5;
+			this->checkSolutionButton->Text = L"Проверить решение";
+			this->checkSolutionButton->UseVisualStyleBackColor = true;
+			this->checkSolutionButton->Click += gcnew System::EventHandler(this, &DijkstraVisualizationForm::CheckSolution);
+			// 
+			// showSolutionButton
+			// 
+			this->showSolutionButton->Font = (gcnew System::Drawing::Font(L"Arial", 12));
+			this->showSolutionButton->Location = System::Drawing::Point(1372, 740);
+			this->showSolutionButton->Name = L"showSolutionButton";
+			this->showSolutionButton->Size = System::Drawing::Size(120, 57);
+			this->showSolutionButton->TabIndex = 6;
+			this->showSolutionButton->Text = L"Показать решение";
+			this->showSolutionButton->UseMnemonic = false;
+			this->showSolutionButton->UseVisualStyleBackColor = true;
+			this->showSolutionButton->Click += gcnew System::EventHandler(this, &DijkstraVisualizationForm::ShowSolution);
+			// 
+			// DijkstraVisualizationForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1800, 959);
+			this->Controls->Add(this->showSolutionButton);
+			this->Controls->Add(this->checkSolutionButton);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->dataGridView2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->pictureBox1);
-			this->Name = L"ShortestPathForm";
+			this->Name = L"DijkstraVisualizationForm";
 			this->Text = L"ShortestPathForm";
 			this->Shown += gcnew System::EventHandler(this, &DijkstraVisualizationForm::onShown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -147,6 +184,7 @@ namespace DijkstraVisualization {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
 		}
 #pragma endregion
 	private:
@@ -158,6 +196,8 @@ namespace DijkstraVisualization {
 		};
 
 		Void onShown(System::Object^ sender, System::EventArgs^ e);
+		Void CheckSolution(System::Object^ sender, System::EventArgs^ e);
+		Void ShowSolution(System::Object^ sender, System::EventArgs^ e);
 		Void VisualizeGraph(array<Vertex^>^ vertices);
 		Void VisualizeTables();
 

@@ -150,7 +150,7 @@ void DijkstraVisualization::DijkstraVisualizationForm::CalculatePositions(array<
                 if (vertices[i] != nullptr && vertices[i]->X == X && vertices[i]->Y == Y)
                 {
                     Y += 100;
-                    X += xIncValue;
+                    X += 200;
                     Trace::WriteLine("ѕроблема одинаковых координат предотвращена");
                 }
             }
@@ -259,7 +259,6 @@ Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeTables()
     
     for (int i = 0; i < size; i++) // заполнение матрицы смежности
     {
-        array<int>^ values = gcnew array<int>(size);
         dataGridView1->Rows->Add();
         dataGridView1->Rows[i]->HeaderCell->Value = (i + 1).ToString();
         for (int j = 0; j < size; j++)
@@ -268,24 +267,31 @@ Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeTables()
         }
     }
 
+    dataGridView2->TopLeftHeaderCell->Value = "»тераци€";
     dataGridView2->Height = 22 * size + 20;
-    dataGridView2->Width = GridColumnWidth * (size + 1) + 112;
+    dataGridView2->Width = GridColumnWidth * (size + 1) + 72;
 
     label2->Location = System::Drawing::Point(1218, dataGridView1->Location.Y + dataGridView1->Height + 10);
     dataGridView2->Location = System::Drawing::Point(1218, label2->Location.Y + 30);
 
-    dataGridView2->Columns->Add("0", "»тераци€");
-    dataGridView2->Columns[0]->Width = 60;
+    checkSolutionButton->Location = System::Drawing::Point(1218, dataGridView2->Location.Y + dataGridView2->Height + 20);
+    showSolutionButton->Location = System::Drawing::Point(checkSolutionButton->Location.X + 150, checkSolutionButton->Location.Y);
+
+    dataGridView2->Columns->Add("0", "X");
+    dataGridView2->Columns[0]->Width = GridColumnWidth;
     dataGridView2->Columns[0]->SortMode = DataGridViewColumnSortMode::NotSortable;
-    dataGridView2->Columns->Add("1", "x");
-    dataGridView2->Columns[1]->Width = GridColumnWidth;
-    dataGridView2->Columns[1]->SortMode = DataGridViewColumnSortMode::NotSortable;
 
     for (int i = 0; i < size; i++)
     {
-        dataGridView2->Columns->Add((i + 2).ToString(), (i + 1).ToString());
-        dataGridView2->Columns[i + 2]->Width = GridColumnWidth;
-        dataGridView2->Columns[i + 2]->SortMode = DataGridViewColumnSortMode::NotSortable;
+        dataGridView2->Columns->Add((i + 1).ToString(), (i + 1).ToString());
+        dataGridView2->Columns[i + 1]->Width = GridColumnWidth;
+        dataGridView2->Columns[i + 1]->SortMode = DataGridViewColumnSortMode::NotSortable;
+    }
+
+    for (int i = 0; i < size; i++) // заполнение матрицы смежности
+    {
+        dataGridView2->Rows->Add();
+        dataGridView2->Rows[i]->HeaderCell->Value = (i).ToString();
     }
 }
 
@@ -309,4 +315,21 @@ int DijkstraVisualization::DijkstraVisualizationForm::NextNotMarked(int currentV
     if (foundNotMarked)
         return newVertex;
     return -1;
+}
+
+Void DijkstraVisualization::DijkstraVisualizationForm::CheckSolution(System::Object^ sender, System::EventArgs^ e)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (Convert::ToInt32(dataGridView2->Rows[size - 1]->Cells[i + 1]->Value) != ways[i])
+        {
+            Trace::WriteLine(dataGridView2->Rows[size - 1]->Cells[i + 1]->Value + " != " + ways[i]);
+            //Trace::WriteLine(" од красный, код красный, тут шутки про мамаш");
+        }
+    }
+}
+
+Void DijkstraVisualization::DijkstraVisualizationForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
+{
+    return Void();
 }

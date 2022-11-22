@@ -93,12 +93,10 @@ void DijkstraGeneration::GenerateMatrix(array<array<int>^>^ matrix, int size)
 			}
 		}
 	}
-	//return matrix;
 }
 
 void DijkstraGeneration::SolveDijkstra(array<int>^ ways, int size, array<array<int>^>^ matrix)
 {
-	array<array<int>^>^ correct_ways = gcnew array<array<int>^>(size);
 	array<int>^ correct_markers = gcnew array<int>(size);
 	array<int>^ markers = gcnew array<int>(size);
 
@@ -110,10 +108,18 @@ void DijkstraGeneration::SolveDijkstra(array<int>^ ways, int size, array<array<i
 		markers[i] = 0;
 	}
 	// Ищем минимальный путь алгоритмом Дейкстры
-
+	correct_markers[0] = 0;
+	markers[0] = 1;
+	ways[0] = 0;
+	Trace::WriteLine("Вершина " + 0 + " сделана постоянной");
+	Trace::Write("Массив путей на итерации " + 0 + ": ");
+	for (int j = 0; j < size; j++)
+	{
+		Trace::Write(ways[j] + " ");
+	}
+	Trace::WriteLine("");
 	int curr_vertex = 0; //текущая вершина
-	for (int k = 0; markers[size - 1] == 0; k++) { // заполняем size меток, по одной на каждой итерации
-		correct_ways[k] = gcnew array<int>(size);
+	for (int i = 1; i < size; i++) { // заполняем size меток, по одной на каждой итерации
 		for (int j = 0; j < size; j++) { // проходимся по строке в матрице для текущей вершины
 			if (matrix[curr_vertex][j] != 0) { // если есть путь
 				// если значение пути в вершину больше чем значение пути в эту вершину и из нее в ту то обновляем
@@ -121,17 +127,28 @@ void DijkstraGeneration::SolveDijkstra(array<int>^ ways, int size, array<array<i
 			}
 		}
 		int min_marker = 1000000;
-		for (int i = 0; i < size; i++) { //проходимся по всем вершинам
-			if (markers[i] != 1 && ways[i] < min_marker) { // если вершина не помечена постоянной и значение пути в нее минимально помечаем постоянной
-				curr_vertex = i;
-				min_marker = ways[i];
+		for (int j = 0; j < size; j++) { //проходимся по всем вершинам
+			if (markers[j] != 1 && ways[j] < min_marker) { // если вершина не помечена постоянной и значение пути в нее минимально помечаем постоянной
+				curr_vertex = j;
+				min_marker = ways[j];
 			}
 		}
-		ways->CopyTo(correct_ways[k], 0);
-		correct_markers[k] = curr_vertex;
+		correct_markers[i] = curr_vertex;
 		markers[curr_vertex] = 1;
+		Trace::WriteLine("Вершина " + (correct_markers[i] + 1) + " сделана постоянной");
+		Trace::Write("Массив путей на итерации " + i + ": ");
+		for (int j = 0; j < size; j++)
+		{
+			Trace::Write(ways[j] + " ");
+		}
+		Trace::WriteLine("");
 	}
-	//return ways;
+	Trace::Write("Корректный массив путей: ");
+	for (int i = 0; i < size; i++)
+	{
+		Trace::Write(ways[i] + " ");
+	}
+	Trace::WriteLine("");
 }
 
 // не должны перезаписывать уже созданное значение, не должны записывать на главную диагональ
