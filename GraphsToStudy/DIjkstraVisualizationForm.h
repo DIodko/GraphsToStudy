@@ -1,7 +1,6 @@
 #pragma once
-#include <math.h>
 
-namespace GraphsToStudy {
+namespace DijkstraVisualization {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -13,19 +12,19 @@ namespace GraphsToStudy {
 	/// <summary>
 	/// Сводка для ShortestPathForm
 	/// </summary>
-	public ref class ShortestPathForm : public System::Windows::Forms::Form
+	public ref class DijkstraVisualizationForm : public System::Windows::Forms::Form
 	{
 	public:
-		ShortestPathForm(void)
+		DijkstraVisualizationForm(void)
 		{
 			InitializeComponent();
 			//
 			//TODO: добавьте код конструктора
 			//
 		}
-		ShortestPathForm(String^ t, array<array<int>^>^ m, int s)
+		DijkstraVisualizationForm(array<array<int>^>^ m, int s, array<int>^ w)
 		{
-			type = t;
+			ways = w;
 			matrix = m;
 			size = s;
 			InitializeComponent();
@@ -37,7 +36,7 @@ namespace GraphsToStudy {
 		/// <summary>
 		/// Освободить все используемые ресурсы.
 		/// </summary>
-		~ShortestPathForm()
+		~DijkstraVisualizationForm()
 		{
 			if (components)
 			{
@@ -111,7 +110,6 @@ namespace GraphsToStudy {
 			// 
 			// dataGridView2
 			// 
-			this->dataGridView2->AllowUserToAddRows = false;
 			this->dataGridView2->AllowUserToResizeColumns = false;
 			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView2->Location = System::Drawing::Point(1218, 360);
@@ -143,13 +141,12 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"ShortestPathForm";
 			this->Text = L"ShortestPathForm";
-			this->Shown += gcnew System::EventHandler(this, &ShortestPathForm::onShown);
+			this->Shown += gcnew System::EventHandler(this, &DijkstraVisualizationForm::onShown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
 		}
 #pragma endregion
 	private:
@@ -164,14 +161,13 @@ namespace GraphsToStudy {
 		Void VisualizeGraph(array<Vertex^>^ vertices);
 		Void VisualizeTables();
 
-		void AddToLevel(int levelIndex, int vertexIndex);
-		void CalculatePositions();
+		void AddOffsetsBasedOnLevels(array<array<int>^>^ levels, array<Vertex^>^ vertices, int maxX, int amountOfLevels);
+		void AddToLevel(int levelIndex, int vertexIndex, array<array<int>^>^ levels);
+		void CalculatePositions(array<Vertex^>^ vertices);
 		int NextNotMarked(int currentVertex, array<int>^ markedVertices, array<int>^ verticesOffsets);
 
-		array<array<int>^>^ levels;
-		array<Vertex^>^ vertices;
 		const int diameter = 30;
-		String^ type; // содержит тип задания
+		array<int>^ ways;
 		array<array<int>^>^ matrix; // содержит матрицу смежности
 		int size; // содержит количество вершин
 	};

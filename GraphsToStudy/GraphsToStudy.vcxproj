@@ -120,22 +120,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DemoucronForm.cpp" />
+    <ClCompile Include="DemoucronVisualizationForm.cpp" />
+    <ClCompile Include="DijkstraGeneration.cpp" />
+    <ClCompile Include="GraphsToVisualize.cpp" />
     <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="MalgrangeForm.cpp" />
-    <ClCompile Include="ShortestPathForm.cpp" />
+    <ClCompile Include="MalgrangeVisualizationForm.cpp" />
+    <ClCompile Include="DijkstraVisualizationForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DemoucronForm.h">
+    <ClInclude Include="DemoucronVisualizationForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="DijkstraGeneration.h" />
+    <ClInclude Include="GraphsToVisualize.h" />
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="MalgrangeForm.h">
+    <ClInclude Include="MalgrangeVisualizationForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="ShortestPathForm.h">
+    <ClInclude Include="DIjkstraVisualizationForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
@@ -143,11 +147,11 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MalgrangeForm.resx">
-      <DependentUpon>MalgrangeForm.h</DependentUpon>
+    <EmbeddedResource Include="MalgrangeVisualizationForm.resx">
+      <DependentUpon>MalgrangeVisualizationForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ShortestPathForm.resx">
-      <DependentUpon>ShortestPathForm.h</DependentUpon>
+    <EmbeddedResource Include="DIjkstraVisualizationForm.resx">
+      <DependentUpon>DIjkstraVisualizationForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

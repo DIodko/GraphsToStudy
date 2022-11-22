@@ -18,13 +18,19 @@
     <ClCompile Include="MainForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ShortestPathForm.cpp">
+    <ClCompile Include="GraphsToVisualize.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MalgrangeForm.cpp">
+    <ClCompile Include="DijkstraVisualizationForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="DemoucronForm.cpp">
+    <ClCompile Include="DemoucronVisualizationForm.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="MalgrangeVisualizationForm.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="DijkstraGeneration.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,13 +38,19 @@
     <ClInclude Include="MainForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ShortestPathForm.h">
+    <ClInclude Include="DIjkstraVisualizationForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MalgrangeForm.h">
+    <ClInclude Include="GraphsToVisualize.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="DemoucronForm.h">
+    <ClInclude Include="DemoucronVisualizationForm.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="MalgrangeVisualizationForm.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DijkstraGeneration.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

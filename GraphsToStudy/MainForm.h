@@ -97,11 +97,5 @@ namespace GraphsToStudy {
 #pragma endregion
 	private: 
 		Void button1_Click(System::Object^ sender, System::EventArgs^ e);
-
-		array<array<int>^>^ GenerateMatrix(int size);
-		void FillRandom(int index, array<array<int>^>^ matrix, int size, array<int>^ amounts);
-		bool BetweenFirstLast(int index, array<array<int>^>^ matrix, int size, int j);
-
-		int size;
 	};
 }
