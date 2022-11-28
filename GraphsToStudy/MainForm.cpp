@@ -21,11 +21,12 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 	//Генерируем матрицу смежности для алгоритма Дейкстры
 	int size = Convert::ToInt32(this->comboBox1->Text);
 	array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
-	array<int>^ ways = gcnew array<int>(size);
+	array<array<int>^>^ ways = gcnew array<array<int>^>(size);
+	array<int>^ correctMarkers = gcnew array<int>(size);
 
 	DijkstraGeneration::GenerateMatrix(matrix, size);
-	DijkstraGeneration::SolveDijkstra(ways, size, matrix);
+	DijkstraGeneration::SolveDijkstra(ways, size, matrix, correctMarkers);
 
-	GraphsToVisualize::VisualizeDijkstra(matrix, size, ways);
+	GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
 	//GraphsToVisualize::VisualizeDijkstra(matrix, size, ways);
 }

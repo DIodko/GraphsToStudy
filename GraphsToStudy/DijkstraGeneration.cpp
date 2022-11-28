@@ -1,5 +1,6 @@
 #include "DijkstraGeneration.h"
 #include <math.h>
+
 void DijkstraGeneration::GenerateMatrix(array<array<int>^>^ matrix, int size)
 {
 	array<int>^ vertices = gcnew array<int>(size);
@@ -43,12 +44,12 @@ void DijkstraGeneration::GenerateMatrix(array<array<int>^>^ matrix, int size)
 	// отладочный вывод маршрутов
 	for (int i = 0; i < numOfRoutes; i++)
 	{
-		Trace::Write((i + 1) + ": ");
+		//Trace::Write((i + 1) + ": ");
 		for (int j = 0; j < routes[i]->Length; j++)
 		{
-			Trace::Write(routes[i][j] + 1 + " ");
+			//Trace::Write(routes[i][j] + 1 + " ");
 		}
-		Trace::WriteLine("");
+		//Trace::WriteLine("");
 	}
 
 	//заполнение матрицы
@@ -83,7 +84,7 @@ void DijkstraGeneration::GenerateMatrix(array<array<int>^>^ matrix, int size)
 				routeIndex = rand->Next(0, numOfRoutes); // св€зь с любым маршрутом
 				vertexIndex = rand->Next(0, routes[routeIndex]->Length - 1);
 
-				if (matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0)
+				if (matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 && routes[i][j] != routes[routeIndex][vertexIndex])
 				{
 					matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = rand->Next(1, 15);
 					matrix[routes[routeIndex][vertexIndex]][routes[i][j]] = matrix[routes[i][j]][routes[routeIndex][vertexIndex]];
@@ -95,60 +96,67 @@ void DijkstraGeneration::GenerateMatrix(array<array<int>^>^ matrix, int size)
 	}
 }
 
-void DijkstraGeneration::SolveDijkstra(array<int>^ ways, int size, array<array<int>^>^ matrix)
+void DijkstraGeneration::SolveDijkstra(array<array<int>^>^ ways, int size, array<array<int>^>^ matrix, array<int>^ correctMarkers)
 {
-	array<int>^ correct_markers = gcnew array<int>(size);
 	array<int>^ markers = gcnew array<int>(size);
-
-	ways[0] = 0;
+	ways[0] = gcnew array<int>(size);
+	
 	markers[0] = 1;
 
 	for (int i = 1; i < size; i++) {
-		ways[i] = 1000000;
+		ways[i] = gcnew array<int>(size);
+		ways[0][i] = 1000000;
 		markers[i] = 0;
 	}
 	// »щем минимальный путь алгоритмом ƒейкстры
-	correct_markers[0] = 0;
+	ways[0][0] = 0;
+	correctMarkers[0] = 1;
 	markers[0] = 1;
-	ways[0] = 0;
-	Trace::WriteLine("¬ершина " + 0 + " сделана посто€нной");
-	Trace::Write("ћассив путей на итерации " + 0 + ": ");
-	for (int j = 0; j < size; j++)
-	{
-		Trace::Write(ways[j] + " ");
-	}
-	Trace::WriteLine("");
+	//Trace::WriteLine("¬ершина " + 0 + " сделана посто€нной");
+	////Trace::Write("ћассив путей на итерации " + 0 + ": ");
+	//for (int j = 0; j < size; j++)
+	//{
+	//	//Trace::Write(ways[0][j] + " ");
+	//}
+	////Trace::WriteLine("");
 	int curr_vertex = 0; //текуща€ вершина
-	for (int i = 1; i < size; i++) { // заполн€ем size меток, по одной на каждой итерации
+	for (int i = 0; i < size; i++) { // заполн€ем size меток, по одной на каждой итерации
 		for (int j = 0; j < size; j++) { // проходимс€ по строке в матрице дл€ текущей вершины
 			if (matrix[curr_vertex][j] != 0) { // если есть путь
 				// если значение пути в вершину больше чем значение пути в эту вершину и из нее в ту то обновл€ем
-				ways[j] = (ways[j] > (ways[curr_vertex] + matrix[curr_vertex][j])) ? ways[curr_vertex] + matrix[curr_vertex][j] : ways[j];
+				ways[i][j] = (ways[i][j] > (ways[i][curr_vertex] + matrix[curr_vertex][j])) ? ways[i][curr_vertex] + matrix[curr_vertex][j] : ways[i][j];
 			}
 		}
 		int min_marker = 1000000;
 		for (int j = 0; j < size; j++) { //проходимс€ по всем вершинам
-			if (markers[j] != 1 && ways[j] < min_marker) { // если вершина не помечена посто€нной и значение пути в нее минимально помечаем посто€нной
+			if (markers[j] != 1 && ways[i][j] < min_marker) { // если вершина не помечена посто€нной и значение пути в нее минимально помечаем посто€нной
 				curr_vertex = j;
-				min_marker = ways[j];
+				min_marker = ways[i][j];
 			}
 		}
-		correct_markers[i] = curr_vertex;
 		markers[curr_vertex] = 1;
-		Trace::WriteLine("¬ершина " + (correct_markers[i] + 1) + " сделана посто€нной");
-		Trace::Write("ћассив путей на итерации " + i + ": ");
-		for (int j = 0; j < size; j++)
+		//Trace::WriteLine("¬ершина " + correctMarkers[i] + " сделана посто€нной");
+		////Trace::Write("ћассив путей на итерации " + i + ": ");
+		//for (int j = 0; j < size; j++)
+		//{
+		//	//Trace::Write(ways[j] + " ");
+		//}
+		////Trace::WriteLine("");
+		if (i != size - 1)
 		{
-			Trace::Write(ways[j] + " ");
+			correctMarkers[i + 1] = curr_vertex + 1;
+			for (int j = 0; j < size; j++)
+			{
+				ways[i + 1][j] = ways[i][j];
+			}
 		}
-		Trace::WriteLine("");
 	}
-	Trace::Write(" орректный массив путей: ");
-	for (int i = 0; i < size; i++)
-	{
-		Trace::Write(ways[i] + " ");
-	}
-	Trace::WriteLine("");
+	////Trace::Write(" орректный массив путей: ");
+	//for (int i = 0; i < size; i++)
+	//{
+	//	//Trace::Write(ways[i] + " ");
+	//}
+	////Trace::WriteLine("");
 }
 
 // не должны перезаписывать уже созданное значение, не должны записывать на главную диагональ

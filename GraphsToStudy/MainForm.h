@@ -73,14 +73,15 @@ namespace GraphsToStudy {
 			// comboBox1
 			// 
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(16) {
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(11) {
 				L"5", L"6", L"7", L"8", L"9", L"10", L"11", L"12",
-					L"13", L"14", L"15", L"16", L"17", L"18", L"19", L"20"
+					L"13", L"14", L"15"
 			});
 			this->comboBox1->Location = System::Drawing::Point(331, 355);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(58, 21);
 			this->comboBox1->TabIndex = 2;
+			this->comboBox1->Text = L"5";
 			// 
 			// MainForm
 			// 

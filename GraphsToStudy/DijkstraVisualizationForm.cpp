@@ -1,4 +1,4 @@
-#include "DijkstraVisualizationForm.h"
+п»ї#include "DijkstraVisualizationForm.h"
 #include <math.h>
 
 using namespace System;
@@ -8,13 +8,13 @@ using namespace System::Drawing;
 
 Void DijkstraVisualization::DijkstraVisualizationForm::onShown(System::Object^ sender, System::EventArgs^ e)
 {
-    array<Vertex^>^ vertices = gcnew array<Vertex^>(size); // инициализируется основной массив с вершинами, которые потом будут выводиться
-    CalculatePositions(vertices); // рассчитываются позиции вершин в графе с использованием логики маршрутов и уровней
-    VisualizeGraph(vertices); // отрисовываются вершины и линии между ними
-    VisualizeTables(); // визуализируются нужные таблицы, кнопки, надписи и т.д.
+    array<Vertex^>^ vertices = gcnew array<Vertex^>(size); // РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ РѕСЃРЅРѕРІРЅРѕР№ РјР°СЃСЃРёРІ СЃ РІРµСЂС€РёРЅР°РјРё, РєРѕС‚РѕСЂС‹Рµ РїРѕС‚РѕРј Р±СѓРґСѓС‚ РІС‹РІРѕРґРёС‚СЊСЃСЏ
+    CalculatePositions(vertices); // СЂР°СЃСЃС‡РёС‚С‹РІР°СЋС‚СЃСЏ РїРѕР·РёС†РёРё РІРµСЂС€РёРЅ РІ РіСЂР°С„Рµ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Р»РѕРіРёРєРё РјР°СЂС€СЂСѓС‚РѕРІ Рё СѓСЂРѕРІРЅРµР№
+    VisualizeGraph(vertices); // РѕС‚СЂРёСЃРѕРІС‹РІР°СЋС‚СЃСЏ РІРµСЂС€РёРЅС‹ Рё Р»РёРЅРёРё РјРµР¶РґСѓ РЅРёРјРё
+    VisualizeTables(); // РІРёР·СѓР°Р»РёР·РёСЂСѓСЋС‚СЃСЏ РЅСѓР¶РЅС‹Рµ С‚Р°Р±Р»РёС†С‹, РєРЅРѕРїРєРё, РЅР°РґРїРёСЃРё Рё С‚.Рґ.
 }
 
-Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeGraph(array<Vertex^>^ vertices) // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
+Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeGraph(array<Vertex^>^ vertices) // Р±РµСЂСѓ РїРµСЂРІСѓСЋ РІРµСЂС€РёРЅСѓ, СЃС‚СЂРѕСЋ РµРµ РІ РЅР°С‡Р°Р»СЊРЅРѕР№ С‚РѕС‡РєРµ, РїСЂРѕС…РѕР¶СѓСЃСЊ РїРѕ РµРµ СЃС‚СЂРѕРєРµ РІ РјР°С‚СЂРёС†Рµ Рё СЃС‚СЂРѕСЋ РІРµСЂС€РёРЅС‹, РІ РєРѕС‚РѕСЂС‹Рµ РёР· РЅРµРµ РјРѕР¶РЅРѕ РїРѕРїР°СЃС‚СЊ 
 {
     int radius = diameter / 2;
     int offset = radius / 2 - 5;
@@ -52,7 +52,7 @@ Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeGraph(array<Vert
     }
 }
 
-// добавляет вершину на уровень
+// РґРѕР±Р°РІР»СЏРµС‚ РІРµСЂС€РёРЅСѓ РЅР° СѓСЂРѕРІРµРЅСЊ
 void DijkstraVisualization::DijkstraVisualizationForm::AddToLevel(int levelIndex, int vertexIndex, array<array<int>^>^ levels)
 {
     int length = levels[levelIndex]->Length;
@@ -75,7 +75,7 @@ void DijkstraVisualization::DijkstraVisualizationForm::CalculatePositions(array<
 
     int xIncValue = 140;
     int xDefaultValue = 200;
-    int yDefaultValue = this->pictureBox1->Height / 2 - size * 25;
+    int yDefaultValue = this->pictureBox1->Height / 2 - size * 20;
     int markedAmount = 1;
 
     int X = xDefaultValue;
@@ -83,26 +83,26 @@ void DijkstraVisualization::DijkstraVisualizationForm::CalculatePositions(array<
 
     markedVertices[0] = 1;
 
-    while (markedAmount != size - 1) // пока не все вершины помечены
+    while (markedAmount != size - 1) // РїРѕРєР° РЅРµ РІСЃРµ РІРµСЂС€РёРЅС‹ РїРѕРјРµС‡РµРЅС‹
     {
         beforePrevVertex = prevVertex;
         prevVertex = currentVertex;
-        currentVertex = NextNotMarked(currentVertex, markedVertices, verticesOffsets); // попытка найти непомеченную вершину для текущей
+        currentVertex = NextNotMarked(currentVertex, markedVertices, verticesOffsets); // РїРѕРїС‹С‚РєР° РЅР°Р№С‚Рё РЅРµРїРѕРјРµС‡РµРЅРЅСѓСЋ РІРµСЂС€РёРЅСѓ РґР»СЏ С‚РµРєСѓС‰РµР№
         markedAmount++; 
-        if (currentVertex == -1) // если для текущей вершины уже все помечены, найти первую непомеченную для первой
+        if (currentVertex == -1) // РµСЃР»Рё РґР»СЏ С‚РµРєСѓС‰РµР№ РІРµСЂС€РёРЅС‹ СѓР¶Рµ РІСЃРµ РїРѕРјРµС‡РµРЅС‹, РЅР°Р№С‚Рё РїРµСЂРІСѓСЋ РЅРµРїРѕРјРµС‡РµРЅРЅСѓСЋ РґР»СЏ РїРµСЂРІРѕР№
         {
-            currentVertex = NextNotMarked(0, markedVertices, verticesOffsets); // попытка найти непомеченную вершину для первой
+            currentVertex = NextNotMarked(0, markedVertices, verticesOffsets); // РїРѕРїС‹С‚РєР° РЅР°Р№С‚Рё РЅРµРїРѕРјРµС‡РµРЅРЅСѓСЋ РІРµСЂС€РёРЅСѓ РґР»СЏ РїРµСЂРІРѕР№
             X = xDefaultValue;
             Y += 100;
-            if (currentVertex == -1) // если и для первой вершины уже все помечены, найти любую непомеченную
+            if (currentVertex == -1) // РµСЃР»Рё Рё РґР»СЏ РїРµСЂРІРѕР№ РІРµСЂС€РёРЅС‹ СѓР¶Рµ РІСЃРµ РїРѕРјРµС‡РµРЅС‹, РЅР°Р№С‚Рё Р»СЋР±СѓСЋ РЅРµРїРѕРјРµС‡РµРЅРЅСѓСЋ
             {
-                Trace::WriteLine("Не можем попасть в конец или в непомеченную");
+                //Trace::WriteLine("РќРµ РјРѕР¶РµРј РїРѕРїР°СЃС‚СЊ РІ РєРѕРЅРµС† РёР»Рё РІ РЅРµРїРѕРјРµС‡РµРЅРЅСѓСЋ");
                 Y -= 100;
-                for (int i = 0; i < size; i++) // обнуление смещений
+                for (int i = 0; i < size; i++) // РѕР±РЅСѓР»РµРЅРёРµ СЃРјРµС‰РµРЅРёР№
                 {
                     verticesOffsets[i] = 0;
                 }
-                for (int i = 0; i < size; i++) // сам поиск непомеченной вершины
+                for (int i = 0; i < size; i++) // СЃР°Рј РїРѕРёСЃРє РЅРµРїРѕРјРµС‡РµРЅРЅРѕР№ РІРµСЂС€РёРЅС‹
                 {
                     if (markedVertices[i] == 0)
                     {
@@ -113,22 +113,22 @@ void DijkstraVisualization::DijkstraVisualizationForm::CalculatePositions(array<
             }
         }
 
-        if (prevVertex != 0 && matrix[0][currentVertex] > 0) // если мы не из первой вершины попали в вершину, в которую есть путь из первой, сбросить значения
+        if (prevVertex != 0 && matrix[0][currentVertex] > 0) // РµСЃР»Рё РјС‹ РЅРµ РёР· РїРµСЂРІРѕР№ РІРµСЂС€РёРЅС‹ РїРѕРїР°Р»Рё РІ РІРµСЂС€РёРЅСѓ, РІ РєРѕС‚РѕСЂСѓСЋ РµСЃС‚СЊ РїСѓС‚СЊ РёР· РїРµСЂРІРѕР№, СЃР±СЂРѕСЃРёС‚СЊ Р·РЅР°С‡РµРЅРёСЏ
         {
             X = xDefaultValue;
             Y = maxY + 100;
-            Trace::WriteLine("Предотвращена линия из 1 через весь граф");
+            //Trace::WriteLine("РџСЂРµРґРѕС‚РІСЂР°С‰РµРЅР° Р»РёРЅРёСЏ РёР· 1 С‡РµСЂРµР· РІРµСЃСЊ РіСЂР°С„");
             for (int i = 0; i < size; i++)
             {
                 verticesOffsets[i] = 0;
             }
         }
 
-        if (currentVertex == size - 1) // если мы попали в последнюю вершину то мы сбрасываем значения и ничего не строим
+        if (currentVertex == size - 1) // РµСЃР»Рё РјС‹ РїРѕРїР°Р»Рё РІ РїРѕСЃР»РµРґРЅСЋСЋ РІРµСЂС€РёРЅСѓ С‚Рѕ РјС‹ СЃР±СЂР°СЃС‹РІР°РµРј Р·РЅР°С‡РµРЅРёСЏ Рё РЅРёС‡РµРіРѕ РЅРµ СЃС‚СЂРѕРёРј
         {
             markedVertices[currentVertex] = 0;
             markedAmount--;
-            Trace::WriteLine("Пришли в конец");
+            //Trace::WriteLine("РџСЂРёС€Р»Рё РІ РєРѕРЅРµС†");
             for (int i = 0; i < size; i++)
             {
                 verticesOffsets[i] = 0;
@@ -136,31 +136,31 @@ void DijkstraVisualization::DijkstraVisualizationForm::CalculatePositions(array<
             currentVertex = 0;
             X = xDefaultValue;
             Y = maxY + 100;
-            Trace::WriteLine("Y: " + Y);
+            //Trace::WriteLine("Y: " + Y);
         }
-        else // стандартное заполнение значений для обычной вершины
+        else // СЃС‚Р°РЅРґР°СЂС‚РЅРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ Р·РЅР°С‡РµРЅРёР№ РґР»СЏ РѕР±С‹С‡РЅРѕР№ РІРµСЂС€РёРЅС‹
         {
             X += xIncValue - verticesOffsets[currentVertex];
             Y += verticesOffsets[currentVertex];
             maxX = (maxX < X) ? X : maxX;
             maxY = (maxY < Y) ? Y : maxY;
             markedVertices[currentVertex] = 1;
-            for (int i = 0; i < size; i++) // проверка на странную ошибку, когда у вершины создаются координаты, уже имеющиеся у другой вершины
+            for (int i = 0; i < size; i++) // РїСЂРѕРІРµСЂРєР° РЅР° СЃС‚СЂР°РЅРЅСѓСЋ РѕС€РёР±РєСѓ, РєРѕРіРґР° Сѓ РІРµСЂС€РёРЅС‹ СЃРѕР·РґР°СЋС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚С‹, СѓР¶Рµ РёРјРµСЋС‰РёРµСЃСЏ Сѓ РґСЂСѓРіРѕР№ РІРµСЂС€РёРЅС‹
             {
                 if (vertices[i] != nullptr && vertices[i]->X == X && vertices[i]->Y == Y)
                 {
                     Y += 100;
                     X += 200;
-                    Trace::WriteLine("Проблема одинаковых координат предотвращена");
+                    //Trace::WriteLine("РџСЂРѕР±Р»РµРјР° РѕРґРёРЅР°РєРѕРІС‹С… РєРѕРѕСЂРґРёРЅР°С‚ РїСЂРµРґРѕС‚РІСЂР°С‰РµРЅР°");
                 }
             }
             vertices[currentVertex] = gcnew Vertex;
             vertices[currentVertex]->Name = (currentVertex + 1).ToString();
             vertices[currentVertex]->X = X;
             vertices[currentVertex]->Y = Y;
-            Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена со смещением " + verticesOffsets[currentVertex]);
-            Trace::WriteLine("Созданы координаты " + (currentVertex + 1) + " вершины, Х: " + X + ", Y: " + Y);
-            // проверка на принадлежность добавленной вершины к уровню по координатам
+            //Trace::WriteLine("Р’РµСЂС€РёРЅР° " + (currentVertex + 1) + " РґРѕР±Р°РІР»РµРЅР° СЃРѕ СЃРјРµС‰РµРЅРёРµРј " + verticesOffsets[currentVertex]);
+            //Trace::WriteLine("РЎРѕР·РґР°РЅС‹ РєРѕРѕСЂРґРёРЅР°С‚С‹ " + (currentVertex + 1) + " РІРµСЂС€РёРЅС‹, РҐ: " + X + ", Y: " + Y);
+            // РїСЂРѕРІРµСЂРєР° РЅР° РїСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ РґРѕР±Р°РІР»РµРЅРЅРѕР№ РІРµСЂС€РёРЅС‹ Рє СѓСЂРѕРІРЅСЋ РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Р°Рј
             if ((X - xDefaultValue) % xIncValue == 0 && X != 20)
             {
                 int levelIndex = (X - xDefaultValue) / xIncValue - 1;
@@ -174,15 +174,15 @@ void DijkstraVisualization::DijkstraVisualizationForm::CalculatePositions(array<
         }
     }
 
-    // отладочный вывод уровней
+    // РѕС‚Р»Р°РґРѕС‡РЅС‹Р№ РІС‹РІРѕРґ СѓСЂРѕРІРЅРµР№
     for (int i = 0; i < amountOfLevels; i++)
     {
-        Trace::Write((i + 1) + ": ");
+        //Trace::Write((i + 1) + ": ");
         for (int j = 0; j < levels[i]->Length; j++)
         {
-            Trace::Write((levels[i][j] + 1) + " ");
+            //Trace::Write((levels[i][j] + 1) + " ");
         }
-        Trace::WriteLine("");
+        //Trace::WriteLine("");
     }
 
     AddOffsetsBasedOnLevels(levels, vertices, maxX, amountOfLevels);
@@ -203,43 +203,43 @@ void DijkstraVisualization::DijkstraVisualizationForm::AddOffsetsBasedOnLevels(a
     int levelOffset = 0;
     int offset = 0;
     int maxOffset = 0;
-    for (int i = 0; i < amountOfLevels; i++) // добавление смещений вершинам на каждом уровне
+    for (int i = 0; i < amountOfLevels; i++) // РґРѕР±Р°РІР»РµРЅРёРµ СЃРјРµС‰РµРЅРёР№ РІРµСЂС€РёРЅР°Рј РЅР° РєР°Р¶РґРѕРј СѓСЂРѕРІРЅРµ
     {
         int length = levels[i]->Length;
 
         levelOffset += (offset > 0) ? offset : 0;
         offset = 0;
 
-        // смещение по уровню для центральных на нем вершин
+        // СЃРјРµС‰РµРЅРёРµ РїРѕ СѓСЂРѕРІРЅСЋ РґР»СЏ С†РµРЅС‚СЂР°Р»СЊРЅС‹С… РЅР° РЅРµРј РІРµСЂС€РёРЅ
         if (length % 2 == 0) 
         {
             vertices[levels[i][length / 2 - 1]]->X += levelOffset;
-            Trace::WriteLine("Для вершины " + (levels[i][length / 2 - 1] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
+            //Trace::WriteLine("Р”Р»СЏ РІРµСЂС€РёРЅС‹ " + (levels[i][length / 2 - 1] + 1) + " Р·Р°РґР°РЅРѕ СЃРјРµС‰РµРЅРёРµ " + levelOffset + " РёР·-Р·Р° СѓСЂРѕРІРЅСЏ " + (i + 1));
             maxX = (vertices[levels[i][length / 2 - 1]]->X > maxX) ? vertices[levels[i][length / 2 - 1]]->X : maxX;
 
             vertices[levels[i][length / 2]]->X += levelOffset;
-            Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
+            //Trace::WriteLine("Р”Р»СЏ РІРµСЂС€РёРЅС‹ " + (levels[i][length / 2] + 1) + " Р·Р°РґР°РЅРѕ СЃРјРµС‰РµРЅРёРµ " + levelOffset + " РёР·-Р·Р° СѓСЂРѕРІРЅСЏ " + (i + 1));
             maxX = (vertices[levels[i][length / 2]]->X > maxX) ? vertices[levels[i][length / 2]]->X : maxX;
         }
         else 
         {
             vertices[levels[i][length / 2]]->X += levelOffset;
-            Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
+            //Trace::WriteLine("Р”Р»СЏ РІРµСЂС€РёРЅС‹ " + (levels[i][length / 2] + 1) + " Р·Р°РґР°РЅРѕ СЃРјРµС‰РµРЅРёРµ " + levelOffset + " РёР·-Р·Р° СѓСЂРѕРІРЅСЏ " + (i + 1));
             maxX = (vertices[levels[i][length / 2]]->X > maxX) ? vertices[levels[i][length / 2]]->X : maxX;
         }
 
-        // смещение остальных пар вершин на уровне
+        // СЃРјРµС‰РµРЅРёРµ РѕСЃС‚Р°Р»СЊРЅС‹С… РїР°СЂ РІРµСЂС€РёРЅ РЅР° СѓСЂРѕРІРЅРµ
         for (int j = length / 2 + 1; j < length; j++) // 
         {
             offset -= (j - 1) * 50 - (j - 2) * 25;
 
             vertices[levels[i][length - 1 - j]]->X += offset + levelOffset;
             maxX = (vertices[levels[i][length - 1 - j]]->X > maxX) ? vertices[levels[i][length - 1 - j]]->X : maxX;
-            Trace::WriteLine("Для вершины " + (levels[i][length - 1 - j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
+            //Trace::WriteLine("Р”Р»СЏ РІРµСЂС€РёРЅС‹ " + (levels[i][length - 1 - j] + 1) + " Р·Р°РґР°РЅРѕ СЃРјРµС‰РµРЅРёРµ " + offset + " " + levelOffset + " РёР·-Р·Р° СѓСЂРѕРІРЅСЏ " + (i + 1));
 
             vertices[levels[i][j]]->X += offset + levelOffset;
             maxX = (vertices[levels[i][j]]->X > maxX) ? vertices[levels[i][j]]->X : maxX;
-            Trace::WriteLine("Для вершины " + (levels[i][j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
+            //Trace::WriteLine("Р”Р»СЏ РІРµСЂС€РёРЅС‹ " + (levels[i][j] + 1) + " Р·Р°РґР°РЅРѕ СЃРјРµС‰РµРЅРёРµ " + offset + " " + levelOffset + " РёР·-Р·Р° СѓСЂРѕРІРЅСЏ " + (i + 1));
         }
     }
 }
@@ -257,7 +257,7 @@ Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeTables()
         dataGridView1->Columns[i]->SortMode = DataGridViewColumnSortMode::NotSortable;
     }
     
-    for (int i = 0; i < size; i++) // заполнение матрицы смежности
+    for (int i = 0; i < size; i++) // Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°С‚СЂРёС†С‹ СЃРјРµР¶РЅРѕСЃС‚Рё
     {
         dataGridView1->Rows->Add();
         dataGridView1->Rows[i]->HeaderCell->Value = (i + 1).ToString();
@@ -267,13 +267,13 @@ Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeTables()
         }
     }
 
-    dataGridView2->TopLeftHeaderCell->Value = "Итерация";
+    dataGridView2->TopLeftHeaderCell->Value = "РС‚РµСЂР°С†РёСЏ";
     dataGridView2->Height = 22 * size + 20;
     dataGridView2->Width = GridColumnWidth * (size + 1) + 72;
 
     label2->Location = System::Drawing::Point(1218, dataGridView1->Location.Y + dataGridView1->Height + 10);
     dataGridView2->Location = System::Drawing::Point(1218, label2->Location.Y + 30);
-
+    
     checkSolutionButton->Location = System::Drawing::Point(1218, dataGridView2->Location.Y + dataGridView2->Height + 20);
     showSolutionButton->Location = System::Drawing::Point(checkSolutionButton->Location.X + 150, checkSolutionButton->Location.Y);
 
@@ -288,7 +288,7 @@ Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeTables()
         dataGridView2->Columns[i + 1]->SortMode = DataGridViewColumnSortMode::NotSortable;
     }
 
-    for (int i = 0; i < size; i++) // заполнение матрицы смежности
+    for (int i = 0; i < size; i++) // Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°С‚СЂРёС†С‹ СЃРјРµР¶РЅРѕСЃС‚Рё
     {
         dataGridView2->Rows->Add();
         dataGridView2->Rows[i]->HeaderCell->Value = (i).ToString();
@@ -301,7 +301,7 @@ int DijkstraVisualization::DijkstraVisualizationForm::NextNotMarked(int currentV
     int newVertex = -1;
     for (int i = 0; i < size; i++)
     {
-        if (matrix[currentVertex][i] != 0 && (markedVertices[i] == 0) && !foundNotMarked) // если новая вершина не помечена и в нее есть путь из текущей
+        if (matrix[currentVertex][i] != 0 && (markedVertices[i] == 0) && !foundNotMarked) // РµСЃР»Рё РЅРѕРІР°СЏ РІРµСЂС€РёРЅР° РЅРµ РїРѕРјРµС‡РµРЅР° Рё РІ РЅРµРµ РµСЃС‚СЊ РїСѓС‚СЊ РёР· С‚РµРєСѓС‰РµР№
         {
             newVertex = i;
             foundNotMarked = true;
@@ -319,17 +319,60 @@ int DijkstraVisualization::DijkstraVisualizationForm::NextNotMarked(int currentV
 
 Void DijkstraVisualization::DijkstraVisualizationForm::CheckSolution(System::Object^ sender, System::EventArgs^ e)
 {
+    String^ errorMessage = "";
     for (int i = 0; i < size; i++)
     {
-        if (Convert::ToInt32(dataGridView2->Rows[size - 1]->Cells[i + 1]->Value) != ways[i])
+        if (dataGridView2->Rows[size - 1]->Cells[i + 1]->Value != nullptr)
         {
-            Trace::WriteLine(dataGridView2->Rows[size - 1]->Cells[i + 1]->Value + " != " + ways[i]);
-            //Trace::WriteLine("Код красный, код красный, тут шутки про мамаш");
+            String^ cellValue = dataGridView2->Rows[size - 1]->Cells[i + 1]->Value->ToString();
+            if (cellValue[cellValue->Length - 1] == '*')
+                cellValue = cellValue->Remove(cellValue->Length - 1);
+            if (ways[size - 1][i] != Convert::ToInt32(cellValue))
+            {
+                errorMessage += "РќРµРІРµСЂРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РїСѓС‚Рё РІ " + (i + 1) + " РІРµСЂС€РёРЅСѓ (РѕР¶РёРґР°РµС‚СЃСЏ: " + ways[size - 1][i] +
+                    ", РЅР°РїРёСЃР°РЅРѕ: " + cellValue + ")" + Environment::NewLine;
+            }
+        }
+        else
+        {
+            errorMessage += "РќРµ Р·Р°РїРѕР»РЅРµРЅРѕ Р·РЅР°С‡РµРЅРёРµ РїСѓС‚Рё РІ " + (i + 1) + " РІРµСЂС€РёРЅСѓ (РѕР¶РёРґР°РµС‚СЃСЏ: " + ways[size - 1][i] 
+                + ")" + Environment::NewLine;
         }
     }
+    if (errorMessage == "")
+    {
+        errorMessage = "РћС€РёР±РѕРє РЅРµС‚. РҐРѕСЂРѕС€Р°СЏ СЂР°Р±РѕС‚Р°!";
+    }
+    //textBox1->Location = System::Drawing::Point(1218, checkSolutionButton->Location.Y + 70);
+    textBox1->Visible = true;
+    textBox1->Text = errorMessage;
 }
 
 Void DijkstraVisualization::DijkstraVisualizationForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
 {
-    return Void();
+    for (int i = 0; i < size; i++)
+    {
+        if (i == 0)
+        {
+            dataGridView2->Rows[i]->Cells[0]->Value = "-";
+        }
+        else
+        {
+            dataGridView2->Rows[i]->Cells[0]->Value = correctMarkers[i];
+        }
+        for (int j = 0; j < size; j++)
+        {
+            dataGridView2->Rows[i]->Cells[j + 1]->Value = (ways[i][j] > 500) ? L"в€ћ" : ways[i][j].ToString();
+            bool isMarked = false;
+            for (int k = 0; k < i + 1; k++)
+            {
+                if (correctMarkers[k] == j + 1)
+                    isMarked = true;
+            }
+            if (isMarked)
+            {
+                dataGridView2->Rows[i]->Cells[j + 1]->Value += "*";
+            }
+        }
+    }
 }
