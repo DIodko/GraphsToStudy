@@ -120,23 +120,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DemoucronVisualizationForm.cpp" />
     <ClCompile Include="DijkstraGeneration.cpp" />
     <ClCompile Include="GraphsToVisualize.cpp" />
     <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="MalgrangeVisualizationForm.cpp" />
     <ClCompile Include="DijkstraVisualizationForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DemoucronVisualizationForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
     <ClInclude Include="DijkstraGeneration.h" />
     <ClInclude Include="GraphsToVisualize.h" />
     <ClInclude Include="MainForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="MalgrangeVisualizationForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="DIjkstraVisualizationForm.h">
@@ -146,9 +138,6 @@
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MalgrangeVisualizationForm.resx">
-      <DependentUpon>MalgrangeVisualizationForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DIjkstraVisualizationForm.resx">
       <DependentUpon>DIjkstraVisualizationForm.h</DependentUpon>
