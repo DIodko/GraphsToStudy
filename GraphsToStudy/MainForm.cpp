@@ -19,7 +19,13 @@ void main(array<String^>^ args)
 Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::EventArgs^ e)
 {	
 	//Генерируем матрицу смежности для алгоритма Дейкстры
-	int size = Convert::ToInt32(this->comboBox1->Text);
+	int size = 0;
+
+	if (!int::TryParse(comboBox1->Text, size) || size < 5 || size > 15) {
+		MessageBox::Show("Введите число от 5 до 15");
+		return;
+	}
+	
 	array<array<int>^>^ matrix = gcnew array<array<int>^>(size);
 	array<array<int>^>^ ways = gcnew array<array<int>^>(size);
 	array<int>^ correctMarkers = gcnew array<int>(size);
@@ -28,5 +34,4 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 	DijkstraGeneration::SolveDijkstra(ways, size, matrix, correctMarkers);
 
 	GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
-	//GraphsToVisualize::VisualizeDijkstra(matrix, size, ways);
 }

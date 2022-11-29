@@ -146,7 +146,7 @@ namespace DijkstraVisualization {
 			// 
 			// checkSolutionButton
 			// 
-			this->checkSolutionButton->Font = (gcnew System::Drawing::Font(L"Calibri", 12));
+			this->checkSolutionButton->Font = (gcnew System::Drawing::Font(L"Calibri", 14));
 			this->checkSolutionButton->Location = System::Drawing::Point(1218, 740);
 			this->checkSolutionButton->Name = L"checkSolutionButton";
 			this->checkSolutionButton->Size = System::Drawing::Size(120, 60);
@@ -157,7 +157,7 @@ namespace DijkstraVisualization {
 			// 
 			// showSolutionButton
 			// 
-			this->showSolutionButton->Font = (gcnew System::Drawing::Font(L"Calibri", 12));
+			this->showSolutionButton->Font = (gcnew System::Drawing::Font(L"Calibri", 14));
 			this->showSolutionButton->Location = System::Drawing::Point(1372, 740);
 			this->showSolutionButton->Name = L"showSolutionButton";
 			this->showSolutionButton->Size = System::Drawing::Size(120, 60);
@@ -169,7 +169,7 @@ namespace DijkstraVisualization {
 			// 
 			// textBox1
 			// 
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"Calibri", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox1->Location = System::Drawing::Point(12, 750);
 			this->textBox1->Multiline = true;
