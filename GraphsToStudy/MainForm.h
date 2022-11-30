@@ -65,6 +65,10 @@ namespace GraphsToStudy {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(1180, 655);
+
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
 			this->button1 = (gcnew System::Windows::Forms::Button());
@@ -87,7 +91,7 @@ namespace GraphsToStudy {
 			this->dataGridView1->AllowUserToResizeColumns = false;
 			this->dataGridView1->AllowUserToResizeRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(196, 164);
+			this->dataGridView1->Location = System::Drawing::Point(118, 161);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->ReadOnly = true;
 			this->dataGridView1->RowHeadersWidth = 50;
@@ -103,7 +107,7 @@ namespace GraphsToStudy {
 			this->dataGridView2->AllowUserToResizeColumns = false;
 			this->dataGridView2->AllowUserToResizeRows = false;
 			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView2->Location = System::Drawing::Point(681, 164);
+			this->dataGridView2->Location = System::Drawing::Point(this->Width / 2 + 20, 161);
 			this->dataGridView2->Name = L"dataGridView2";
 			this->dataGridView2->ReadOnly = true;
 			this->dataGridView2->RowHeadersWidth = 70;
@@ -139,6 +143,8 @@ namespace GraphsToStudy {
 			this->comboBox1->Size = System::Drawing::Size(58, 31);
 			this->comboBox1->TabIndex = 2;
 			this->comboBox1->Text = L"5";
+			this->comboBox1->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::DifferentVertexAmountSelected);
+			this->comboBox1->DropDownStyle = ComboBoxStyle::DropDownList;
 			// 
 			// label1
 			// 
@@ -162,6 +168,8 @@ namespace GraphsToStudy {
 			this->comboBox2->Size = System::Drawing::Size(192, 31);
 			this->comboBox2->TabIndex = 4;
 			this->comboBox2->Text = L"Алгоритм Дейкстры";
+			this->comboBox2->DropDownStyle = ComboBoxStyle::DropDownList;
+			this->comboBox2->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::DifferentTaskSelected);
 			// 
 			// label2
 			// 
@@ -204,7 +212,7 @@ namespace GraphsToStudy {
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label3->Location = System::Drawing::Point(192, 138);
+			this->label3->Location = System::Drawing::Point(118, 135);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(81, 23);
 			this->label3->TabIndex = 10;
@@ -216,7 +224,7 @@ namespace GraphsToStudy {
 			this->label4->AutoSize = true;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label4->Location = System::Drawing::Point(677, 138);
+			this->label4->Location = System::Drawing::Point(this->Width / 2 + 20, 135);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(81, 23);
 			this->label4->TabIndex = 11;
@@ -225,9 +233,6 @@ namespace GraphsToStudy {
 			// 
 			// MainForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1180, 655);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->button3);
@@ -252,8 +257,11 @@ namespace GraphsToStudy {
 		Void button1_Click(System::Object^ sender, System::EventArgs^ e);
 		Void ShowMatrix(System::Object^ sender, System::EventArgs^ e);
 		Void ShowSolution(System::Object^ sender, System::EventArgs^ e);
+		Void DifferentTaskSelected(System::Object^ sender, System::EventArgs^ e);
+		Void DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e);
+		Void ResetCurrentValues();
 
-		int size;
+		int size = 5;
 		array<array<int>^>^ matrix;
 		array<array<int>^>^ ways;
 		array<int>^ correctMarkers;

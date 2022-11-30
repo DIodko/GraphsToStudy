@@ -19,12 +19,6 @@ void main(array<String^>^ args)
 Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::EventArgs^ e)
 {	
 	//Генерируем матрицу смежности для алгоритма Дейкстры
-	size = 0;
-
-	if (!int::TryParse(comboBox1->Text, size) || size < 5 || size > 15) {
-		MessageBox::Show("Введите число от 5 до 15");
-		return;
-	}
 
 	if (matrix == nullptr)
 	{
@@ -38,9 +32,7 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 
 	GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
 
-	matrix = nullptr;
-	ways = nullptr;
-	correctMarkers = nullptr;
+	/*ResetCurrentValues();*/
 }
 
 
@@ -51,12 +43,6 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 	this->label3->Visible = true;
 	this->label4->Visible = false;
 	dataGridView1->Columns->Clear();
-	size = 0;
-
-	if (!int::TryParse(comboBox1->Text, size) || size < 5 || size > 15) {
-		MessageBox::Show("Введите число от 5 до 15");
-		return;
-	}
 
 	matrix = gcnew array<array<int>^>(size);
 	ways = gcnew array<array<int>^>(size);
@@ -86,6 +72,9 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 		}
 	}
 
+	this->dataGridView1->Location = System::Drawing::Point(this->Width / 2 - this->dataGridView1->Width - 20, 161);
+	this->label3->Location = System::Drawing::Point(this->dataGridView1->Location.X, 135);
+
 	dataGridView2->Visible = false;
 	dataGridView1->Visible = true;
 }
@@ -93,15 +82,10 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 
 Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
 {
-	int testSize;
 	this->label4->Visible = true;
 	this->button3->Enabled = false;
 
-	if (!int::TryParse(comboBox1->Text, testSize) || testSize < 5 || testSize > 15) {
-		MessageBox::Show("Введите число от 5 до 15");
-		return;
-	}
-	if (matrix == nullptr || size != testSize)
+	if (matrix == nullptr)
 	{
 		ShowMatrix(sender, e);
 	}
@@ -155,3 +139,41 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 
 	dataGridView2->Visible = true;
 }
+
+Void GraphsToStudy::MainForm::DifferentTaskSelected(System::Object^ sender, System::EventArgs^ e)
+{
+	this->label3->Visible = false;
+	this->label4->Visible = false;
+
+	this->dataGridView1->Visible = false;
+	this->dataGridView2->Visible = false;
+
+	this->button1->Enabled = false;
+	this->button3->Enabled = false;
+
+	ResetCurrentValues();
+}
+
+Void GraphsToStudy::MainForm::ResetCurrentValues()
+{
+	matrix = nullptr;
+	ways = nullptr;
+	correctMarkers = nullptr;
+}
+
+Void GraphsToStudy::MainForm::DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e)
+{
+	this->label3->Visible = false;
+	this->label4->Visible = false;
+
+	this->dataGridView1->Visible = false;
+	this->dataGridView2->Visible = false;
+
+	this->button1->Enabled = false;
+	this->button3->Enabled = false;
+
+	size = Convert::ToInt32(this->comboBox1->Text);
+
+	ResetCurrentValues();
+}
+
