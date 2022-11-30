@@ -12,11 +12,11 @@ void main(array<String^>^ args)
 	Application::EnableVisualStyles;
 	Application::SetCompatibleTextRenderingDefault(false);
 
-	GraphsToStudy::MainForm form;
+	GraphsToSolve::MainForm form;
 	Application::Run(% form);
 }
 
-Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::EventArgs^ e)
+Void GraphsToSolve::MainForm::button1_Click(System::Object^ sender, System::EventArgs^ e)
 {	
 	//Генерируем матрицу смежности для алгоритма Дейкстры
 
@@ -36,7 +36,7 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 }
 
 
-Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventArgs^ e)
+Void GraphsToSolve::MainForm::ShowMatrix(System::Object^ sender, System::EventArgs^ e)
 {
 	this->button3->Enabled = true;
 	this->button1->Enabled = true;
@@ -80,7 +80,7 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 }
 
 
-Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
+Void GraphsToSolve::MainForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
 {
 	this->label4->Visible = true;
 	this->button3->Enabled = false;
@@ -140,7 +140,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 	dataGridView2->Visible = true;
 }
 
-Void GraphsToStudy::MainForm::DifferentTaskSelected(System::Object^ sender, System::EventArgs^ e)
+Void GraphsToSolve::MainForm::DifferentTaskSelected(System::Object^ sender, System::EventArgs^ e)
 {
 	this->label3->Visible = false;
 	this->label4->Visible = false;
@@ -154,14 +154,14 @@ Void GraphsToStudy::MainForm::DifferentTaskSelected(System::Object^ sender, Syst
 	ResetCurrentValues();
 }
 
-Void GraphsToStudy::MainForm::ResetCurrentValues()
+Void GraphsToSolve::MainForm::ResetCurrentValues()
 {
 	matrix = nullptr;
 	ways = nullptr;
 	correctMarkers = nullptr;
 }
 
-Void GraphsToStudy::MainForm::DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e)
+Void GraphsToSolve::MainForm::DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e)
 {
 	this->label3->Visible = false;
 	this->label4->Visible = false;

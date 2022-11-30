@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #pragma once
 
-namespace GraphsToStudy {
+namespace GraphsToSolve {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -265,5 +265,5 @@ namespace GraphsToStudy {
 		array<array<int>^>^ matrix;
 		array<array<int>^>^ ways;
 		array<int>^ correctMarkers;
-};
+	};
 }
