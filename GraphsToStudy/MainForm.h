@@ -114,11 +114,12 @@ namespace GraphsToStudy {
 			// 
 			// button1
 			// 
+			this->button1->Enabled = false;
 			this->button1->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->button1->Location = System::Drawing::Point(703, 537);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(135, 60);
+			this->button1->Size = System::Drawing::Size(150, 60);
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Решить";
 			this->button1->UseVisualStyleBackColor = true;
@@ -179,21 +180,22 @@ namespace GraphsToStudy {
 				static_cast<System::Byte>(204)));
 			this->button2->Location = System::Drawing::Point(285, 537);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(135, 60);
+			this->button2->Size = System::Drawing::Size(150, 60);
 			this->button2->TabIndex = 6;
-			this->button2->Text = L"Показать без решения";
+			this->button2->Text = L"Сформировать новую матрицу";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::ShowMatrix);
 			// 
 			// button3
 			// 
+			this->button3->Enabled = false;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->button3->Location = System::Drawing::Point(492, 537);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(135, 60);
+			this->button3->Size = System::Drawing::Size(150, 60);
 			this->button3->TabIndex = 7;
-			this->button3->Text = L"Показать с решением";
+			this->button3->Text = L"Показать решение";
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &MainForm::ShowSolution);
 			// 
@@ -207,6 +209,7 @@ namespace GraphsToStudy {
 			this->label3->Size = System::Drawing::Size(81, 23);
 			this->label3->TabIndex = 10;
 			this->label3->Text = L"Матрица";
+			this->label3->Visible = false;
 			// 
 			// label4
 			// 
@@ -218,6 +221,7 @@ namespace GraphsToStudy {
 			this->label4->Size = System::Drawing::Size(81, 23);
 			this->label4->TabIndex = 11;
 			this->label4->Text = L"Решение";
+			this->label4->Visible = false;
 			// 
 			// MainForm
 			// 
@@ -253,5 +257,5 @@ namespace GraphsToStudy {
 		array<array<int>^>^ matrix;
 		array<array<int>^>^ ways;
 		array<int>^ correctMarkers;
-	};
+};
 }

@@ -37,11 +37,19 @@ Void GraphsToStudy::MainForm::button1_Click(System::Object^ sender, System::Even
 	}
 
 	GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
+
+	matrix = nullptr;
+	ways = nullptr;
+	correctMarkers = nullptr;
 }
 
 
 Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventArgs^ e)
 {
+	this->button3->Enabled = true;
+	this->button1->Enabled = true;
+	this->label3->Visible = true;
+	this->label4->Visible = false;
 	dataGridView1->Columns->Clear();
 	size = 0;
 
@@ -86,6 +94,9 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
 {
 	int testSize;
+	this->label4->Visible = true;
+	this->button3->Enabled = false;
+
 	if (!int::TryParse(comboBox1->Text, testSize) || testSize < 5 || testSize > 15) {
 		MessageBox::Show("Введите число от 5 до 15");
 		return;
