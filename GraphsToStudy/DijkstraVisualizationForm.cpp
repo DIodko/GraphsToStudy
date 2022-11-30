@@ -288,7 +288,7 @@ Void DijkstraVisualization::DijkstraVisualizationForm::VisualizeTables()
         dataGridView2->Columns[i + 1]->SortMode = DataGridViewColumnSortMode::NotSortable;
     }
 
-    for (int i = 0; i < size; i++) // заполнение матрицы смежности
+    for (int i = 0; i < size; i++) 
     {
         dataGridView2->Rows->Add();
         dataGridView2->Rows[i]->HeaderCell->Value = (i).ToString();
