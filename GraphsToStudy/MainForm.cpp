@@ -1,7 +1,6 @@
 ﻿#include "MainForm.h"
-#include "DijkstraGeneration.h"
+#include "GraphsToSolve.h"
 #include "GraphsToVisualize.h"
-//#include "DemoucronGeneration.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -12,31 +11,25 @@ void main(array<String^>^ args)
 	Application::EnableVisualStyles;
 	Application::SetCompatibleTextRenderingDefault(false);
 
-	GraphsToSolve::MainForm form;
+	GraphsToStudy::MainForm form;
 	Application::Run(% form);
 }
 
-Void GraphsToSolve::MainForm::button1_Click(System::Object^ sender, System::EventArgs^ e)
+// функция для решения задания, которая визуализирует текущее сформированное задание в зависимости от задания
+Void GraphsToStudy::MainForm::VisualizeTask(System::Object^ sender, System::EventArgs^ e)
 {	
-	//Генерируем матрицу смежности для алгоритма Дейкстры
-
-	if (matrix == nullptr)
+	if (comboBox2->Text == "Алгоритм Дейкстры")
 	{
-		matrix = gcnew array<array<int>^>(size);
-		ways = gcnew array<array<int>^>(size);
-		correctMarkers = gcnew array<int>(size);
-
-		DijkstraGeneration::GenerateMatrix(matrix, size);
-		DijkstraGeneration::SolveDijkstra(ways, size, matrix, correctMarkers);
+		GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
 	}
-
-	GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
-
-	/*ResetCurrentValues();*/
+	else if (comboBox2->Text == "Алгоритм Демукрона")
+	{
+		GraphsToVisualize::VisualizeDemoucron(matrix, size, levels);
+	}
 }
 
-
-Void GraphsToSolve::MainForm::ShowMatrix(System::Object^ sender, System::EventArgs^ e)
+// функция, которая вызывается первой, формирует задание, решает его и выводит матрицу смежности в зависимости от задания
+Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventArgs^ e)
 {
 	this->button3->Enabled = true;
 	this->button1->Enabled = true;
@@ -45,11 +38,22 @@ Void GraphsToSolve::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 	dataGridView1->Columns->Clear();
 
 	matrix = gcnew array<array<int>^>(size);
-	ways = gcnew array<array<int>^>(size);
-	correctMarkers = gcnew array<int>(size);
 
-	DijkstraGeneration::GenerateMatrix(matrix, size);
-	DijkstraGeneration::SolveDijkstra(ways, size, matrix, correctMarkers);
+	if (comboBox2->Text == "Алгоритм Дейкстры")
+	{
+		ways = gcnew array<array<int>^>(size);
+		correctMarkers = gcnew array<int>(size);
+
+		GraphsToSolve::GenerateMatrix(matrix, size, true);
+		GraphsToSolve::SolveDijkstra(matrix, size, ways, correctMarkers);
+	}
+	else if (comboBox2->Text == "Алгоритм Демукрона")
+	{
+		levels = gcnew array<array<int>^>(size);
+
+		GraphsToSolve::GenerateMatrix(matrix, size, false);
+		GraphsToSolve::SolveDemoucron(matrix, size, levels);
+	}
 
 	int GridColumnWidth = 25;
 	dataGridView1->Height = 22 * size + 20;
@@ -79,60 +83,82 @@ Void GraphsToSolve::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 	dataGridView1->Visible = true;
 }
 
-
-Void GraphsToSolve::MainForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
+// функция, которая выводит решение по нажатию кнопки разными способами в зависимости от задания
+Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
 {
 	this->label4->Visible = true;
 	this->button3->Enabled = false;
 
-	if (matrix == nullptr)
-	{
-		ShowMatrix(sender, e);
-	}
-
 	dataGridView2->Columns->Clear();
 	int GridColumnWidth = 25;
 
-	dataGridView2->TopLeftHeaderCell->Value = "Итерация";
-	dataGridView2->Height = 22 * size + 20;
-	dataGridView2->Width = GridColumnWidth * (size + 1) + 72;
-
-	dataGridView2->Columns->Add("0", "X");
-	dataGridView2->Columns[0]->Width = GridColumnWidth;
-	dataGridView2->Columns[0]->SortMode = DataGridViewColumnSortMode::NotSortable;
-
-	for (int i = 0; i < size; i++)
+	if (comboBox2->Text == "Алгоритм Дейкстры")
 	{
-		dataGridView2->Columns->Add((i + 1).ToString(), (i + 1).ToString());
-		dataGridView2->Columns[i + 1]->Width = GridColumnWidth;
-		dataGridView2->Columns[i + 1]->SortMode = DataGridViewColumnSortMode::NotSortable;
-	}
+		dataGridView2->TopLeftHeaderCell->Value = "Итерация";
+		dataGridView2->Height = 22 * size + 20;
+		dataGridView2->Width = GridColumnWidth * (size + 1) + 72;
 
-	for (int i = 0; i < size; i++) 
-	{
-		dataGridView2->Rows->Add();
-		dataGridView2->Rows[i]->HeaderCell->Value = (i).ToString();
+		dataGridView2->Columns->Add("0", "X");
+		dataGridView2->Columns[0]->Width = GridColumnWidth;
+		dataGridView2->Columns[0]->SortMode = DataGridViewColumnSortMode::NotSortable;
 
-		if (i == 0)
+		for (int i = 0; i < size; i++)
 		{
-			dataGridView2->Rows[i]->Cells[0]->Value = "-";
+			dataGridView2->Columns->Add((i + 1).ToString(), (i + 1).ToString());
+			dataGridView2->Columns[i + 1]->Width = GridColumnWidth;
+			dataGridView2->Columns[i + 1]->SortMode = DataGridViewColumnSortMode::NotSortable;
 		}
-		else
+
+		for (int i = 0; i < size; i++)
 		{
-			dataGridView2->Rows[i]->Cells[0]->Value = correctMarkers[i];
-		}
-		for (int j = 0; j < size; j++)
-		{
-			dataGridView2->Rows[i]->Cells[j + 1]->Value = (ways[i][j] > 500) ? L"∞" : ways[i][j].ToString();
-			bool isMarked = false;
-			for (int k = 0; k < i + 1; k++)
+			dataGridView2->Rows->Add();
+			dataGridView2->Rows[i]->HeaderCell->Value = (i).ToString();
+
+			if (i == 0)
 			{
-				if (correctMarkers[k] == j + 1)
-					isMarked = true;
+				dataGridView2->Rows[i]->Cells[0]->Value = "-";
 			}
-			if (isMarked)
+			else
 			{
-				dataGridView2->Rows[i]->Cells[j + 1]->Value += "*";
+				dataGridView2->Rows[i]->Cells[0]->Value = correctMarkers[i];
+			}
+			for (int j = 0; j < size; j++)
+			{
+				dataGridView2->Rows[i]->Cells[j + 1]->Value = (ways[i][j] > 500) ? L"∞" : ways[i][j].ToString();
+				bool isMarked = false;
+				for (int k = 0; k < i + 1; k++)
+				{
+					if (correctMarkers[k] == j + 1)
+						isMarked = true;
+				}
+				if (isMarked)
+				{
+					dataGridView2->Rows[i]->Cells[j + 1]->Value += "*";
+				}
+			}
+		}
+	}
+	else if (comboBox2->Text == "Алгоритм Демукрона")
+	{
+		dataGridView2->TopLeftHeaderCell->Value = "Уровень";
+		dataGridView2->Height = 20;
+		dataGridView2->Width = 222;
+
+		dataGridView2->Columns->Add("0", "Список вершин на уровне");
+		dataGridView2->Columns[0]->Width = 150;
+		dataGridView2->Columns[0]->SortMode = DataGridViewColumnSortMode::NotSortable;
+
+		for (int i = 0; levels[i] != nullptr && levels[i]->Length != 0; i++)
+		{
+			dataGridView2->Height += 22;	
+			dataGridView2->Rows->Add();
+			dataGridView2->Rows[i]->HeaderCell->Value = (i + 1).ToString();
+
+			dataGridView2->Rows[i]->Cells[0]->Value = levels[i][0].ToString();
+
+			for (int j = 1; j < levels[i]->Length; j++)
+			{
+				dataGridView2->Rows[i]->Cells[0]->Value += ", " + levels[i][j].ToString();
 			}
 		}
 	}
@@ -140,29 +166,13 @@ Void GraphsToSolve::MainForm::ShowSolution(System::Object^ sender, System::Event
 	dataGridView2->Visible = true;
 }
 
-Void GraphsToSolve::MainForm::DifferentTaskSelected(System::Object^ sender, System::EventArgs^ e)
-{
-	this->label3->Visible = false;
-	this->label4->Visible = false;
-
-	this->dataGridView1->Visible = false;
-	this->dataGridView2->Visible = false;
-
-	this->button1->Enabled = false;
-	this->button3->Enabled = false;
-
-	ResetCurrentValues();
-}
-
-Void GraphsToSolve::MainForm::ResetCurrentValues()
+// изменяет свойства компонентов формы при изменении задания
+Void GraphsToStudy::MainForm::ResetCurrentValues(System::Object^ sender, System::EventArgs^ e)
 {
 	matrix = nullptr;
 	ways = nullptr;
 	correctMarkers = nullptr;
-}
 
-Void GraphsToSolve::MainForm::DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e)
-{
 	this->label3->Visible = false;
 	this->label4->Visible = false;
 
@@ -171,9 +181,14 @@ Void GraphsToSolve::MainForm::DifferentVertexAmountSelected(System::Object^ send
 
 	this->button1->Enabled = false;
 	this->button3->Enabled = false;
+}
 
+// изменяет свойства компонентов формы при изменении количества вершин
+Void GraphsToStudy::MainForm::DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e)
+{
 	size = Convert::ToInt32(this->comboBox1->Text);
 
-	ResetCurrentValues();
+	ResetCurrentValues(sender, e);
 }
+
 

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #pragma once
 
-namespace GraphsToSolve {
+namespace GraphsToStudy {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -127,7 +127,7 @@ namespace GraphsToSolve {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Решить";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &MainForm::VisualizeTask);
 			// 
 			// comboBox1
 			// 
@@ -165,11 +165,11 @@ namespace GraphsToSolve {
 			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Алгоритм Дейкстры", L"Алгоритм Демукрона" });
 			this->comboBox2->Location = System::Drawing::Point(630, 95);
 			this->comboBox2->Name = L"comboBox2";
-			this->comboBox2->Size = System::Drawing::Size(192, 31);
+			this->comboBox2->Size = System::Drawing::Size(210, 31);
 			this->comboBox2->TabIndex = 4;
 			this->comboBox2->Text = L"Алгоритм Дейкстры";
 			this->comboBox2->DropDownStyle = ComboBoxStyle::DropDownList;
-			this->comboBox2->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::DifferentTaskSelected);
+			this->comboBox2->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::ResetCurrentValues);
 			// 
 			// label2
 			// 
@@ -254,16 +254,18 @@ namespace GraphsToSolve {
 		}
 #pragma endregion
 	private: 
-		Void button1_Click(System::Object^ sender, System::EventArgs^ e);
+		Void VisualizeTask(System::Object^ sender, System::EventArgs^ e);
 		Void ShowMatrix(System::Object^ sender, System::EventArgs^ e);
 		Void ShowSolution(System::Object^ sender, System::EventArgs^ e);
-		Void DifferentTaskSelected(System::Object^ sender, System::EventArgs^ e);
 		Void DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e);
-		Void ResetCurrentValues();
+		Void ResetCurrentValues(System::Object^ sender, System::EventArgs^ e);
 
 		int size = 5;
+
 		array<array<int>^>^ matrix;
 		array<array<int>^>^ ways;
 		array<int>^ correctMarkers;
+
+		array<array<int>^>^ levels;
 	};
 }

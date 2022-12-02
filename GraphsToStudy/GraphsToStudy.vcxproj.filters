@@ -21,10 +21,7 @@
     <ClCompile Include="GraphsToVisualize.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="DijkstraVisualizationForm.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="DijkstraGeneration.cpp">
+    <ClCompile Include="GraphsToSolve.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,13 +29,10 @@
     <ClInclude Include="MainForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="DIjkstraVisualizationForm.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="GraphsToVisualize.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="DijkstraGeneration.h">
+    <ClInclude Include="GraphsToSolve.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
