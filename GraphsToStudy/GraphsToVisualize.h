@@ -174,6 +174,7 @@ namespace GraphsToVisualize {
 			this->showSolutionButton->Name = L"showSolutionButton";
 			this->showSolutionButton->Size = System::Drawing::Size(120, 60);
 			this->showSolutionButton->TabIndex = 6;
+			this->showSolutionButton->Enabled = false;
 			this->showSolutionButton->Text = L"Показать решение";
 			this->showSolutionButton->UseMnemonic = false;
 			this->showSolutionButton->UseVisualStyleBackColor = true;

@@ -120,7 +120,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 			}
 			else
 			{
-				dataGridView2->Rows[i]->Cells[0]->Value = correctMarkers[i];
+				dataGridView2->Rows[i]->Cells[0]->Value = correctMarkers[i - 1];
 			}
 			for (int j = 0; j < size; j++)
 			{

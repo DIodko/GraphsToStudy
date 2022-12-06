@@ -299,7 +299,9 @@ Void GraphsToVisualize::VisualizationForm::VisualizeTables()
             {
                 dataGridView2->Rows[i]->Cells[j + 1]->Value = L"∞";
             }
+            dataGridView2->Rows[i]->Cells[1]->Value = "0*";
         }
+        dataGridView2->Rows[0]->Cells[0]->Value = "-";
     }
     else if (taskName == "Алгоритм Демукрона")
     {
@@ -350,6 +352,7 @@ int GraphsToVisualize::VisualizationForm::NextNotMarked(int currentVertex, array
 // проверяет правильность решения в зависимости от типа задания
 Void GraphsToVisualize::VisualizationForm::CheckSolution(System::Object^ sender, System::EventArgs^ e)
 {
+    showSolutionButton->Enabled = true;
     String^ resultMessage = "";
     if (taskName == "Алгоритм Дейкстры")
     {
@@ -370,14 +373,12 @@ Void GraphsToVisualize::VisualizationForm::CheckSolution(System::Object^ sender,
                 }
                 if (ways[size - 1][i] != Convert::ToInt32(cellValue))
                 {
-                    resultMessage += "Неверное значение пути в " + (i + 1) + " вершину (ожидается: " + ways[size - 1][i] +
-                        ", написано: " + cellValue + ")" + Environment::NewLine;
+                    resultMessage += "Неверное значение пути в " + (i + 1) + " вершину" + Environment::NewLine;
                 }
             }
             else
             {
-                resultMessage += "Не заполнено значение пути в " + (i + 1) + " вершину (ожидается: " + ways[size - 1][i]
-                    + ")" + Environment::NewLine;
+                resultMessage += "Не заполнено значение пути в " + (i + 1) + " вершину" + Environment::NewLine;
             }
         }
     }
@@ -417,6 +418,8 @@ Void GraphsToVisualize::VisualizationForm::CheckSolution(System::Object^ sender,
 // выводит корректное решение в зависимости от типа задания
 Void GraphsToVisualize::VisualizationForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
 {
+    showSolutionButton->Enabled = false;
+    checkSolutionButton->Enabled = false;
     if (taskName == "Алгоритм Дейкстры")
     {
         for (int i = 0; i < size; i++)
@@ -427,7 +430,7 @@ Void GraphsToVisualize::VisualizationForm::ShowSolution(System::Object^ sender, 
             }
             else
             {
-                dataGridView2->Rows[i]->Cells[0]->Value = correctMarkers[i];
+                dataGridView2->Rows[i]->Cells[0]->Value = correctMarkers[i - 1];
             }
             for (int j = 0; j < size; j++)
             {
