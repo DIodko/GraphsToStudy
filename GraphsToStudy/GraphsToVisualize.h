@@ -206,7 +206,7 @@ namespace GraphsToVisualize {
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"DijkstraVisualizationForm";
-			this->Text = L"ShortestPathForm";
+			this->Text = L"Решение задания";
 			this->Shown += gcnew System::EventHandler(this, &VisualizationForm::onShown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();

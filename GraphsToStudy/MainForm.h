@@ -245,7 +245,7 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->dataGridView2);
 			this->Controls->Add(this->button1);
 			this->Name = L"MainForm";
-			this->Text = L"MainForm";
+			this->Text = L"Генерация задания";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
