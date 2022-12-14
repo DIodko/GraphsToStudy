@@ -18,11 +18,11 @@ void main(array<String^>^ args)
 // функция для решения задания, которая визуализирует текущее сформированное задание в зависимости от задания
 Void GraphsToStudy::MainForm::VisualizeTask(System::Object^ sender, System::EventArgs^ e)
 {	
-	if (comboBox2->Text == "Алгоритм Дейкстры")
+	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры")
 	{
 		GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
 	}
-	else if (comboBox2->Text == "Алгоритм Демукрона")
+	else if (comboBox2->Text == "Поиск функции уровней графа с помощью Алгоритма Демукрона")
 	{
 		GraphsToVisualize::VisualizeDemoucron(matrix, size, levels);
 	}
@@ -39,7 +39,7 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 
 	matrix = gcnew array<array<int>^>(size);
 
-	if (comboBox2->Text == "Алгоритм Дейкстры")
+	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры")
 	{
 		ways = gcnew array<array<int>^>(size);
 		correctMarkers = gcnew array<int>(size);
@@ -47,7 +47,7 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 		GraphsToSolve::GenerateMatrix(matrix, size, true);
 		GraphsToSolve::SolveDijkstra(matrix, size, ways, correctMarkers);
 	}
-	else if (comboBox2->Text == "Алгоритм Демукрона")
+	else if (comboBox2->Text == "Поиск функции уровней графа с помощью Алгоритма Демукрона")
 	{
 		levels = gcnew array<array<int>^>(size);
 
@@ -92,7 +92,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 	dataGridView2->Columns->Clear();
 	int GridColumnWidth = 25;
 
-	if (comboBox2->Text == "Алгоритм Дейкстры")
+	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры")
 	{
 		dataGridView2->TopLeftHeaderCell->Value = "Итерация";
 		dataGridView2->Height = 22 * size + 20;
@@ -138,7 +138,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 			}
 		}
 	}
-	else if (comboBox2->Text == "Алгоритм Демукрона")
+	else if (comboBox2->Text == "Поиск функции уровней графа с помощью Алгоритма Демукрона")
 	{
 		dataGridView2->TopLeftHeaderCell->Value = "Уровень";
 		dataGridView2->Height = 20;
