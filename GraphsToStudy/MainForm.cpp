@@ -88,6 +88,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 {
 	this->label4->Visible = true;
 	this->button3->Enabled = false;
+	this->button1->Enabled = false;
 
 	dataGridView2->Columns->Clear();
 	int GridColumnWidth = 25;
