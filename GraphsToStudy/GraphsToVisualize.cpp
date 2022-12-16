@@ -422,7 +422,7 @@ Void GraphsToVisualize::VisualizationForm::CheckSolution(System::Object^ sender,
     }
     else if (taskName == "Алгоритм Демукрона")
     {
-        for (int i = 0; levels[i] != nullptr && levels[i]->Length != 0; i++) // проход по строчкам для сравнения заполненных в них значений с массивом уровней
+        for (int i = 0; i < levels->Length && levels[i] != nullptr && levels[i]->Length != 0; i++) // проход по строчкам для сравнения заполненных в них значений с массивом уровней
         {
             String^ cellValue = (dataGridView2->Rows[i]->Cells[0]->Value != nullptr) ? dataGridView2->Rows[i]->Cells[0]->Value->ToString() : "";
             for(int j = 0; j < levels[i]->Length; j++)
@@ -488,7 +488,7 @@ Void GraphsToVisualize::VisualizationForm::ShowSolution(System::Object^ sender, 
     }
     else if (taskName == "Алгоритм Демукрона")
     {
-        for (int i = 0; levels[i] != nullptr && levels[i]->Length != 0; i++)
+        for (int i = 0; i < levels->Length && levels[i] != nullptr && levels[i]->Length != 0; i++)
         {
             dataGridView2->Rows[i]->Cells[0]->Value = levels[i][0].ToString();
 

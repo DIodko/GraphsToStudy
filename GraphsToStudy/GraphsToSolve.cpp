@@ -14,7 +14,6 @@ void GraphsToSolve::SolveDemoucron(array<array<int>^>^ matrix, int size, array<a
 		{
 			Array::Resize(levels[levelIndex], 1);
 			levels[0][0] = 1; // в массиве дл€ первого уровн€ номер первой вершины
-			//Trace::WriteLine("¬ершина 1 добавлена в уровень 0");
 		}
 		else
 		{
@@ -24,7 +23,7 @@ void GraphsToSolve::SolveDemoucron(array<array<int>^>^ matrix, int size, array<a
 				int vertexIndex = levels[prevLevelIndex][i] - 1;
 				for (int j = 0; j < size - 1; j++) // цикл обхода строки в матрице смежности дл€ вершины предудыщего уровн€
 				{
-					if (matrix[vertexIndex][j] > 0 && vertexIndex != j && !IsInLevels(levels, j, levelIndex + 1)) // учитываем уровень, который строитс€ сейчас, поскольку в него может быть уже добавлена текуща€ вершина
+					if (matrix[vertexIndex][j] > 0 && vertexIndex != j && !IsInLevels(levels, j, levelIndex + 1) && AccessibleOnlyFromPrevLevel(matrix, levels, prevLevelIndex, j, size)) // учитываем уровень, который строитс€ сейчас, поскольку в него может быть уже добавлена текуща€ вершина
 					{
 						AddToLevel(levels, levelIndex, j);
 						addedVerticesAmount++;
@@ -40,6 +39,38 @@ void GraphsToSolve::SolveDemoucron(array<array<int>^>^ matrix, int size, array<a
 			}
 		}
 	}
+}
+
+bool GraphsToSolve::AccessibleOnlyFromPrevLevel(array<array<int>^>^ matrix, array<array<int>^>^ levels, int prevLevelIndex, int vertexIndex, int size)
+{
+	// проходимс€ по матрице
+	for (int i = 0; i < size; i++)
+	{
+		// если в элемент можно попасть из матрицы
+		if (matrix[i][vertexIndex] > 0)
+		{
+			bool existsInLevels = false;
+			// элемент должен быть хот€ бы в одном предыдущем массиве уровней
+			for (int k = 0; k < prevLevelIndex + 1; k++)
+			{
+				// провер€ем, есть ли i в levels[prevLevelIndex]
+				bool existsInLevel = false;
+				for (int j = 0; j < levels[k]->Length; j++)
+				{
+					if (levels[k][j] == i + 1)
+						existsInLevel = true;
+				}
+				existsInLevels = existsInLevel || existsInLevels;
+			}
+			// если нету, значит в vertexIndex можно попасть из элемента
+			if (!existsInLevels)
+			{
+				Trace::WriteLine("¬ " + (vertexIndex + 1) + " можно попасть из элемента " + (i + 1) + ", которого нет в предыдущих уровн€х");
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 // добавл€ет вершину на уровень, используетс€ в SolveDemoucron
@@ -143,15 +174,13 @@ void GraphsToSolve::GenerateDijkstra(array<array<int>^>^ matrix, int size)
 	}
 	else // добавить случайные св€зи, если несколько маршрутов
 	{
+		int numOfConnections = 5 - numOfRoutes; // дл€ 2 путей будет 3, дл€ 3 будет 2, дл€ 4 будет 1
 		for (int i = 0; i < numOfRoutes; i++) { // типа проход по маршрутам
 			int j = 0;
 			int addedConnections = 0;
-			int routeIndex = 0;
-			int vertexIndex = 0;
-			int numOfConnections = 4 - numOfRoutes + 1; // дл€ 2 путей будет 3, дл€ 3 будет 2, дл€ 4 будет 1
 			while (addedConnections < numOfConnections && j < routes[i]->Length - 1) {
-				routeIndex = rand->Next(0, numOfRoutes); // св€зь с любым маршрутом
-				vertexIndex = rand->Next(0, routes[routeIndex]->Length - 1);
+				int routeIndex = rand->Next(0, numOfRoutes); // св€зь с любым маршрутом
+				int vertexIndex = rand->Next(0, routes[routeIndex]->Length - 1);
 
 				if (matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 && routes[i][j] != routes[routeIndex][vertexIndex])
 				{
@@ -194,39 +223,77 @@ void GraphsToSolve::GenerateDemoucron(array<array<int>^>^ matrix, int size)
 	}
 	else // добавить случайные св€зи, если несколько маршрутов
 	{
+		int numOfConnections = 5 - numOfRoutes; // дл€ 2 путей будет 3, дл€ 3 будет 2, дл€ 4 будет 1
+		array<int>^ directions = gcnew array<int>(size);
+
+		for (int i = 0; i < size; i++)
+		{
+			directions[i] = rand->Next(0, 2);
+		}
+
 		for (int i = 0; i < numOfRoutes; i++) { // типа проход по маршрутам
 			int j = 0;
+			int direction = directions[j];
 			int addedConnections = 0;
-			int routeIndex = 0;
-			int vertexIndex = 0;
-			int numOfConnections = 4 - numOfRoutes + 1; // дл€ 2 путей будет 3, дл€ 3 будет 2, дл€ 4 будет 1
 			while (addedConnections < numOfConnections && j < routes[i]->Length - 1) 
 			{
-				// блок рисует только на более вершины на следующих уровн€х
-				routeIndex = rand->Next(0, numOfRoutes); 
-				vertexIndex = (j < routes[routeIndex]->Length - 1) ? rand->Next(j, routes[routeIndex]->Length - 1) : -1;
+				direction = directions[j];
 				// рисуем к вершине на текущем уровне
-				if (vertexIndex == j)
+				if (rand->Next(0, 2) == 0)
 				{
-
+					int routeIndex = rand->Next(0, numOfRoutes);
+					int vertexIndex = (j < routes[routeIndex]->Length - 1) ? j : -1;
+					// тут строим в одну сторону
+					if (vertexIndex != -1 &&
+						matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 &&
+						matrix[routes[routeIndex][vertexIndex]][routes[i][j]] == 0 &&
+						routes[i][j] != routes[routeIndex][vertexIndex])
+					{
+						if (direction)
+						{
+							Trace::WriteLine("—троим снизу вверх");
+							if (i >= routeIndex)
+							{
+								Trace::WriteLine("—троим из " + (routes[i][j]) + " в " + (routes[routeIndex][vertexIndex]));
+								matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = 1;
+							}
+							else
+							{
+								Trace::WriteLine("—троим из " + (routes[routeIndex][vertexIndex]) + " в " + (routes[i][j]));
+								matrix[routes[routeIndex][vertexIndex]][routes[i][j]] = 1;
+							}
+						}
+						else
+						{
+							Trace::WriteLine("—троим сверху вниз");
+							if (i >= routeIndex)
+							{
+								Trace::WriteLine("—троим из " + (routes[routeIndex][vertexIndex]) + " в " + (routes[i][j]));
+								matrix[routes[routeIndex][vertexIndex]][routes[i][j]] = 1;
+							}
+							else
+							{
+								Trace::WriteLine("—троим из " + (routes[i][j]) + " в " + (routes[routeIndex][vertexIndex]));
+								matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = 1;
+							}
+						}
+						addedConnections++;
+					}
 				}
-				else if (vertexIndex != -1 && matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 && routes[i][j] != routes[routeIndex][vertexIndex] && matrix[routes[routeIndex][vertexIndex]][routes[i][j]] == 0)
+				else // рисуем к вершине правее
 				{
-					matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = 1;
-					addedConnections++;
+					int routeIndex = rand->Next(0, numOfRoutes);
+					int vertexIndex = (j + 1 < routes[routeIndex]->Length - 1) ? rand->Next(j + 1, routes[routeIndex]->Length - 1) : -1;
+					if (vertexIndex != -1 && 
+							matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 && 
+							matrix[routes[routeIndex][vertexIndex]][routes[i][j]] == 0 &&
+							routes[i][j] != routes[routeIndex][vertexIndex])
+					{
+						matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = 1;
+						addedConnections++;
+					}
 				}
 				j++;
-
-				//routeIndex = rand->Next(0, numOfRoutes); // св€зь с любым маршрутом
-				//vertexIndex = rand->Next(0, routes[routeIndex]->Length - 1);
-
-				//if (matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 && routes[i][j] != routes[routeIndex][vertexIndex])
-				//{
-				//	matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = 1;
-				//	matrix[routes[routeIndex][vertexIndex]][routes[i][j]] = matrix[routes[i][j]][routes[routeIndex][vertexIndex]];
-				//	addedConnections++;
-				//}
-				//j++;
 			}
 		}
 	}
@@ -239,19 +306,23 @@ int GraphsToSolve::GenerateRoutes(array<array<int>^>^ routes, int size)
 	int numOfRoutes = 0;
 	int verticesOnRootsAmount = 0;
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++) 
+	{
 		vertices[i] = 1;
 	}
 
-	for (int i = 0; i < size && verticesOnRootsAmount < size - 2; i++) {
+	for (int i = 0; i < size && verticesOnRootsAmount < size - 2; i++) 
+	{
 		routes[i] = gcnew array<int>(0);
 		numOfRoutes++;
 		int j = 0;
 		bool routeDone = false;
-		while (!routeDone) {
+		while (!routeDone) 
+		{
 			int probability = rand->Next(0, 100);
 			int num = 0;
-			if ((probability < 50 && j < 4) || j < size / 3) {
+			if ((probability < 50 && j < 4) || j < size / 3) 
+			{
 				num = rand->Next(1, size - 1);
 				while (vertices[num] == 0)
 				{
@@ -263,7 +334,8 @@ int GraphsToSolve::GenerateRoutes(array<array<int>^>^ routes, int size)
 				j++;
 				verticesOnRootsAmount++;
 			}
-			if (verticesOnRootsAmount == size - 2 || (probability >= 50 && j >= size / 3 - 1) || j >= 4) {
+			if (verticesOnRootsAmount == size - 2 || (probability >= 50 && j >= size / 3 - 1) || j >= 4) 
+			{
 				Array::Resize(routes[i], routes[i]->Length + 1);
 				routes[i][j] = size - 1;
 				routeDone = true;

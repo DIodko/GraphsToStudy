@@ -156,7 +156,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 		dataGridView2->Columns[0]->Width = 150;
 		dataGridView2->Columns[0]->SortMode = DataGridViewColumnSortMode::NotSortable;
 
-		for (int i = 0; levels[i] != nullptr && levels[i]->Length != 0; i++)
+		for (int i = 0; i < levels->Length && levels[i] != nullptr && levels[i]->Length != 0; i++)
 		{
 			dataGridView2->Height += 22;	
 			dataGridView2->Rows->Add();
