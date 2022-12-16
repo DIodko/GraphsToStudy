@@ -22,23 +22,23 @@ namespace GraphsToVisualize {
 			//TODO: добавьте код конструктора
 			//
 		}
-		VisualizationForm(array<array<int>^>^ m, int s, array<array<int>^>^ w, array<int>^ cm)
+		VisualizationForm(array<array<int>^>^ _matrix, int _size, array<array<int>^>^ _ways, array<int>^ _correctMarkers)
 		{
-			matrix = m;
-			size = s;
-			ways = w;
-			correctMarkers = cm;
+			matrix = _matrix;
+			size = _size;
+			ways = _ways;
+			correctMarkers = _correctMarkers;
 			taskName = "Алгоритм Дейкстры";
 			InitializeComponent();
 			//
 			//TODO: добавьте код конструктора
 			//
 		}
-		VisualizationForm(array<array<int>^>^ m, int s, array<array<int>^>^ l)
+		VisualizationForm(array<array<int>^>^ _matrix, int _size, array<array<int>^>^ _levels)
 		{
-			matrix = m;
-			size = s;
-			levels = l;
+			matrix = _matrix;
+			size = _size;
+			levels = _levels;
 			taskName = "Алгоритм Демукрона";
 			InitializeComponent();
 			//
@@ -65,7 +65,6 @@ namespace GraphsToVisualize {
 
 	private: System::Windows::Forms::Button^ showSolutionButton;
 	private: System::Windows::Forms::TextBox^ textBox1;
-
 
 
 
@@ -102,7 +101,8 @@ namespace GraphsToVisualize {
 			// 
 			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->pictureBox1->Location = System::Drawing::Point(12, 12);
-			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Name = L"pictureBox1";			
+			this->pictureBox1->BackColor = System::Drawing::Color::White;
 			this->pictureBox1->Size = System::Drawing::Size(1200, 720);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
@@ -125,7 +125,7 @@ namespace GraphsToVisualize {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Calibri", 14));
+			this->label1->Font = (gcnew System::Drawing::Font(L"Calibri", 14, System::Drawing::FontStyle::Bold));
 			this->label1->Location = System::Drawing::Point(1218, 12);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(173, 23);
@@ -149,7 +149,7 @@ namespace GraphsToVisualize {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Calibri", 14));
+			this->label2->Font = (gcnew System::Drawing::Font(L"Calibri", 14, System::Drawing::FontStyle::Bold));
 			this->label2->Location = System::Drawing::Point(1219, 344);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(81, 23);
@@ -158,6 +158,7 @@ namespace GraphsToVisualize {
 			// 
 			// checkSolutionButton
 			// 
+			this->checkSolutionButton->BackColor = System::Drawing::Color::White;
 			this->checkSolutionButton->Font = (gcnew System::Drawing::Font(L"Calibri", 14));
 			this->checkSolutionButton->Location = System::Drawing::Point(1218, 740);
 			this->checkSolutionButton->Name = L"checkSolutionButton";
@@ -169,6 +170,7 @@ namespace GraphsToVisualize {
 			// 
 			// showSolutionButton
 			// 
+			this->showSolutionButton->BackColor = System::Drawing::Color::White;
 			this->showSolutionButton->Font = (gcnew System::Drawing::Font(L"Calibri", 14));
 			this->showSolutionButton->Location = System::Drawing::Point(1372, 740);
 			this->showSolutionButton->Name = L"showSolutionButton";
@@ -187,7 +189,8 @@ namespace GraphsToVisualize {
 			this->textBox1->Location = System::Drawing::Point(12, 750);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->ReadOnly = true;
+			this->textBox1->ReadOnly = true; 
+			this->textBox1->ScrollBars = ScrollBars::Vertical;
 			this->textBox1->Size = System::Drawing::Size(500, 197);
 			this->textBox1->TabIndex = 7;
 			this->textBox1->Visible = false;
@@ -197,6 +200,7 @@ namespace GraphsToVisualize {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1800, 959);
+			this->BackColor = System::Drawing::Color::FromArgb(179, 229, 252);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->showSolutionButton);
 			this->Controls->Add(this->checkSolutionButton);

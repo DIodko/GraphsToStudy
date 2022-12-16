@@ -1,4 +1,5 @@
 ﻿#include "GraphsToVisualize.h"
+#include <math.h>
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -16,10 +17,12 @@ Void GraphsToVisualize::VisualizationForm::onShown(System::Object^ sender, Syste
 // визуализирует граф
 Void GraphsToVisualize::VisualizationForm::VisualizeGraph(array<Vertex^>^ vertices) // беру первую вершину, строю ее в начальной точке, прохожусь по ее строке в матрице и строю вершины, в которые из нее можно попасть 
 {
+    bool drawArrows = (taskName->Contains("Демукрон")) ? true : false;
+
     int radius = diameter / 2;
     int offset = radius / 2 - 5;
     pictureBox1->Image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
-    Pen^ pen = gcnew Pen(Color::Black, 1.0f);
+    Pen^ pen = gcnew Pen(Color::Black, 2.0f);
     Brush^ brush = Brushes::Black;
     Brush^ whiteBrush = Brushes::White;
     Drawing::Font^ font = gcnew Drawing::Font("Arial", 14);
@@ -27,12 +30,47 @@ Void GraphsToVisualize::VisualizationForm::VisualizeGraph(array<Vertex^>^ vertic
 
     for (int i = 0; i < size; i++)
     {
-        for (int j = i + 1; j < size; j++)
+        for (int j = 0; j < size; j++)
         {
             if (matrix[i][j] > 0)
             {
                 graph->DrawLine(pen, vertices[i]->X + radius, vertices[i]->Y + radius,
                     vertices[j]->X + radius, vertices[j]->Y + radius);
+                if (drawArrows)
+                {
+                    // найти длину начальной линии
+                    int deltaX = (vertices[j]->X - vertices[i]->X);
+                    int deltaY = (vertices[j]->Y - vertices[i]->Y);
+                    float length = sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                    // найти отношение длины к разнице игриков
+                    float ux = deltaX / length;
+                    float uy = deltaY / length;
+
+                    // находим новые значения разницы между координатами
+                    length -= radius;
+                    int newDeltaX = length * ux;
+                    int newDeltaY = length * uy;
+
+                    int newX = vertices[i]->X + newDeltaX + radius;
+                    int newY = vertices[i]->Y + newDeltaY + radius;
+
+                    ux = newDeltaX / length;
+                    uy = newDeltaY / length;
+
+                    float vx = -uy;
+                    float vy = ux;
+
+                    array<Point>^ arrow = gcnew array<Point>(3);
+                    arrow[0] = Point(newX, newY);
+                    arrow[1] = Point(round(newX - 20 * ux + 5 * vx),
+                                      round(newY - 20 * uy + 5 * vy));
+                    arrow[2] = Point(round(newX - 20 * ux - 5 * vx),
+                                      round(newY - 20 * uy - 5 * vy));
+
+                    graph->FillPolygon(brush, arrow);
+                    graph->DrawPolygon(pen, arrow);
+                }
             }
         }
     }
@@ -97,7 +135,7 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
             Y += 100;
             if (currentVertex == -1) // если и для первой вершины уже все помечены, найти любую непомеченную
             {
-                //Trace::WriteLine("Не можем попасть в конец или в непомеченную");
+                ////Trace::WriteLine("Не можем попасть в конец или в непомеченную");
                 Y -= 100;
                 for (int i = 0; i < size; i++) // обнуление смещений
                 {
@@ -118,7 +156,7 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
         {
             X = xDefaultValue;
             Y = maxY + 100;
-            //Trace::WriteLine("Предотвращена линия из 1 через весь граф");
+            ////Trace::WriteLine("Предотвращена линия из 1 через весь граф");
             for (int i = 0; i < size; i++)
             {
                 verticesOffsets[i] = 0;
@@ -129,7 +167,7 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
         {
             markedVertices[currentVertex] = 0;
             markedAmount--;
-            //Trace::WriteLine("Пришли в конец");
+            ////Trace::WriteLine("Пришли в конец");
             for (int i = 0; i < size; i++)
             {
                 verticesOffsets[i] = 0;
@@ -137,7 +175,7 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
             currentVertex = 0;
             X = xDefaultValue;
             Y = maxY + 100;
-            //Trace::WriteLine("Y: " + Y);
+            ////Trace::WriteLine("Y: " + Y);
         }
         else // стандартное заполнение значений для обычной вершины
         {
@@ -152,15 +190,15 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
                 {
                     Y += 100;
                     X += 200;
-                    //Trace::WriteLine("Проблема одинаковых координат предотвращена");
+                    ////Trace::WriteLine("Проблема одинаковых координат предотвращена");
                 }
             }
             vertices[currentVertex] = gcnew Vertex;
             vertices[currentVertex]->Name = (currentVertex + 1).ToString();
             vertices[currentVertex]->X = X;
             vertices[currentVertex]->Y = Y;
-            //Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена со смещением " + verticesOffsets[currentVertex]);
-            //Trace::WriteLine("Созданы координаты " + (currentVertex + 1) + " вершины, Х: " + X + ", Y: " + Y);
+            ////Trace::WriteLine("Вершина " + (currentVertex + 1) + " добавлена со смещением " + verticesOffsets[currentVertex]);
+            ////Trace::WriteLine("Созданы координаты " + (currentVertex + 1) + " вершины, Х: " + X + ", Y: " + Y);
             // проверка на принадлежность добавленной вершины к уровню по координатам
             if ((X - xDefaultValue) % xIncValue == 0 && X != 20)
             {
@@ -178,12 +216,12 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
     // отладочный вывод уровней
     for (int i = 0; i < amountOfLevels; i++)
     {
-        //Trace::Write((i + 1) + ": ");
+        ////Trace::Write((i + 1) + ": ");
         for (int j = 0; j < levels[i]->Length; j++)
         {
-            //Trace::Write((levels[i][j] + 1) + " ");
+            ////Trace::Write((levels[i][j] + 1) + " ");
         }
-        //Trace::WriteLine("");
+        ////Trace::WriteLine("");
     }
 
     AddOffsetsBasedOnLevels(levels, vertices, maxX, amountOfLevels);
@@ -216,17 +254,17 @@ void GraphsToVisualize::VisualizationForm::AddOffsetsBasedOnLevels(array<array<i
         if (length % 2 == 0)
         {
             vertices[levels[i][length / 2 - 1]]->X += levelOffset;
-            //Trace::WriteLine("Для вершины " + (levels[i][length / 2 - 1] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
+            ////Trace::WriteLine("Для вершины " + (levels[i][length / 2 - 1] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
             maxX = (vertices[levels[i][length / 2 - 1]]->X > maxX) ? vertices[levels[i][length / 2 - 1]]->X : maxX;
 
             vertices[levels[i][length / 2]]->X += levelOffset;
-            //Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
+            ////Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
             maxX = (vertices[levels[i][length / 2]]->X > maxX) ? vertices[levels[i][length / 2]]->X : maxX;
         }
         else
         {
             vertices[levels[i][length / 2]]->X += levelOffset;
-            //Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
+            ////Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
             maxX = (vertices[levels[i][length / 2]]->X > maxX) ? vertices[levels[i][length / 2]]->X : maxX;
         }
 
@@ -237,11 +275,11 @@ void GraphsToVisualize::VisualizationForm::AddOffsetsBasedOnLevels(array<array<i
 
             vertices[levels[i][length - 1 - j]]->X += offset + levelOffset;
             maxX = (vertices[levels[i][length - 1 - j]]->X > maxX) ? vertices[levels[i][length - 1 - j]]->X : maxX;
-            //Trace::WriteLine("Для вершины " + (levels[i][length - 1 - j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
+            ////Trace::WriteLine("Для вершины " + (levels[i][length - 1 - j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
 
             vertices[levels[i][j]]->X += offset + levelOffset;
             maxX = (vertices[levels[i][j]]->X > maxX) ? vertices[levels[i][j]]->X : maxX;
-            //Trace::WriteLine("Для вершины " + (levels[i][j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
+            ////Trace::WriteLine("Для вершины " + (levels[i][j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
         }
     }
 }
@@ -314,7 +352,7 @@ Void GraphsToVisualize::VisualizationForm::VisualizeTables()
         dataGridView2->Columns[0]->Width = 150;
         dataGridView2->Columns[0]->SortMode = DataGridViewColumnSortMode::NotSortable;
 
-        for (int i = 0; levels[i] != nullptr && levels[i]->Length != 0; i++)
+        for (int i = 0; i < levels->Length && levels[i] != nullptr && levels[i]->Length != 0; i++)
         {
             dataGridView2->Height += 22;
             dataGridView2->Rows->Add();

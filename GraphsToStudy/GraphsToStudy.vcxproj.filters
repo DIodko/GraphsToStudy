@@ -24,6 +24,9 @@
     <ClCompile Include="GraphsToSolve.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="TheoryForm.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -33,6 +36,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="GraphsToSolve.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="TheoryForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,7 +14,7 @@ void GraphsToSolve::SolveDemoucron(array<array<int>^>^ matrix, int size, array<a
 		{
 			Array::Resize(levels[levelIndex], 1);
 			levels[0][0] = 1; // в массиве дл€ первого уровн€ номер первой вершины
-			Trace::WriteLine("¬ершина 1 добавлена в уровень 0");
+			//Trace::WriteLine("¬ершина 1 добавлена в уровень 0");
 		}
 		else
 		{
@@ -34,7 +34,7 @@ void GraphsToSolve::SolveDemoucron(array<array<int>^>^ matrix, int size, array<a
 							levels[levelIndex + 1] = gcnew array<int>(0);
 							AddToLevel(levels, levelIndex + 1, size - 1);
 						}
-						Trace::WriteLine("¬ершина " + (j + 1).ToString() + " добавлена в уровень " + levelIndex.ToString());
+						//Trace::WriteLine("¬ершина " + (j + 1).ToString() + " добавлена в уровень " + levelIndex.ToString());
 					}
 				}
 			}
@@ -109,55 +109,17 @@ void GraphsToSolve::SolveDijkstra(array<array<int>^>^ matrix, int size, array<ar
 }
 
 // формирует матрицу в зависимости от аргументов
-void GraphsToSolve::GenerateMatrix(array<array<int>^>^ matrix, int size, bool generateWithValues)
+void GraphsToSolve::GenerateDijkstra(array<array<int>^>^ matrix, int size)
 {
-	array<int>^ vertices = gcnew array<int>(size);
 	array<array<int>^>^ routes = gcnew array<array<int>^>(size);
 	Random^ rand = gcnew Random();
-	int maxValue = 0;
+	int maxValue = 15;
 	for (int i = 0; i < size; i++) {
 		matrix[i] = gcnew array<int>(size);
-		vertices[i] = 1;
 	}
 
-	if (generateWithValues)
-	{
-		maxValue = 15;
-	}
-	else
-	{
-		maxValue = 2;
-	}
 	//создание маршрутов
-	int numOfRoutes = 0;
-	int verticesOnRootsAmount = 0;
-	for (int i = 0; i < size && verticesOnRootsAmount < size - 2; i++) {
-		routes[i] = gcnew array<int>(0);
-		numOfRoutes++;
-		int j = 0;
-		bool routeDone = false;
-		while (!routeDone) {
-			int probability = rand->Next(0, 100);
-			int num = 0;
-			if ((probability < 50 && j < 4) || j < size / 3) {
-				num = rand->Next(1, size - 1);
-				while (vertices[num] == 0)
-				{
-					num = rand->Next(1, size - 1);
-				}
-				Array::Resize(routes[i], routes[i]->Length + 1);
-				routes[i][j] = num;
-				vertices[num] = 0;
-				j++;
-				verticesOnRootsAmount++;
-			}
-			if (verticesOnRootsAmount == size - 2 || (probability >= 50 && j >= size / 3 - 1) || j >= 4) {
-				Array::Resize(routes[i], routes[i]->Length + 1);
-				routes[i][j] = size - 1;
-				routeDone = true;
-			}
-		}
-	}
+	int numOfRoutes = GenerateRoutes(routes, size);
 
 	//заполнение матрицы
 	for (int i = 0; i < numOfRoutes; i++) { // цикл дл€ обхода путей
@@ -201,4 +163,112 @@ void GraphsToSolve::GenerateMatrix(array<array<int>^>^ matrix, int size, bool ge
 			}
 		}
 	}
+}
+
+void GraphsToSolve::GenerateDemoucron(array<array<int>^>^ matrix, int size)
+{
+	array<array<int>^>^ routes = gcnew array<array<int>^>(size);
+	Random^ rand = gcnew Random();
+	for (int i = 0; i < size; i++) {
+		matrix[i] = gcnew array<int>(size);
+	}
+
+	int numOfRoutes = GenerateRoutes(routes, size);
+
+	//заполнение матрицы
+	for (int i = 0; i < numOfRoutes; i++) { // цикл дл€ обхода путей
+		matrix[0][routes[i][0]] = 1;
+		for (int j = 0; j < routes[i]->Length - 1; j++) { // цикл дл€ обхода пути
+			matrix[routes[i][j]][routes[i][j + 1]] = 1;
+		}
+	}
+
+	if (numOfRoutes == 1) // если один маршрут, добавить случайную св€зь
+	{
+		int i = rand->Next(1, size - 2);
+		while (matrix[routes[0][0]][routes[0][i]] != 0)
+		{
+			i = rand->Next(1, size - 2);
+		}
+		matrix[routes[0][0]][routes[0][i]] = 1;
+	}
+	else // добавить случайные св€зи, если несколько маршрутов
+	{
+		for (int i = 0; i < numOfRoutes; i++) { // типа проход по маршрутам
+			int j = 0;
+			int addedConnections = 0;
+			int routeIndex = 0;
+			int vertexIndex = 0;
+			int numOfConnections = 4 - numOfRoutes + 1; // дл€ 2 путей будет 3, дл€ 3 будет 2, дл€ 4 будет 1
+			while (addedConnections < numOfConnections && j < routes[i]->Length - 1) 
+			{
+				// блок рисует только на более вершины на следующих уровн€х
+				routeIndex = rand->Next(0, numOfRoutes); 
+				vertexIndex = (j < routes[routeIndex]->Length - 1) ? rand->Next(j, routes[routeIndex]->Length - 1) : -1;
+				// рисуем к вершине на текущем уровне
+				if (vertexIndex == j)
+				{
+
+				}
+				else if (vertexIndex != -1 && matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 && routes[i][j] != routes[routeIndex][vertexIndex] && matrix[routes[routeIndex][vertexIndex]][routes[i][j]] == 0)
+				{
+					matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = 1;
+					addedConnections++;
+				}
+				j++;
+
+				//routeIndex = rand->Next(0, numOfRoutes); // св€зь с любым маршрутом
+				//vertexIndex = rand->Next(0, routes[routeIndex]->Length - 1);
+
+				//if (matrix[routes[i][j]][routes[routeIndex][vertexIndex]] == 0 && routes[i][j] != routes[routeIndex][vertexIndex])
+				//{
+				//	matrix[routes[i][j]][routes[routeIndex][vertexIndex]] = 1;
+				//	matrix[routes[routeIndex][vertexIndex]][routes[i][j]] = matrix[routes[i][j]][routes[routeIndex][vertexIndex]];
+				//	addedConnections++;
+				//}
+				//j++;
+			}
+		}
+	}
+}
+
+int GraphsToSolve::GenerateRoutes(array<array<int>^>^ routes, int size)
+{
+	array<int>^ vertices = gcnew array<int>(size);
+	Random^ rand = gcnew Random();
+	int numOfRoutes = 0;
+	int verticesOnRootsAmount = 0;
+
+	for (int i = 0; i < size; i++) {
+		vertices[i] = 1;
+	}
+
+	for (int i = 0; i < size && verticesOnRootsAmount < size - 2; i++) {
+		routes[i] = gcnew array<int>(0);
+		numOfRoutes++;
+		int j = 0;
+		bool routeDone = false;
+		while (!routeDone) {
+			int probability = rand->Next(0, 100);
+			int num = 0;
+			if ((probability < 50 && j < 4) || j < size / 3) {
+				num = rand->Next(1, size - 1);
+				while (vertices[num] == 0)
+				{
+					num = rand->Next(1, size - 1);
+				}
+				Array::Resize(routes[i], routes[i]->Length + 1);
+				routes[i][j] = num;
+				vertices[num] = 0;
+				j++;
+				verticesOnRootsAmount++;
+			}
+			if (verticesOnRootsAmount == size - 2 || (probability >= 50 && j >= size / 3 - 1) || j >= 4) {
+				Array::Resize(routes[i], routes[i]->Length + 1);
+				routes[i][j] = size - 1;
+				routeDone = true;
+			}
+		}
+	}
+	return numOfRoutes;
 }

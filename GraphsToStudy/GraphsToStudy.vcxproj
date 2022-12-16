@@ -123,11 +123,15 @@
     <ClCompile Include="GraphsToSolve.cpp" />
     <ClCompile Include="GraphsToVisualize.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="TheoryForm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphsToSolve.h" />
     <ClInclude Include="GraphsToVisualize.h" />
     <ClInclude Include="MainForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="TheoryForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿#include "MainForm.h"
 #include "GraphsToSolve.h"
 #include "GraphsToVisualize.h"
+#include "TheoryForm.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -44,14 +45,14 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 		ways = gcnew array<array<int>^>(size);
 		correctMarkers = gcnew array<int>(size);
 
-		GraphsToSolve::GenerateMatrix(matrix, size, true);
+		GraphsToSolve::GenerateDijkstra(matrix, size);
 		GraphsToSolve::SolveDijkstra(matrix, size, ways, correctMarkers);
 	}
 	else if (comboBox2->Text == "Поиск функции уровней графа с помощью Алгоритма Демукрона")
 	{
 		levels = gcnew array<array<int>^>(size);
 
-		GraphsToSolve::GenerateMatrix(matrix, size, false);
+		GraphsToSolve::GenerateDemoucron(matrix, size);
 		GraphsToSolve::SolveDemoucron(matrix, size, levels);
 	}
 
@@ -81,6 +82,12 @@ Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventAr
 
 	dataGridView2->Visible = false;
 	dataGridView1->Visible = true;
+}
+
+Void GraphsToStudy::MainForm::ShowTheory(System::Object^ sender, System::EventArgs^ e)
+{
+	GraphsToStudy::TheoryForm^ theoryForm = gcnew GraphsToStudy::TheoryForm(comboBox2->Text);
+	theoryForm->Show();
 }
 
 // функция, которая выводит решение по нажатию кнопки разными способами в зависимости от задания
@@ -190,5 +197,3 @@ Void GraphsToStudy::MainForm::DifferentVertexAmountSelected(System::Object^ send
 
 	ResetCurrentValues(sender, e);
 }
-
-

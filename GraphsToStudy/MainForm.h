@@ -36,7 +36,6 @@ namespace GraphsToStudy {
 			}
 		}
 	private: System::Windows::Forms::Button^ button1;
-
 	private: System::Windows::Forms::ComboBox^ comboBox1;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::ComboBox^ comboBox2;
@@ -45,6 +44,7 @@ namespace GraphsToStudy {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
 	protected:
@@ -71,6 +71,7 @@ namespace GraphsToStudy {
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
@@ -114,19 +115,6 @@ namespace GraphsToStudy {
 			this->dataGridView2->Size = System::Drawing::Size(240, 150);
 			this->dataGridView2->TabIndex = 9;
 			this->dataGridView2->Visible = false;
-			// 
-			// button1
-			// 
-			this->button1->Enabled = false;
-			this->button1->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->button1->Location = System::Drawing::Point(703, 537);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(150, 60);
-			this->button1->TabIndex = 0;
-			this->button1->Text = L"Решить самостоятельно";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MainForm::VisualizeTask);
 			// 
 			// comboBox1
 			// 
@@ -188,31 +176,61 @@ namespace GraphsToStudy {
 			// 
 			this->button2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button2->Location = System::Drawing::Point(285, 537);
+			this->button2->Location = System::Drawing::Point(200, 537);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(150, 60);
 			this->button2->TabIndex = 6;
 			this->button2->Text = L"Сформировать задание";
+			this->button2->BackColor = System::Drawing::Color::White;
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::ShowMatrix);
+			// 
+			// button4
+			// 
+			this->button4->Enabled = true;
+			this->button4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button4->Location = System::Drawing::Point(400, 537);
+			this->button4->Name = L"button3";
+			this->button4->Size = System::Drawing::Size(150, 60);
+			this->button4->TabIndex = 7;
+			this->button4->BackColor = System::Drawing::Color::White;
+			this->button4->Text = L"Показать теорию";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MainForm::ShowTheory);
 			// 
 			// button3
 			// 
 			this->button3->Enabled = false;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button3->Location = System::Drawing::Point(492, 537);
+			this->button3->Location = System::Drawing::Point(600, 537);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(150, 60);
 			this->button3->TabIndex = 7;
 			this->button3->Text = L"Показать решение";
+			this->button3->BackColor = System::Drawing::Color::White;
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &MainForm::ShowSolution);
+			// 
+			// button1
+			// 
+			this->button1->Enabled = false;
+			this->button1->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1->Location = System::Drawing::Point(800, 537);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(150, 60);
+			this->button1->TabIndex = 0;
+			this->button1->Text = L"Решить самостоятельно";
+			this->button1->BackColor = System::Drawing::Color::White;
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MainForm::VisualizeTask);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label3->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label3->Location = System::Drawing::Point(118, 135);
 			this->label3->Name = L"label3";
@@ -224,7 +242,7 @@ namespace GraphsToStudy {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label4->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label4->Location = System::Drawing::Point(this->Width / 2 + 20, 135);
 			this->label4->Name = L"label4";
@@ -239,6 +257,7 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->button3);
+			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->comboBox2);
@@ -247,6 +266,7 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->dataGridView2);
 			this->Controls->Add(this->button1);
+			this->BackColor = System::Drawing::Color::FromArgb(179, 229, 252);
 			this->Name = L"MainForm";
 			this->Text = L"Генерация задания";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
@@ -259,6 +279,7 @@ namespace GraphsToStudy {
 	private: 
 		Void VisualizeTask(System::Object^ sender, System::EventArgs^ e);
 		Void ShowMatrix(System::Object^ sender, System::EventArgs^ e);
+		Void ShowTheory(System::Object^ sender, System::EventArgs^ e);
 		Void ShowSolution(System::Object^ sender, System::EventArgs^ e);
 		Void DifferentVertexAmountSelected(System::Object^ sender, System::EventArgs^ e);
 		Void ResetCurrentValues(System::Object^ sender, System::EventArgs^ e);
