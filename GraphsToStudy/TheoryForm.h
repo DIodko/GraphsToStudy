@@ -91,13 +91,14 @@ namespace GraphsToStudy {
 			this->pictureBox1->Size = System::Drawing::Size(600, 500);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->SizeMode = PictureBoxSizeMode::AutoSize;
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->Location = System::Drawing::Point(320, 20);
+			this->label1->Location = System::Drawing::Point(520, 20);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(332, 23);
 			this->label1->TabIndex = 3;
@@ -112,7 +113,7 @@ namespace GraphsToStudy {
 				L"Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры",
 					L"Поиск функции уровней графа с помощью Алгоритма Демукрона"
 			});
-			this->comboBox1->Location = System::Drawing::Point(520, 20);
+			this->comboBox1->Location = System::Drawing::Point(720, 20);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(582, 31);
 			this->comboBox1->DropDownStyle = ComboBoxStyle::DropDownList;
@@ -124,7 +125,7 @@ namespace GraphsToStudy {
 			// 
 			this->button1->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1->Location = System::Drawing::Point(600, 600);
+			this->button1->Location = System::Drawing::Point(800, 600);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(150, 60);
 			this->button1->TabIndex = 0;
@@ -142,7 +143,7 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label1);
-			this->Size = System::Drawing::Size(1400, 750);
+			this->Size = System::Drawing::Size(1800, 750);
 			this->Text = L"Теоретическая информация";
 			this->Padding = System::Windows::Forms::Padding(0);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;

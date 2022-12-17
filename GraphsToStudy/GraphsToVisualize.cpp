@@ -288,27 +288,27 @@ void GraphsToVisualize::VisualizationForm::AddOffsetsBasedOnLevels(array<array<i
 Void GraphsToVisualize::VisualizationForm::VisualizeTables()
 {
     int GridColumnWidth = 25;
-    dataGridView1->Height = 22 * size + 20;
-    dataGridView1->Width = GridColumnWidth * size + 52;
+    conditionGridView->Height = 22 * size + 20;
+    conditionGridView->Width = GridColumnWidth * size + 52;
 
     for (int i = 0; i < size; i++)
     {
-        dataGridView1->Columns->Add((i + 1).ToString(), (i + 1).ToString());
-        dataGridView1->Columns[i]->Width = GridColumnWidth;
-        dataGridView1->Columns[i]->SortMode = DataGridViewColumnSortMode::NotSortable;
+        conditionGridView->Columns->Add((i + 1).ToString(), (i + 1).ToString());
+        conditionGridView->Columns[i]->Width = GridColumnWidth;
+        conditionGridView->Columns[i]->SortMode = DataGridViewColumnSortMode::NotSortable;
     }
 
     for (int i = 0; i < size; i++) // заполнение матрицы смежности
     {
-        dataGridView1->Rows->Add();
-        dataGridView1->Rows[i]->HeaderCell->Value = (i + 1).ToString();
+        conditionGridView->Rows->Add();
+        conditionGridView->Rows[i]->HeaderCell->Value = (i + 1).ToString();
         for (int j = 0; j < size; j++)
         {
-            dataGridView1->Rows[i]->Cells[j]->Value = matrix[i][j];
+            conditionGridView->Rows[i]->Cells[j]->Value = matrix[i][j];
         }
     }
 
-    label2->Location = System::Drawing::Point(1218, dataGridView1->Location.Y + dataGridView1->Height + 10);
+    label2->Location = System::Drawing::Point(1218, conditionGridView->Location.Y + conditionGridView->Height + 10);
     dataGridView2->Location = System::Drawing::Point(1218, label2->Location.Y + 30);
 
     if (taskName == "Алгоритм Дейкстры")
