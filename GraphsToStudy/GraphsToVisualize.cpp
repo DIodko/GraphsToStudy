@@ -343,7 +343,7 @@ Void GraphsToVisualize::VisualizationForm::VisualizeTables()
     }
     else if (taskName == "Алгоритм Демукрона")
     {
-        label2->Text = "Решение (Вводить вершины строго через \", \")";
+        label2->Text = "Решение (Вводить вершины через \", \")";
         dataGridView2->TopLeftHeaderCell->Value = "Уровень";
         dataGridView2->Height = 20;
         dataGridView2->Width = 222;
@@ -456,6 +456,7 @@ Void GraphsToVisualize::VisualizationForm::CheckSolution(System::Object^ sender,
 // выводит корректное решение в зависимости от типа задания
 Void GraphsToVisualize::VisualizationForm::ShowSolution(System::Object^ sender, System::EventArgs^ e)
 {
+    this->dataGridView2->ReadOnly = true;
     showSolutionButton->Enabled = false;
     checkSolutionButton->Enabled = false;
     if (taskName == "Алгоритм Дейкстры")
