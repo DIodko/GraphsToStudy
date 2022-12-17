@@ -44,8 +44,8 @@ Void GraphsToVisualize::VisualizationForm::VisualizeGraph(array<Vertex^>^ vertic
                     float length = sqrt(deltaX * deltaX + deltaY * deltaY);
 
                     // найти отношение длины к разнице игриков
-                    float ux = deltaX / length;
-                    float uy = deltaY / length;
+                    float ux = (float)deltaX / length;
+                    float uy = (float)deltaY / length;
 
                     // находим новые значения разницы между координатами
                     length -= radius;
@@ -55,8 +55,8 @@ Void GraphsToVisualize::VisualizationForm::VisualizeGraph(array<Vertex^>^ vertic
                     int newX = vertices[i]->X + newDeltaX + radius;
                     int newY = vertices[i]->Y + newDeltaY + radius;
 
-                    ux = newDeltaX / length;
-                    uy = newDeltaY / length;
+                    ux = (float)newDeltaX / length;
+                    uy = (float)newDeltaY / length;
 
                     float vx = -uy;
                     float vy = ux;
@@ -202,7 +202,7 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
             // проверка на принадлежность добавленной вершины к уровню по координатам
             if ((X - xDefaultValue) % xIncValue == 0 && X != 20)
             {
-                int levelIndex = (X - xDefaultValue) / xIncValue - 1;
+                int levelIndex = (float)(X - xDefaultValue) / xIncValue - 1;
                 if (levels[levelIndex] == nullptr)
                 {
                     levels[levelIndex] = gcnew array<int>(0);
