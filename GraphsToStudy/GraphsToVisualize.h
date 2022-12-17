@@ -57,8 +57,8 @@ namespace GraphsToVisualize {
 			}
 		}
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
-	private: System::Windows::Forms::DataGridView^ dataGridView1;
-	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::DataGridView^ conditionGridView;
+	private: System::Windows::Forms::Label^ conditionLabel;
 	private: System::Windows::Forms::DataGridView^ dataGridView2;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Button^ checkSolutionButton;
@@ -85,15 +85,15 @@ namespace GraphsToVisualize {
 		void InitializeComponent(void)
 		{
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->conditionGridView = (gcnew System::Windows::Forms::DataGridView());
+			this->conditionLabel = (gcnew System::Windows::Forms::Label());
 			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->checkSolutionButton = (gcnew System::Windows::Forms::Button());
 			this->showSolutionButton = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->conditionGridView))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -107,30 +107,30 @@ namespace GraphsToVisualize {
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			// 
-			// dataGridView1
+			// conditionGridView
 			// 
-			this->dataGridView1->AllowUserToAddRows = false;
-			this->dataGridView1->AllowUserToDeleteRows = false;
-			this->dataGridView1->AllowUserToResizeColumns = false;
-			this->dataGridView1->AllowUserToResizeRows = false;
-			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(1218, 37);
-			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->ReadOnly = true;
-			this->dataGridView1->RowHeadersWidth = 50;
-			this->dataGridView1->ShowRowErrors = false;
-			this->dataGridView1->Size = System::Drawing::Size(240, 150);
-			this->dataGridView1->TabIndex = 1;
+			this->conditionGridView->AllowUserToAddRows = false;
+			this->conditionGridView->AllowUserToDeleteRows = false;
+			this->conditionGridView->AllowUserToResizeColumns = false;
+			this->conditionGridView->AllowUserToResizeRows = false;
+			this->conditionGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->conditionGridView->Location = System::Drawing::Point(1218, 37);
+			this->conditionGridView->Name = L"conditionGridView";
+			this->conditionGridView->ReadOnly = true;
+			this->conditionGridView->RowHeadersWidth = 50;
+			this->conditionGridView->ShowRowErrors = false;
+			this->conditionGridView->Size = System::Drawing::Size(240, 150);
+			this->conditionGridView->TabIndex = 1;
 			// 
-			// label1
+			// conditionLabel
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Calibri", 14, System::Drawing::FontStyle::Bold));
-			this->label1->Location = System::Drawing::Point(1218, 12);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(173, 23);
-			this->label1->TabIndex = 2;
-			this->label1->Text = L"Матрица смежности";
+			this->conditionLabel->AutoSize = true;
+			this->conditionLabel->Font = (gcnew System::Drawing::Font(L"Calibri", 14, System::Drawing::FontStyle::Bold));
+			this->conditionLabel->Location = System::Drawing::Point(1218, 12);
+			this->conditionLabel->Name = L"conditionLabel";
+			this->conditionLabel->Size = System::Drawing::Size(173, 23);
+			this->conditionLabel->TabIndex = 2;
+			this->conditionLabel->Text = L"Матрица смежности";
 			// 
 			// dataGridView2
 			// 
@@ -206,14 +206,14 @@ namespace GraphsToVisualize {
 			this->Controls->Add(this->checkSolutionButton);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->dataGridView2);
-			this->Controls->Add(this->label1);
-			this->Controls->Add(this->dataGridView1);
+			this->Controls->Add(this->conditionLabel);
+			this->Controls->Add(this->conditionGridView);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"DijkstraVisualizationForm";
 			this->Text = L"Решение задания";
 			this->Shown += gcnew System::EventHandler(this, &VisualizationForm::onShown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->conditionGridView))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
