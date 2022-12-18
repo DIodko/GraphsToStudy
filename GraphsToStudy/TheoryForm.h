@@ -144,7 +144,7 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label1);
 			this->Size = System::Drawing::Size(1800, 750);
-			this->Text = L"Теоретическая информация";
+			this->Text = L"Теоретические материалы";
 			this->Padding = System::Windows::Forms::Padding(0);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->Shown += gcnew System::EventHandler(this, &TheoryForm::onShown);

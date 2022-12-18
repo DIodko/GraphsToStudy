@@ -142,7 +142,7 @@ namespace GraphsToStudy {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(332, 23);
 			this->label1->TabIndex = 3;
-			this->label1->Text = L"Введите количество вершин графа (от 5 до 15)";
+			this->label1->Text = L"Введите количество вершин (от 5 до 15)";
 			// 
 			// comboBox2
 			// 
@@ -173,6 +173,7 @@ namespace GraphsToStudy {
 			this->label2->Text = L"Выберите тип задачи";
 			// 
 			// button2
+			// 
 			// 
 			this->button2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -268,7 +269,7 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->button1);
 			this->BackColor = System::Drawing::Color::FromArgb(179, 229, 252);
 			this->Name = L"MainForm";
-			this->Text = L"Генерация задания";
+			this->Text = L"Генерация задачи";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
