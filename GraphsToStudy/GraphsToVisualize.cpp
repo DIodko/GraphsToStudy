@@ -124,7 +124,6 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
 
     while (markedAmount != size - 1) // пока не все вершины помечены
     {
-        beforePrevVertex = prevVertex;
         prevVertex = currentVertex;
         currentVertex = NextNotMarked(currentVertex, markedVertices, verticesOffsets); // попытка найти непомеченную вершину для текущей
         markedAmount++;
@@ -375,7 +374,7 @@ int GraphsToVisualize::VisualizationForm::NextNotMarked(int currentVertex, array
 Void GraphsToVisualize::VisualizationForm::CheckSolution(System::Object^ sender, System::EventArgs^ e)
 {
     showSolutionButton->Enabled = true;
-    String^ resultMessage = "";
+    String^ resultMessage = "Некорректное название алгоритма";
     if (taskName == "Алгоритм Дейкстры")
     {
         for (int i = 0; i < size; i++)
