@@ -142,7 +142,7 @@ namespace GraphsToStudy {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(332, 23);
 			this->label1->TabIndex = 3;
-			this->label1->Text = L"Введите количество вершин (от 5 до 15)";
+			this->label1->Text = L"Введите количество вершин графа (от 5 до 15)";
 			// 
 			// comboBox2
 			// 
@@ -150,15 +150,15 @@ namespace GraphsToStudy {
 				static_cast<System::Byte>(204)));
 			this->comboBox2->FormattingEnabled = true;
 			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(2) {
-				L"Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры",
-					L"Поиск функции уровней графа с помощью Алгоритма Демукрона"
+				L"Поиск величины кратчайшего пути с помощью алгоритма Дейкстры",
+					L"Определение уровней графа с помощью алгоритма Демукрона"
 			});
 			this->comboBox2->Location = System::Drawing::Point(477, 91);
 			this->comboBox2->Name = L"comboBox2";
 			this->comboBox2->Size = System::Drawing::Size(582, 31);
 			this->comboBox2->DropDownStyle = ComboBoxStyle::DropDownList;
 			this->comboBox2->TabIndex = 4;
-			this->comboBox2->Text = L"Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры";
+			this->comboBox2->Text = L"Поиск величины кратчайшего пути с помощью алгоритма Дейкстры";
 			this->comboBox2->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::ResetCurrentValues);
 			// 
 			// label2
@@ -170,7 +170,7 @@ namespace GraphsToStudy {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(189, 23);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"Выберите тип задания";
+			this->label2->Text = L"Выберите тип задачи";
 			// 
 			// button2
 			// 
@@ -180,7 +180,7 @@ namespace GraphsToStudy {
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(150, 60);
 			this->button2->TabIndex = 6;
-			this->button2->Text = L"Сформировать задание";
+			this->button2->Text = L"Сформировать задачу";
 			this->button2->BackColor = System::Drawing::Color::White;
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::ShowMatrix);

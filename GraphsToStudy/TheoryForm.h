@@ -110,8 +110,8 @@ namespace GraphsToStudy {
 				static_cast<System::Byte>(204)));
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(2) {
-				L"Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры",
-					L"Поиск функции уровней графа с помощью Алгоритма Демукрона"
+				L"Поиск величины кратчайшего пути с помощью алгоритма Дейкстры",
+					L"Определение уровней графа с помощью алгоритма Демукрона"
 			});
 			this->comboBox1->Location = System::Drawing::Point(720, 20);
 			this->comboBox1->Name = L"comboBox1";
