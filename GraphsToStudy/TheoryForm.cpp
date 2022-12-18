@@ -9,7 +9,7 @@ Void GraphsToStudy::TheoryForm::onShown(System::Object^ sender, System::EventArg
 {
 	StreamReader^ textFile = File::OpenText(taskName + ".txt");
 
-	String^ str;
+	String^ str = "";
 	while ((str = textFile->ReadLine()) != nullptr)
 	{
 		this->textBox1->Text += str + Environment::NewLine;

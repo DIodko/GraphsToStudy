@@ -374,7 +374,7 @@ int GraphsToVisualize::VisualizationForm::NextNotMarked(int currentVertex, array
 Void GraphsToVisualize::VisualizationForm::CheckSolution(System::Object^ sender, System::EventArgs^ e)
 {
     showSolutionButton->Enabled = true;
-    String^ resultMessage = "Некорректное название алгоритма";
+    String^ resultMessage = "";
     if (taskName == "Алгоритм Дейкстры")
     {
         for (int i = 0; i < size; i++)
