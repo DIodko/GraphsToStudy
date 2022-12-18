@@ -130,7 +130,6 @@ namespace GraphsToStudy {
 			this->comboBox1->Size = System::Drawing::Size(58, 31);
 			this->comboBox1->TabIndex = 2;
 			this->comboBox1->Text = L"5";			
-			this->comboBox1->DropDownStyle = ComboBoxStyle::DropDownList;
 			this->comboBox1->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::DifferentVertexAmountSelected);
 			// 
 			// label1
@@ -156,7 +155,6 @@ namespace GraphsToStudy {
 			this->comboBox2->Location = System::Drawing::Point(477, 91);
 			this->comboBox2->Name = L"comboBox2";
 			this->comboBox2->Size = System::Drawing::Size(582, 31);
-			this->comboBox2->DropDownStyle = ComboBoxStyle::DropDownList;
 			this->comboBox2->TabIndex = 4;
 			this->comboBox2->Text = L"Поиск величины кратчайшего пути с помощью алгоритма Дейкстры";
 			this->comboBox2->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::ResetCurrentValues);

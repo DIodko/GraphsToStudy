@@ -118,7 +118,7 @@ namespace GraphsToStudy {
 			this->comboBox1->Size = System::Drawing::Size(582, 31);
 			this->comboBox1->DropDownStyle = ComboBoxStyle::DropDownList;
 			this->comboBox1->TabIndex = 4;
-			this->comboBox1->Text = taskName;
+			this->comboBox1->Text = "Поиск величины кратчайшего пути с помощью алгоритма Дейкстры";
 			this->comboBox1->SelectionChangeCommitted += gcnew System::EventHandler(this, &TheoryForm::onSelectionChanged);
 			// 
 			// button1
