@@ -213,17 +213,6 @@ void GraphsToVisualize::VisualizationForm::CalculatePositions(array<Vertex^>^ ve
         }
     }
 
-    // отладочный вывод уровней
-    for (int i = 0; i < amountOfLevels; i++)
-    {
-        ////Trace::Write((i + 1) + ": ");
-        for (int j = 0; j < levels[i]->Length; j++)
-        {
-            ////Trace::Write((levels[i][j] + 1) + " ");
-        }
-        ////Trace::WriteLine("");
-    }
-
     AddOffsetsBasedOnLevels(levels, vertices, maxX, amountOfLevels);
 
     vertices[0] = gcnew Vertex;
@@ -254,17 +243,14 @@ void GraphsToVisualize::VisualizationForm::AddOffsetsBasedOnLevels(array<array<i
         if (length % 2 == 0)
         {
             vertices[levels[i][length / 2 - 1]]->X += levelOffset;
-            ////Trace::WriteLine("Для вершины " + (levels[i][length / 2 - 1] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
             maxX = (vertices[levels[i][length / 2 - 1]]->X > maxX) ? vertices[levels[i][length / 2 - 1]]->X : maxX;
 
             vertices[levels[i][length / 2]]->X += levelOffset;
-            ////Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
             maxX = (vertices[levels[i][length / 2]]->X > maxX) ? vertices[levels[i][length / 2]]->X : maxX;
         }
         else
         {
             vertices[levels[i][length / 2]]->X += levelOffset;
-            ////Trace::WriteLine("Для вершины " + (levels[i][length / 2] + 1) + " задано смещение " + levelOffset + " из-за уровня " + (i + 1));
             maxX = (vertices[levels[i][length / 2]]->X > maxX) ? vertices[levels[i][length / 2]]->X : maxX;
         }
 
@@ -275,11 +261,9 @@ void GraphsToVisualize::VisualizationForm::AddOffsetsBasedOnLevels(array<array<i
 
             vertices[levels[i][length - 1 - j]]->X += offset + levelOffset;
             maxX = (vertices[levels[i][length - 1 - j]]->X > maxX) ? vertices[levels[i][length - 1 - j]]->X : maxX;
-            ////Trace::WriteLine("Для вершины " + (levels[i][length - 1 - j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
 
             vertices[levels[i][j]]->X += offset + levelOffset;
             maxX = (vertices[levels[i][j]]->X > maxX) ? vertices[levels[i][j]]->X : maxX;
-            ////Trace::WriteLine("Для вершины " + (levels[i][j] + 1) + " задано смещение " + offset + " " + levelOffset + " из-за уровня " + (i + 1));
         }
     }
 }
