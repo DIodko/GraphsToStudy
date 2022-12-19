@@ -19,11 +19,11 @@ void main(array<String^>^ args)
 // функция для решения задания, которая визуализирует текущее сформированное задание в зависимости от задания
 Void GraphsToStudy::MainForm::VisualizeTask(System::Object^ sender, System::EventArgs^ e)
 {	
-	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры")
+	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью алгоритма Дейкстры")
 	{
 		GraphsToVisualize::VisualizeDijkstra(matrix, size, ways, correctMarkers);
 	}
-	else if (comboBox2->Text == "Поиск функции уровней графа с помощью Алгоритма Демукрона")
+	else if (comboBox2->Text == "Определение уровней графа с помощью алгоритма Демукрона")
 	{
 		GraphsToVisualize::VisualizeDemoucron(matrix, size, levels);
 	}
@@ -32,30 +32,52 @@ Void GraphsToStudy::MainForm::VisualizeTask(System::Object^ sender, System::Even
 // функция, которая вызывается первой, формирует задание, решает его и выводит матрицу смежности в зависимости от задания
 Void GraphsToStudy::MainForm::ShowMatrix(System::Object^ sender, System::EventArgs^ e)
 {
-	this->button3->Enabled = true;
-	this->button1->Enabled = true;
-	this->label3->Visible = true;
-	this->label4->Visible = false;
-	dataGridView1->Columns->Clear();
-
-	matrix = gcnew array<array<int>^>(size);
-
-	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры")
+	if (!Int32::TryParse(this->comboBox1->Text, size))
 	{
+		MessageBox::Show("Некорректное число вершин", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		ResetCurrentValues(sender, e);
+		this->comboBox1->Text = "5";
+		return;
+	}
+	if (size < 5 || size > 15)
+	{
+		MessageBox::Show("Некорректное число вершин", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		ResetCurrentValues(sender, e);
+		this->comboBox1->Text = "5";
+		return;
+	}
+
+
+	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью алгоритма Дейкстры")
+	{
+		matrix = gcnew array<array<int>^>(size);
 		ways = gcnew array<array<int>^>(size);
 		correctMarkers = gcnew array<int>(size);
 
 		GraphsToSolve::GenerateDijkstra(matrix, size);
 		GraphsToSolve::SolveDijkstra(matrix, size, ways, correctMarkers);
 	}
-	else if (comboBox2->Text == "Поиск функции уровней графа с помощью Алгоритма Демукрона")
+	else if (comboBox2->Text == "Определение уровней графа с помощью алгоритма Демукрона")
 	{
+		matrix = gcnew array<array<int>^>(size);
 		levels = gcnew array<array<int>^>(size);
 
 		GraphsToSolve::GenerateDemoucron(matrix, size);
 		GraphsToSolve::SolveDemoucron(matrix, size, levels);
 	}
+	else
+	{
+		MessageBox::Show("Некорректное задание", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		comboBox2->Text = "Поиск величины кратчайшего пути с помощью алгоритма Дейкстры";
+		ResetCurrentValues(sender, e);
+		return;
+	}
 
+	dataGridView1->Columns->Clear();
+	this->button3->Enabled = true;
+	this->button1->Enabled = true;
+	this->label3->Visible = true;
+	this->label4->Visible = false;
 	int GridColumnWidth = 25;
 	dataGridView1->Height = 22 * size + 20;
 	dataGridView1->Width = GridColumnWidth * size + 52;
@@ -100,7 +122,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 	dataGridView2->Columns->Clear();
 	int GridColumnWidth = 25;
 
-	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры")
+	if (comboBox2->Text == "Поиск величины кратчайшего пути с помощью алгоритма Дейкстры")
 	{
 		dataGridView2->TopLeftHeaderCell->Value = "Итерация";
 		dataGridView2->Height = 22 * size + 20;
@@ -146,7 +168,7 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 			}
 		}
 	}
-	else if (comboBox2->Text == "Поиск функции уровней графа с помощью Алгоритма Демукрона")
+	else if (comboBox2->Text == "Определение уровней графа с помощью алгоритма Демукрона")
 	{
 		dataGridView2->TopLeftHeaderCell->Value = "Уровень";
 		dataGridView2->Height = 20;
@@ -170,7 +192,6 @@ Void GraphsToStudy::MainForm::ShowSolution(System::Object^ sender, System::Event
 			}
 		}
 	}
-
 	dataGridView2->Visible = true;
 }
 

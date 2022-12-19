@@ -130,7 +130,6 @@ namespace GraphsToStudy {
 			this->comboBox1->Size = System::Drawing::Size(58, 31);
 			this->comboBox1->TabIndex = 2;
 			this->comboBox1->Text = L"5";			
-			this->comboBox1->DropDownStyle = ComboBoxStyle::DropDownList;
 			this->comboBox1->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::DifferentVertexAmountSelected);
 			// 
 			// label1
@@ -150,15 +149,14 @@ namespace GraphsToStudy {
 				static_cast<System::Byte>(204)));
 			this->comboBox2->FormattingEnabled = true;
 			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(2) {
-				L"Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры",
-					L"Поиск функции уровней графа с помощью Алгоритма Демукрона"
+				L"Поиск величины кратчайшего пути с помощью алгоритма Дейкстры",
+					L"Определение уровней графа с помощью алгоритма Демукрона"
 			});
 			this->comboBox2->Location = System::Drawing::Point(477, 91);
 			this->comboBox2->Name = L"comboBox2";
 			this->comboBox2->Size = System::Drawing::Size(582, 31);
-			this->comboBox2->DropDownStyle = ComboBoxStyle::DropDownList;
 			this->comboBox2->TabIndex = 4;
-			this->comboBox2->Text = L"Поиск величины кратчайшего пути с помощью Алгоритма Дейкстры";
+			this->comboBox2->Text = L"Поиск величины кратчайшего пути с помощью алгоритма Дейкстры";
 			this->comboBox2->SelectionChangeCommitted += gcnew System::EventHandler(this, &MainForm::ResetCurrentValues);
 			// 
 			// label2
@@ -170,9 +168,10 @@ namespace GraphsToStudy {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(189, 23);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"Выберите тип задания";
+			this->label2->Text = L"Выберите тип задачи";
 			// 
 			// button2
+			// 
 			// 
 			this->button2->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -180,7 +179,7 @@ namespace GraphsToStudy {
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(150, 60);
 			this->button2->TabIndex = 6;
-			this->button2->Text = L"Сформировать задание";
+			this->button2->Text = L"Сформировать задачу";
 			this->button2->BackColor = System::Drawing::Color::White;
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::ShowMatrix);
@@ -268,7 +267,7 @@ namespace GraphsToStudy {
 			this->Controls->Add(this->button1);
 			this->BackColor = System::Drawing::Color::FromArgb(179, 229, 252);
 			this->Name = L"MainForm";
-			this->Text = L"Генерация задания";
+			this->Text = L"Генерация задачи";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);

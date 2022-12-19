@@ -7,15 +7,15 @@ using namespace System::IO;
 
 Void GraphsToStudy::TheoryForm::onShown(System::Object^ sender, System::EventArgs^ e)
 {
-	StreamReader^ textFile = File::OpenText(taskName + ".txt");
+	StreamReader^ textFile = File::OpenText(this->comboBox1->Text + ".txt");
 
-	String^ str;
+	String^ str = "";
 	while ((str = textFile->ReadLine()) != nullptr)
 	{
 		this->textBox1->Text += str + Environment::NewLine;
 	}
 
-	Image^ image = gcnew Bitmap(taskName + ".jpg");
+	Image^ image = gcnew Bitmap(this->comboBox1->Text + ".jpg");
 	this->pictureBox1->Image = image;
 }
 
